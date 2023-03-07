@@ -3,9 +3,9 @@ Not actually a group project, but the scope has to be as if a group did the proj
 
 # --- Very Basic Treasure Hunting Game To-Do List ---
 :heavy_check_mark: Window /n
-:heavy_check_mark: Game Loop 
-:heavy_check_mark: Movement 
-:x: Sprites and Animations  
+:heavy_check_mark: Game Loop /n
+:heavy_check_mark: Movement /n
+:x: Sprites and Animations  /n
 :x: Drawing Tiles
 :x: World & Camera
 :x: Collision Detection
