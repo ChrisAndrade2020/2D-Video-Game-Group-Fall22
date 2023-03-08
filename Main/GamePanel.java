@@ -7,13 +7,16 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entity.Player;
+
 public class GamePanel extends JPanel implements Runnable {
 
     // Screen Settings
     final int originalTileSize = 16; // 16x16 pixel size
     final int scale = 4;
 
-    final int tileSize = originalTileSize * scale; // scales up 16x16 to 64 for easier viewing on modern 1080p screens
+    public final int tileSize = originalTileSize * scale; // scales up 16x16 to 64 for easier viewing on modern 1080p
+                                                          // screens
 
     final int maxScreenCol = 24;
     final int maxScreenRow = 16;
@@ -25,6 +28,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     KeyHandler keyH = new KeyHandler();
     Thread gameThread; // automatically calls the run method
+    Player player = new Player(this, keyH);
 
     // default position
     int playerX = 100;
@@ -91,19 +95,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
 
-        if (keyH.up == true) {
-            playerY -= playerSpeed;
-        }
-
-        if (keyH.down == true) {
-            playerY += playerSpeed;
-        }
-        if (keyH.left == true) {
-            playerX -= playerSpeed;
-        }
-        if (keyH.right == true) {
-            playerX += playerSpeed;
-        }
+        player.update();
 
     }
 
@@ -112,6 +104,8 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
+
+        player.draw(g2);
 
         g2.dispose(); // apparently good practice to save memory. Might not matter too much with
                       // systems having 16GB or more nowadays.
