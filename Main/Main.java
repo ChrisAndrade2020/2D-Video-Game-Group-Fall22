@@ -8,7 +8,7 @@ public class Main {
 
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(true);
+        window.setResizable(false);
         window.setTitle("GroupGameF22");
 
         GamePanel gamePanel = new GamePanel();
