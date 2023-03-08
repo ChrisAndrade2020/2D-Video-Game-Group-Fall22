@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     int FPS = 60;
 
-    Input input = new Input();
+    KeyHandler keyH = new KeyHandler();
     Thread gameThread; // automatically calls the run method
 
     // default position
@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
-        this.addKeyListener(input);
+        this.addKeyListener(keyH);
         this.setFocusable(true); // So gamePanel can focus on the user inputs
 
     }
@@ -91,17 +91,17 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
 
-        if (input.up == true) {
+        if (keyH.up == true) {
             playerY -= playerSpeed;
         }
 
-        if (input.down == true) {
+        if (keyH.down == true) {
             playerY += playerSpeed;
         }
-        if (input.left == true) {
+        if (keyH.left == true) {
             playerX -= playerSpeed;
         }
-        if (input.right == true) {
+        if (keyH.right == true) {
             playerX += playerSpeed;
         }
 
@@ -112,10 +112,6 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
-
-        g2.setColor(Color.WHITE);
-
-        g2.fillRect(playerX, playerY, tileSize, tileSize);
 
         g2.dispose(); // apparently good practice to save memory. Might not matter too much with
                       // systems having 16GB or more nowadays.

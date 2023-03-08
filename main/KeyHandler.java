@@ -1,9 +1,9 @@
-package Main;
+package main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class Input implements KeyListener {
+public class KeyHandler implements KeyListener {
 
     public boolean up, down, left, right;
 
