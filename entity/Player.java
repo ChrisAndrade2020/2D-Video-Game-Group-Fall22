@@ -72,6 +72,27 @@ public class Player extends Entity {
             pr_5 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_5.png"));
             pr_6 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_6.png"));
 
+            wi1 = ImageIO.read(getClass().getResourceAsStream("/res/player/wi1.png"));
+            wi2 = ImageIO.read(getClass().getResourceAsStream("/res/player/wi2.png"));
+            wi3 = ImageIO.read(getClass().getResourceAsStream("/res/player/wi3.png"));
+            wi4 = ImageIO.read(getClass().getResourceAsStream("/res/player/wi4.png"));
+            wi5 = ImageIO.read(getClass().getResourceAsStream("/res/player/wi5.png"));
+            wi6 = ImageIO.read(getClass().getResourceAsStream("/res/player/wi6.png"));
+
+            wwr1 = ImageIO.read(getClass().getResourceAsStream("/res/player/wwr1.png"));
+            wwr2 = ImageIO.read(getClass().getResourceAsStream("/res/player/wwr2.png"));
+            wwr3 = ImageIO.read(getClass().getResourceAsStream("/res/player/wwr3.png"));
+            wwr4 = ImageIO.read(getClass().getResourceAsStream("/res/player/wwr4.png"));
+            wwr5 = ImageIO.read(getClass().getResourceAsStream("/res/player/wwr5.png"));
+            wwr6 = ImageIO.read(getClass().getResourceAsStream("/res/player/wwr6.png"));
+
+            wwl1 = ImageIO.read(getClass().getResourceAsStream("/res/player/wwl1.png"));
+            wwl2 = ImageIO.read(getClass().getResourceAsStream("/res/player/wwl2.png"));
+            wwl3 = ImageIO.read(getClass().getResourceAsStream("/res/player/wwl3.png"));
+            wwl4 = ImageIO.read(getClass().getResourceAsStream("/res/player/wwl4.png"));
+            wwl5 = ImageIO.read(getClass().getResourceAsStream("/res/player/wwl5.png"));
+            wwl6 = ImageIO.read(getClass().getResourceAsStream("/res/player/wwl6.png"));
+
         } catch (IOException e) {
 
             e.printStackTrace();
@@ -157,102 +178,102 @@ public class Player extends Entity {
         switch (direction) {
             case "idle":
                 if (spriteNum == 1) {
-                    image = pi_1;
+                    image = wi1;
                 }
                 if (spriteNum == 2) {
-                    image = pi_2;
+                    image = wi2;
                 }
                 if (spriteNum == 3) {
-                    image = pi_3;
+                    image = wi3;
                 }
                 if (spriteNum == 4) {
-                    image = pi_4;
+                    image = wi4;
                 }
                 if (spriteNum == 5) {
-                    image = pi_5;
+                    image = wi5;
                 }
                 if (spriteNum == 6) {
-                    image = pi_6;
+                    image = wi6;
                 }
                 break;
             case "up":
                 if (spriteNum == 1) {
-                    image = pu_1;
+                    image = wwr1;
                 }
                 if (spriteNum == 2) {
-                    image = pu_2;
+                    image = wwr2;
                 }
                 if (spriteNum == 3) {
-                    image = pu_3;
+                    image = wwr3;
                 }
                 if (spriteNum == 4) {
-                    image = pu_4;
+                    image = wwr4;
                 }
                 if (spriteNum == 5) {
-                    image = pu_5;
+                    image = wwr5;
                 }
                 if (spriteNum == 6) {
-                    image = pu_6;
+                    image = wwr6;
                 }
                 break;
             case "down":
                 if (spriteNum == 1) {
-                    image = pd_1;
+                    image = wwr1;
                 }
                 if (spriteNum == 2) {
-                    image = pd_2;
+                    image = wwr2;
                 }
                 if (spriteNum == 3) {
-                    image = pd_3;
+                    image = wwr3;
                 }
                 if (spriteNum == 4) {
-                    image = pd_4;
+                    image = wwr4;
                 }
                 if (spriteNum == 5) {
-                    image = pd_5;
+                    image = wwr5;
                 }
                 if (spriteNum == 6) {
-                    image = pd_6;
+                    image = wwr6;
                 }
                 break;
             case "left":
                 if (spriteNum == 1) {
-                    image = pl_1;
+                    image = wwl1;
                 }
                 if (spriteNum == 2) {
-                    image = pl_2;
+                    image = wwl2;
                 }
                 if (spriteNum == 3) {
-                    image = pl_3;
+                    image = wwl3;
                 }
                 if (spriteNum == 4) {
-                    image = pl_4;
+                    image = wwl4;
                 }
                 if (spriteNum == 5) {
-                    image = pl_5;
+                    image = wwl5;
                 }
                 if (spriteNum == 6) {
-                    image = pl_6;
+                    image = wwl6;
                 }
                 break;
             case "right":
                 if (spriteNum == 1) {
-                    image = pr_1;
+                    image = wwr1;
                 }
                 if (spriteNum == 2) {
-                    image = pr_2;
+                    image = wwr2;
                 }
                 if (spriteNum == 3) {
-                    image = pr_3;
+                    image = wwr3;
                 }
                 if (spriteNum == 4) {
-                    image = pr_4;
+                    image = wwr4;
                 }
                 if (spriteNum == 5) {
-                    image = pr_5;
+                    image = wwr5;
                 }
                 if (spriteNum == 6) {
-                    image = pr_6;
+                    image = wwr6;
                 }
                 break;
 
