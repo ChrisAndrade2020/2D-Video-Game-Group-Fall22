@@ -8,24 +8,29 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import entity.Player;
+import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
 
     // Screen Settings
-    final int originalTileSize = 96; // 16x16 pixel size
-    final int scale = 2;
+    final int originalTileSize = 16; // 16x16 common pixel size
+    final int scale = 4;
+    final int pscale = 12;
+    final int escale = 12;
 
-    public final int tileSize = originalTileSize * scale; // scales up 16x16 to 96x96 for easier viewing on modern 1080p
-                                                          // screens
+    public final int tileSize = originalTileSize * scale; // size of tiles
+    public final int playerSize = originalTileSize * pscale; // size of player
+    public final int entitySize = originalTileSize * escale; // size of other entities
 
-    final int maxScreenCol = 10;
-    final int maxScreenRow = 5;
+    public final int maxScreenCol = 30;
+    public final int maxScreenRow = 16;
 
-    final int screenWidth = tileSize * maxScreenCol; // 2560px across
-    final int screenHeight = tileSize * maxScreenRow; // 1008px tall
+    public final int screenWidth = tileSize * maxScreenCol;
+    public final int screenHeight = tileSize * maxScreenRow;
 
     int FPS = 60;
 
+    TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread; // automatically calls the run method
     Player player = new Player(this, keyH);
@@ -105,6 +110,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
+        tileM.draw(g2); // tile first before player entity, otherwise player will be drawn BEHIND the
+                        // tile and won't be seen.
         player.draw(g2);
 
         g2.dispose(); // apparently good practice to save memory. Might not matter too much with

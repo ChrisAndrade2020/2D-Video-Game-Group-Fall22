@@ -37,40 +37,42 @@ public class Player extends Entity {
 
         try {
 
-            pi_1 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_1.png"));
-            pi_2 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_2.png"));
-            pi_3 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_3.png"));
-            pi_4 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_4.png"));
-            pi_5 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_5.png"));
-            pi_6 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_6.png"));
-
-            pu_1 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_1.png"));
-            pu_2 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_2.png"));
-            pu_3 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_3.png"));
-            pu_4 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_4.png"));
-            pu_5 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_5.png"));
-            pu_6 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_6.png"));
-
-            pd_1 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_1.png"));
-            pd_2 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_2.png"));
-            pd_3 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_3.png"));
-            pd_4 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_4.png"));
-            pd_5 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_5.png"));
-            pd_6 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_6.png"));
-
-            pl_1 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_1.png"));
-            pl_2 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_2.png"));
-            pl_3 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_3.png"));
-            pl_4 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_4.png"));
-            pl_5 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_5.png"));
-            pl_6 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_6.png"));
-
-            pr_1 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_1.png"));
-            pr_2 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_2.png"));
-            pr_3 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_3.png"));
-            pr_4 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_4.png"));
-            pr_5 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_5.png"));
-            pr_6 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_6.png"));
+            /*
+             * pi_1 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_1.png"));
+             * pi_2 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_2.png"));
+             * pi_3 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_3.png"));
+             * pi_4 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_4.png"));
+             * pi_5 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_5.png"));
+             * pi_6 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_6.png"));
+             * 
+             * pu_1 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_1.png"));
+             * pu_2 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_2.png"));
+             * pu_3 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_3.png"));
+             * pu_4 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_4.png"));
+             * pu_5 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_5.png"));
+             * pu_6 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_6.png"));
+             * 
+             * pd_1 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_1.png"));
+             * pd_2 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_2.png"));
+             * pd_3 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_3.png"));
+             * pd_4 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_4.png"));
+             * pd_5 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_5.png"));
+             * pd_6 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_6.png"));
+             * 
+             * pl_1 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_1.png"));
+             * pl_2 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_2.png"));
+             * pl_3 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_3.png"));
+             * pl_4 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_4.png"));
+             * pl_5 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_5.png"));
+             * pl_6 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_6.png"));
+             * 
+             * pr_1 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_1.png"));
+             * pr_2 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_2.png"));
+             * pr_3 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_3.png"));
+             * pr_4 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_4.png"));
+             * pr_5 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_5.png"));
+             * pr_6 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_6.png"));
+             */
 
             wi1 = ImageIO.read(getClass().getResourceAsStream("/res/player/wi1.png"));
             wi2 = ImageIO.read(getClass().getResourceAsStream("/res/player/wi2.png"));
@@ -279,7 +281,7 @@ public class Player extends Entity {
 
         }
 
-        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, x, y, gp.playerSize, gp.playerSize, null);
 
     }
 
