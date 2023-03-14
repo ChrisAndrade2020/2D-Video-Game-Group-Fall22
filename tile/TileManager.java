@@ -19,11 +19,11 @@ public class TileManager {
 
         this.gp = gp;
 
-        tile = new Tile[15];
+        tile = new Tile[25];
         mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
 
         getTileImage();
-        loadMap();
+        loadMap("/res/maps/map1test.txt");
 
     }
 
@@ -50,22 +50,22 @@ public class TileManager {
             tile[5].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/Tilemap_Flat_12.png"));
 
             tile[6] = new Tile();
-            tile[6].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/Tilemap_Flat_20.png"));
+            tile[6].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/overlay2.png"));
 
             tile[7] = new Tile();
-            tile[7].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/Tilemap_Flat_21.png"));
+            tile[7].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/overlay3.png"));
 
             tile[8] = new Tile();
-            tile[8].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/Tilemap_Flat_22.png"));
+            tile[8].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/overlay4.png"));
 
             tile[9] = new Tile();
-            tile[9].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/Tilemap_Elevation_12.png"));
+            tile[9].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/overlay1.png"));
 
             tile[10] = new Tile();
-            tile[10].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/Tilemap_Elevation_13.png"));
+            tile[10].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/overlay5.png"));
 
             tile[11] = new Tile();
-            tile[11].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/Tilemap_Elevation_14.png"));
+            tile[11].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/overlay6.png"));
 
             tile[12] = new Tile();
             tile[12].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/Tilemap_Elevation_28.png"));
@@ -76,6 +76,33 @@ public class TileManager {
             tile[14] = new Tile();
             tile[14].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/Tilemap_Elevation_30.png"));
 
+            tile[15] = new Tile();
+            tile[15].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/overlay7.png"));
+
+            tile[16] = new Tile();
+            tile[16].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/overlay8.png"));
+
+            tile[17] = new Tile();
+            tile[17].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/overlay10.png"));
+
+            tile[18] = new Tile();
+            tile[18].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/overlay11.png"));
+
+            tile[19] = new Tile();
+            tile[19].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/overlay12.png"));
+
+            tile[20] = new Tile();
+            tile[20].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/overlay13.png"));
+
+            tile[21] = new Tile();
+            tile[21].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/overlay14.png"));
+
+            tile[22] = new Tile();
+            tile[22].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/overlay15.png"));
+
+            tile[23] = new Tile();
+            tile[23].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/overlay18.png"));
+
         } catch (IOException e) {
 
             e.printStackTrace();
@@ -83,10 +110,10 @@ public class TileManager {
         }
     }
 
-    public void loadMap() {
+    public void loadMap(String filePath) {
 
         try {
-            InputStream is = getClass().getResourceAsStream("/res/maps/map1test.txt");
+            InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             int col = 0;
