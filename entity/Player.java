@@ -15,10 +15,17 @@ public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
 
+    public final int screenX;
+    public final int screenY;
+
     public Player(GamePanel gp, KeyHandler keyH) {
 
         this.gp = gp;
         this.keyH = keyH;
+
+        screenX = gp.screenWidth / 2 - (gp.playerSize / 2);
+        screenY = gp.screenHeight / 2 - (gp.playerSize / 2);
+
         setDefaultValues();
         getPlayerImage();
 
@@ -26,9 +33,9 @@ public class Player extends Entity {
 
     public void setDefaultValues() {
 
-        x = 100;
-        y = 100;
-        speed = 4;
+        worldX = gp.tileSize * 25;
+        worldY = gp.tileSize * 25;
+        speed = 6;
         direction = "idle";
 
     }
@@ -109,19 +116,19 @@ public class Player extends Entity {
 
             if (keyH.up == true) {
                 direction = "up";
-                y -= speed;
+                worldY -= speed;
             }
             if (keyH.down == true) {
                 direction = "down";
-                y += speed;
+                worldY += speed;
             }
             if (keyH.left == true) {
                 direction = "left";
-                x -= speed;
+                worldX -= speed;
             }
             if (keyH.right == true) {
                 direction = "right";
-                x += speed;
+                worldX += speed;
             }
 
             spriteCounter++; // increments every time update is called which is every 16.67ms
@@ -281,7 +288,7 @@ public class Player extends Entity {
 
         }
 
-        g2.drawImage(image, x, y, gp.playerSize, gp.playerSize, null);
+        g2.drawImage(image, screenX, screenY, gp.playerSize, gp.playerSize, null);
 
     }
 
