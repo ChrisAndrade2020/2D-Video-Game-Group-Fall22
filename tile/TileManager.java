@@ -19,7 +19,7 @@ public class TileManager {
 
         this.gp = gp;
 
-        tile = new Tile[45];
+        tile = new Tile[90];
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
@@ -159,6 +159,15 @@ public class TileManager {
 
             tile[43] = new Tile();
             tile[43].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/Grass_Wall3.png"));
+
+            tile[44] = new Tile();
+            tile[44].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/Sand4.png"));
+
+            tile[45] = new Tile();
+            tile[45].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/Sand5.png"));
+
+            tile[46] = new Tile();
+            tile[46].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/Sand6.png"));
 
         } catch (IOException e) {
 
