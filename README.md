@@ -1,7 +1,7 @@
 # 2D-Video-Game-Group-Fall22
 Not actually a group project, but the scope has to be as if a group did the project
 
-# --- Very Basic Treasure Hunting Game To-Do List ---
+# --- Basic Treasure Hunting Game To-Do List ---
 :heavy_check_mark: Window  
 :heavy_check_mark: Game Loop  
 :heavy_check_mark: Movement  
