@@ -93,53 +93,74 @@ public class Player extends Entity {
 
     public void update() {
 
+        collisionOn = false;
+        gp.cChecker.checkTile(this);
+
         if (keyH.up == true || keyH.down == true || keyH.left == true || keyH.right == true) {
 
-            if (keyH.up == true) {
+            if (keyH.up) {
                 direction = "up";
-                // worldY -= speed;
-            }
-            if (keyH.down == true) {
-                direction = "down";
-                // worldY += speed;
-            }
-            if (keyH.left == true) {
-                direction = "left";
-                // worldX -= speed;
-            }
-            if (keyH.right == true) {
-                direction = "right";
-                // worldX += speed;
-            }
-
-            // Check tile collision
-            collisionOn = false;
-            gp.cChecker.checkTile(this); // Since player class is a subclass of Entity class, the collision checker can
-                                         // recieve player class as entity.
-
-            // If collision is false, player moves through the tile.
-
-            if (collisionOn == false) {
-
-                switch (direction) {
-                    case "up":
-                        worldY -= speed;
-                        break;
-
-                    case "down":
-                        worldY += speed;
-                        break;
-
-                    case "left":
-                        worldX -= speed;
-                        break;
-
-                    case "right":
-                        worldX += speed;
-                        break;
-
+                collisionOn = false;
+                gp.cChecker.checkTile(this);
+                if (!collisionOn) {
+                    worldY -= speed;
                 }
             }
+            if (keyH.down) {
+                direction = "down";
+                collisionOn = false;
+                gp.cChecker.checkTile(this);
+                if (!collisionOn) {
+                    worldY += speed;
+                }
+            }
+            if (keyH.left) {
+                direction = "left";
+                collisionOn = false;
+                gp.cChecker.checkTile(this);
+                if (!collisionOn) {
+                    worldX -= speed;
+                }
+            }
+            if (keyH.right) {
+                direction = "right";
+                collisionOn = false;
+                gp.cChecker.checkTile(this);
+                if (!collisionOn) {
+                    worldX += speed;
+                }
+            }
+
+            // CLEANER IMPLEMENTATION BUT REMOVES ABILITY TO MOVE DIAGONALLY
+            // Check tile collision
+            // collisionOn = false;
+            // gp.cChecker.checkTile(this); // Since player class is a subclass of Entity
+            // class, the collision checker can
+            // // recieve player class as entity.
+
+            // // If collision is false, player moves through the tile.
+
+            // // if (collisionOn == false) {
+
+            // // switch (direction) {
+            // // case "up":
+            // // worldY -= speed;
+            // // break;
+
+            // // case "down":
+            // // worldY += speed;
+            // // break;
+
+            // // case "left":
+            // // worldX -= speed;
+            // // break;
+
+            // // case "right":
+            // // worldX += speed;
+            // // break;
+
+            // // }
+            // // }
 
             spriteCounter++; // increments every time update is called which is every 16.67ms
 
