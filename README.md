@@ -8,7 +8,7 @@ Not actually a group project, but the scope has to be as if a group did the proj
 :heavy_check_mark: Sprites and Animations  
 :heavy_check_mark: Drawing Tiles  
 :x: World & Camera  
-:x: Collision Detection  
+:heavy_check_mark: Collision Detection  
 :x: Objects  
 :x: Object Interaction  
 :x: Sound   
