@@ -5,8 +5,8 @@ Not actually a group project, but the scope has to be as if a group did the proj
 :heavy_check_mark: Window  
 :heavy_check_mark: Game Loop  
 :heavy_check_mark: Movement  
-:x: Sprites and Animations  
-:x: Drawing Tiles  
+:heavy_check_mark: Sprites and Animations  
+:heavy_check_mark: Drawing Tiles  
 :x: World & Camera  
 :x: Collision Detection  
 :x: Objects  
