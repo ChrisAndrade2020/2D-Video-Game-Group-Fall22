@@ -18,15 +18,15 @@ public class GamePanel extends JPanel implements Runnable {
     final int pscale = 9;
     final int escale = 12;
 
-    public final int tileSize = originalTileSize * scale; // size of tiles
-    public final int playerSize = originalTileSize * pscale; // size of player
-    public final int entitySize = originalTileSize * escale; // size of other entities
+    public int tileSize = originalTileSize * scale; // size of tiles
+    public int playerSize = originalTileSize * pscale; // size of player
+    public int entitySize = originalTileSize * escale; // size of other entities
 
     public final int maxScreenCol = 32;
     public final int maxScreenRow = 18;
 
-    public final int screenWidth = tileSize * maxScreenCol;
-    public final int screenHeight = tileSize * maxScreenRow;
+    public int screenWidth = tileSize * maxScreenCol;
+    public int screenHeight = tileSize * maxScreenRow;
 
     // World Map Settings
 
@@ -38,7 +38,8 @@ public class GamePanel extends JPanel implements Runnable {
     int FPS = 60;
 
     TileManager tileM = new TileManager(this);
-    KeyHandler keyH = new KeyHandler();
+    KeyHandler keyH = new KeyHandler(this);
+    public CollisionChecker cChecker = new CollisionChecker(this);
     Thread gameThread; // automatically calls the run method
     public Player player = new Player(this, keyH);
 
@@ -56,6 +57,34 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true); // So gamePanel can focus on the user inputs
 
     }
+
+    // Too many problems arise when trying to add a zoom in and out feature
+    // Need to change player speed, need to cast some ints to doubles, need to
+    // reposition the player based off of the new dimensions, etc.
+    // Commented out.
+
+    // public void zoomScreen(int i) {
+
+    // int oldWorldWidth = tileSize * maxWorldCol; // 1920
+
+    // tileSize += i;
+    // playerSize += 6 * i;
+    // entitySize += 9 * i;
+
+    // int newWorldWidth = tileSize * maxWorldCol; // 1880
+
+    // double multiplier = (double) newWorldWidth / oldWorldWidth;
+
+    // System.out.println("tileSize:" + tileSize);
+    // System.out.println("worldWidth:" + newWorldWidth);
+
+    // double newPlayerWorldX = player.worldX * multiplier;
+    // double newPlayerWorldY = player.worldY * multiplier;
+
+    // player.worldX = (int) newPlayerWorldX;
+    // player.worldY = (int) newPlayerWorldY;
+
+    // }
 
     public void startGameThread() {
 

@@ -6,6 +6,11 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
 
     public boolean up, down, left, right;
+    GamePanel gp;
+
+    public KeyHandler(GamePanel gp) {
+        this.gp = gp;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -34,6 +39,15 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_D) {
             right = true;
         }
+
+        // if (code == KeyEvent.VK_PAGE_UP) {
+        // gp.zoomScreen(1);
+        // }
+
+        // if (code == KeyEvent.VK_PAGE_DOWN) {
+        // gp.zoomScreen(-1);
+
+        // }
 
     }
 

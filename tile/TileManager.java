@@ -12,8 +12,8 @@ import main.GamePanel;
 public class TileManager {
 
     GamePanel gp;
-    Tile[] tile;
-    int mapTileNum[][];
+    public Tile[] tile;
+    public int mapTileNum[][];
 
     public TileManager(GamePanel gp) {
 
@@ -23,19 +23,36 @@ public class TileManager {
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
-        loadMap("/res/maps/map1test.txt");
+        loadMap("/res/maps/worldmap1.txt");
 
     }
 
     public void getTileImage() {
 
+        // getting tile images
+
         try {
 
             tile[00] = new Tile();
             tile[00].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/elevated_8.png"));
+            // no need to add collision because it is false by default. refer to tile class
 
             tile[01] = new Tile();
             tile[01].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/rocks_8.png"));
+
+            tile[02] = new Tile();
+            tile[02].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/grass.png"));
+
+            tile[03] = new Tile();
+            tile[03].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/plains_8.png"));
+
+            tile[04] = new Tile();
+            tile[04].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/fences_12.png"));
+            tile[04].collision = true;
+
+            tile[05] = new Tile();
+            tile[05].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/water1_7.png"));
+            tile[05].collision = true;
 
         } catch (IOException e) {
 
@@ -96,15 +113,15 @@ public class TileManager {
                                                  // screen.
             int worldY = worldRow * gp.tileSize;
 
-            int screenX = worldX - gp.player.worldX + gp.player.screenX;
-            int screenY = worldY - gp.player.worldY + gp.player.screenY;
+            double screenX = worldX - gp.player.worldX + gp.player.screenX;
+            double screenY = worldY - gp.player.worldY + gp.player.screenY;
 
             if (worldX + (gp.tileSize) > gp.player.worldX - gp.player.screenX &&
                     worldX - (gp.tileSize * 3) < gp.player.worldX + gp.player.screenX &&
                     worldY + (gp.tileSize) > gp.player.worldY - gp.player.screenY &&
                     worldY - (gp.tileSize * 3) < gp.player.worldY + gp.player.screenY) {
 
-                g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                g2.drawImage(tile[tileNum].image, (int) screenX, (int) screenY, gp.tileSize, gp.tileSize, null);
 
             }
 
