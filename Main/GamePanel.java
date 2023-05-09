@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import entity.Player;
+import object.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -40,8 +41,13 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler(this);
     public CollisionChecker cChecker = new CollisionChecker(this);
+    public AssetSetter aSetter = new AssetSetter(this);
+
     Thread gameThread; // automatically calls the run method
     public Player player = new Player(this, keyH);
+
+    public SuperObject obj[] = new SuperObject[10]; // we can display 10 objects at the same time. Too many objects at
+                                                    // the same time affects performance.
 
     // default position
     int playerX = 100;
@@ -55,6 +61,13 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true); // So gamePanel can focus on the user inputs
+
+    }
+
+    public void setupGame() {
+
+        aSetter.setObject(); // created this method so we can setup other things later in the future.
+                             // Objects, Enemy entities etc.
 
     }
 
@@ -148,7 +161,15 @@ public class GamePanel extends JPanel implements Runnable {
 
         tileM.draw(g2); // tile first before player entity, otherwise player will be drawn BEHIND the
                         // tile and won't be seen.
-        player.draw(g2);
+
+        for (int i = 0; i < obj.length; i++) {
+            // scanning object array, if object not null draw this method. Otherwise if
+            // array "slot" is empty we get NullPointer Error
+            if (obj[i] != null) {
+                obj[i].draw(g2, this);
+            }
+        }
+        player.draw(g2); // drawing player
 
         g2.dispose(); // apparently good practice to save memory. Might not matter too much with
                       // systems having 16GB or more nowadays.
