@@ -100,6 +100,15 @@ public class Player extends Entity {
 
     }
 
+    public void updateSpriteCounter() {
+        spriteCounter++;
+
+        if (spriteCounter > 6) {
+            spriteNum = (spriteNum % 6) + 1;
+            spriteCounter = 0;
+        }
+    }
+
     public void update() {
 
         // Checks tile Collision
@@ -116,6 +125,7 @@ public class Player extends Entity {
                 direction = "up";
                 collisionOn = false;
                 gp.cChecker.checkTile(this);
+                gp.cChecker.checkObject(this, true);
                 if (!collisionOn) {
                     worldY -= speed;
                 }
@@ -124,6 +134,7 @@ public class Player extends Entity {
                 direction = "down";
                 collisionOn = false;
                 gp.cChecker.checkTile(this);
+                gp.cChecker.checkObject(this, true);
                 if (!collisionOn) {
                     worldY += speed;
                 }
@@ -132,6 +143,7 @@ public class Player extends Entity {
                 direction = "left";
                 collisionOn = false;
                 gp.cChecker.checkTile(this);
+                gp.cChecker.checkObject(this, true);
                 if (!collisionOn) {
                     worldX -= speed;
                 }
@@ -140,87 +152,50 @@ public class Player extends Entity {
                 direction = "right";
                 collisionOn = false;
                 gp.cChecker.checkTile(this);
+                gp.cChecker.checkObject(this, true);
                 if (!collisionOn) {
                     worldX += speed;
                 }
             }
 
-            // CLEANER IMPLEMENTATION BUT REMOVES ABILITY TO MOVE DIAGONALLY
-            // Check tile collision
-            // collisionOn = false;
-            // gp.cChecker.checkTile(this); // Since player class is a subclass of Entity
-            // class, the collision checker can
-            // // recieve player class as entity.
+            updateSpriteCounter();
 
-            // // If collision is false, player moves through the tile.
-
-            // // if (collisionOn == false) {
-
-            // // switch (direction) {
-            // // case "up":
-            // // worldY -= speed;
-            // // break;
-
-            // // case "down":
-            // // worldY += speed;
-            // // break;
-
-            // // case "left":
-            // // worldX -= speed;
-            // // break;
-
-            // // case "right":
-            // // worldX += speed;
-            // // break;
-
-            // // }
-            // // }
-
-            spriteCounter++; // increments every time update is called which is every 16.67ms
-
-            if (spriteCounter > 6) {
-
-                if (spriteNum == 1) {
-                    spriteNum = 2;
-                } else if (spriteNum == 2) {
-                    spriteNum = 3;
-                } else if (spriteNum == 3) {
-                    spriteNum = 4;
-                } else if (spriteNum == 4) {
-                    spriteNum = 5;
-                } else if (spriteNum == 5) {
-                    spriteNum = 6;
-                } else if (spriteNum == 6) {
-                    spriteNum = 1;
-                }
-                spriteCounter = 0;
-            }
-
-        }
-
-        else {
+        } else {
             direction = "idle"; // for idle sprite animation
-
-            spriteCounter++;
-
-            if (spriteCounter > 6) {
-                if (spriteNum == 1) {
-                    spriteNum = 2;
-                } else if (spriteNum == 2) {
-                    spriteNum = 3;
-                } else if (spriteNum == 3) {
-                    spriteNum = 4;
-                } else if (spriteNum == 4) {
-                    spriteNum = 5;
-                } else if (spriteNum == 5) {
-                    spriteNum = 6;
-                } else if (spriteNum == 6) {
-                    spriteNum = 1;
-                }
-                spriteCounter = 0;
-            }
+            updateSpriteCounter();
         }
     }
+
+    // CLEANER IMPLEMENTATION BUT REMOVES ABILITY TO MOVE DIAGONALLY
+    // Check tile collision
+    // collisionOn = false;
+    // gp.cChecker.checkTile(this); // Since player class is a subclass of Entity
+    // class, the collision checker can
+    // // recieve player class as entity.
+
+    // // If collision is false, player moves through the tile.
+
+    // // if (collisionOn == false) {
+
+    // // switch (direction) {
+    // // case "up":
+    // // worldY -= speed;
+    // // break;
+
+    // // case "down":
+    // // worldY += speed;
+    // // break;
+
+    // // case "left":
+    // // worldX -= speed;
+    // // break;
+
+    // // case "right":
+    // // worldX += speed;
+    // // break;
+
+    // // }
+    // // }
 
     public void pickUpObject(int i) {
 
@@ -241,7 +216,6 @@ public class Player extends Entity {
                     break;
                 case "Chest":
                     hasChest++;
-                    // lets not have anything happen to the chest for now.
                     break;
                 case "Door":
                     if (hasSword > 0) {
@@ -249,6 +223,7 @@ public class Player extends Entity {
                         hasSword--;
                     }
                     System.out.println("Sword: " + hasSword);
+                    System.out.println("Collision" + collisionOn);
                     break;
             }
 
