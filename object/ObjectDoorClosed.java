@@ -4,11 +4,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class ObjectDoor extends SuperObject {
+public class ObjectDoorClosed extends SuperObject {
 
-    public ObjectDoor() {
+    public ObjectDoorClosed() {
 
-        name = "Door";
+        name = "DoorClosed";
 
         try {
 

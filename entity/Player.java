@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.ObjectDoorOpen;
 
 import java.awt.image.BufferedImage;
 import java.awt.Color;
@@ -217,14 +218,24 @@ public class Player extends Entity {
                 case "Chest":
                     hasChest++;
                     break;
-                case "Door":
+                case "DoorClosed":
                     if (hasSword > 0) {
-                        gp.obj[i] = null; // makes door disappear and decrement number of sword
+                        // Store the original position of the DoorClosed object
+                        int originalWorldX = gp.obj[i].worldX;
+                        int originalWorldY = gp.obj[i].worldY;
+
+                        // Replace the DoorClosed object with an ObjectDoorOpen object
+                        gp.obj[i] = new ObjectDoorOpen();
+                        gp.obj[i].worldX = originalWorldX;
+                        gp.obj[i].worldY = originalWorldY;
+
                         hasSword--;
                     }
+
                     System.out.println("Sword: " + hasSword);
-                    System.out.println("Collision" + collisionOn);
+                    System.out.println("Collision: " + collisionOn);
                     break;
+
             }
 
         }
