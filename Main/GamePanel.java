@@ -46,7 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread; // automatically calls the run method
     public Player player = new Player(this, keyH);
 
-    public SuperObject obj[] = new SuperObject[10]; // we can display 10 objects at the same time. Too many objects at
+    public SuperObject obj[] = new SuperObject[25]; // we can display 10 objects at the same time. Too many objects at
                                                     // the same time affects performance.
 
     // default position

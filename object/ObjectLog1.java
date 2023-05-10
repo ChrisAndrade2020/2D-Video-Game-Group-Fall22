@@ -4,18 +4,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class ObjectLog extends SuperObject {
+public class ObjectLog1 extends SuperObject {
 
-    public ObjectLog() {
+    public ObjectLog1() {
 
         name = "Log";
 
-        width = width * 2;
-
-        solidArea.width = width;
-
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/log_mossy.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/log_mossy_1.png"));
         } catch (IOException e) {
 
             e.printStackTrace();

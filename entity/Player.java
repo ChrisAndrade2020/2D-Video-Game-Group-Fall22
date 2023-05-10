@@ -2,7 +2,6 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
-import object.ObjectChestOpen;
 import object.ObjectDoorOpen;
 
 import java.awt.image.BufferedImage;
@@ -24,6 +23,7 @@ public class Player extends Entity {
     int hasIronKey = 0;
     int hasGoldKey = 0;
     int hasArmor = 0;
+    int hasBoots = 0;
 
     private BufferedImage[] pi;
     private BufferedImage[] pu;
@@ -195,35 +195,73 @@ public class Player extends Entity {
                 case "Gold Key":
                     hasGoldKey++;
                     gp.obj[i] = null; // makes sword disappear once touched
-                    System.out.println("Obtained a Gold Key");
+                    System.out.println("Obtained a Gold Key!");
                     break;
 
                 case "Iron Key":
                     hasIronKey++;
                     gp.obj[i] = null; // makes sword disappear once touched
-                    System.out.println("Obtained a Iron Key");
+                    System.out.println("Obtained a Iron Key!");
                     break;
 
-                case "Armor":
-                    hasArmor++;
-                    gp.obj[i] = null;
-                    System.out.println("Obtained: Leather Amor");
-                    break;
+                case "ChestArmor":
 
-                case "ChestClosed":
                     if (hasGoldKey > 0) {
-                        // Store the original position of the DoorClosed object
-                        int originalWorldX = gp.obj[i].worldX;
-                        int originalWorldY = gp.obj[i].worldY;
 
-                        // Replace the DoorClosed object with an ObjectDoorOpen object
-                        gp.obj[i] = new ObjectChestOpen();
-                        gp.obj[i].worldX = originalWorldX;
-                        gp.obj[i].worldY = originalWorldY;
-
+                        hasArmor++;
+                        gp.obj[i] = null;
+                        System.out.println("Obtained Leather Armor!");
                         hasGoldKey--;
+                        System.out.println("Gold Key(s) Remaining: " + hasGoldKey);
+
                     }
-                    System.out.println("Iron Key(s): " + hasGoldKey);
+
+                    else {
+
+                        System.out.println("Needs a gold key!");
+
+                    }
+
+                    break;
+
+                case "ChestBoots":
+                    if (hasGoldKey > 0) {
+
+                        hasBoots++;
+                        gp.obj[i] = null;
+                        System.out.println("Obtained Leather Boots");
+                        hasGoldKey--;
+                        System.out.println("Gold Key(s) Remaining: " + hasGoldKey);
+                        speed += 2;
+                        System.out.println("You feel like you can run faster!");
+
+                    }
+
+                    else {
+
+                        System.out.println("Needs a gold key!");
+
+                    }
+
+                    break;
+
+                case "ChestSword":
+                    if (hasGoldKey > 0) {
+
+                        hasSword++;
+                        gp.obj[i] = null;
+                        System.out.println("Obtained an Iron Sword!");
+                        hasGoldKey--;
+                        System.out.println("Gold Key(s) Remaining: " + hasGoldKey);
+
+                    }
+
+                    else {
+
+                        System.out.println("Needs a gold key!");
+
+                    }
+
                     break;
 
                 case "DoorClosed":
@@ -238,9 +276,16 @@ public class Player extends Entity {
                         gp.obj[i].worldY = originalWorldY;
 
                         hasIronKey--;
+
+                        System.out.println("Iron Key(s) Remaining: " + hasIronKey);
                     }
 
-                    System.out.println("Iron Key(s): " + hasIronKey);
+                    else {
+
+                        System.out.println("Needs an iron key!");
+
+                    }
+
                     break;
 
             }

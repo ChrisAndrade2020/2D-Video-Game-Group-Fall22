@@ -94,7 +94,7 @@ public class CollisionChecker {
                     case "up":
                         entity.solidArea.y -= entity.speed;
                         if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
-                            System.out.println("Colliding with something above");
+                            // System.out.println("Colliding with something above");
 
                             if (gp.obj[i].collision == true) {
                                 entity.collisionOn = true;
@@ -108,7 +108,7 @@ public class CollisionChecker {
                     case "down":
                         entity.solidArea.y += entity.speed;
                         if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
-                            System.out.println("Colliding with something below");
+                            // System.out.println("Colliding with something below");
 
                             if (gp.obj[i].collision == true) {
                                 entity.collisionOn = true;
@@ -122,7 +122,7 @@ public class CollisionChecker {
                     case "left":
                         entity.solidArea.x -= entity.speed;
                         if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
-                            System.out.println("Colliding with something on the left");
+                            // System.out.println("Colliding with something on the left");
 
                             if (gp.obj[i].collision == true) {
                                 entity.collisionOn = true;
@@ -136,7 +136,7 @@ public class CollisionChecker {
                     case "right":
                         entity.solidArea.x += entity.speed;
                         if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
-                            System.out.println("Colliding with something on the right");
+                            // System.out.println("Colliding with something on the right");
 
                             if (gp.obj[i].collision == true) {
                                 entity.collisionOn = true;

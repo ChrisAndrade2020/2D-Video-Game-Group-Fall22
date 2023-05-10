@@ -17,9 +17,6 @@ public class SuperObject {
     public int solidAreaDefaultX = 0;
     public int solidAreaDefaultY = 0;
 
-    public int width = 48;
-    public int height = 48;
-
     public void draw(Graphics2D g2, GamePanel gp) {
 
         // very similar to tile manager drawing the tiles
@@ -32,7 +29,7 @@ public class SuperObject {
                 worldY + (gp.tileSize) > gp.player.worldY - gp.player.screenY &&
                 worldY - (gp.tileSize * 3) < gp.player.worldY + gp.player.screenY) {
 
-            g2.drawImage(image, (int) screenX, (int) screenY, width, height, null);
+            g2.drawImage(image, (int) screenX, (int) screenY, gp.tileSize, gp.tileSize, null);
 
         }
 
