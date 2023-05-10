@@ -4,14 +4,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class ObjectChest extends SuperObject {
+public class ObjectKeyGold extends SuperObject {
 
-    public ObjectChest() {
+    public ObjectKeyGold() {
 
-        name = "Chest";
+        name = "Gold Key";
 
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/chest1.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/key_gold.png"));
         } catch (IOException e) {
 
             e.printStackTrace();

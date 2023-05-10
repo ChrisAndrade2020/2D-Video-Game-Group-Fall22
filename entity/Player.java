@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.ObjectChestOpen;
 import object.ObjectDoorOpen;
 
 import java.awt.image.BufferedImage;
@@ -20,7 +21,19 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
     int hasSword = 0;
-    int hasChest = 0;
+    int hasIronKey = 0;
+    int hasGoldKey = 0;
+    int hasArmor = 0;
+
+    private BufferedImage[] pi;
+    private BufferedImage[] pu;
+    private BufferedImage[] pd;
+    private BufferedImage[] pl;
+    private BufferedImage[] pr;
+
+    private long lastDirectionInputTime;
+    private boolean idling;
+    private boolean resetDirection;
 
     public Player(GamePanel gp, KeyHandler keyH) {
 
@@ -43,6 +56,11 @@ public class Player extends Entity {
         setDefaultValues();
         getPlayerImage();
 
+        lastDirectionInputTime = System.nanoTime();
+
+        idling = false;
+        resetDirection = false;
+
     }
 
     public void setDefaultValues() {
@@ -56,49 +74,24 @@ public class Player extends Entity {
 
     public void getPlayerImage() {
 
+        // Initialize arrays
+        pi = new BufferedImage[6];
+        pu = new BufferedImage[6];
+        pd = new BufferedImage[6];
+        pl = new BufferedImage[6];
+        pr = new BufferedImage[6];
+
         try {
-
-            pi_1 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_1.png"));
-            pi_2 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_2.png"));
-            pi_3 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_3.png"));
-            pi_4 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_4.png"));
-            pi_5 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_5.png"));
-            pi_6 = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_6.png"));
-
-            pu_1 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_1.png"));
-            pu_2 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_2.png"));
-            pu_3 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_3.png"));
-            pu_4 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_4.png"));
-            pu_5 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_5.png"));
-            pu_6 = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_6.png"));
-
-            pd_1 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_1.png"));
-            pd_2 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_2.png"));
-            pd_3 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_3.png"));
-            pd_4 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_4.png"));
-            pd_5 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_5.png"));
-            pd_6 = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_6.png"));
-
-            pl_1 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_1.png"));
-            pl_2 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_2.png"));
-            pl_3 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_3.png"));
-            pl_4 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_4.png"));
-            pl_5 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_5.png"));
-            pl_6 = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_6.png"));
-
-            pr_1 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_1.png"));
-            pr_2 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_2.png"));
-            pr_3 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_3.png"));
-            pr_4 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_4.png"));
-            pr_5 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_5.png"));
-            pr_6 = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_6.png"));
-
+            for (int i = 0; i < 6; i++) {
+                pi[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_" + (i + 1) + ".png"));
+                pu[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_" + (i + 1) + ".png"));
+                pd[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_" + (i + 1) + ".png"));
+                pl[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_" + (i + 1) + ".png"));
+                pr[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_" + (i + 1) + ".png"));
+            }
         } catch (IOException e) {
-
             e.printStackTrace();
-
         }
-
     }
 
     public void updateSpriteCounter() {
@@ -120,7 +113,13 @@ public class Player extends Entity {
         int objIndex = gp.cChecker.checkObject(this, true);
         pickUpObject(objIndex);
 
-        if (keyH.up == true || keyH.down == true || keyH.left == true || keyH.right == true) {
+        boolean keyPressed = keyH.up || keyH.down || keyH.left || keyH.right;
+
+        if (keyPressed) {
+
+            lastDirectionInputTime = System.nanoTime();
+            idling = false;
+            resetDirection = false;
 
             if (keyH.up) {
                 direction = "up";
@@ -162,41 +161,24 @@ public class Player extends Entity {
             updateSpriteCounter();
 
         } else {
-            direction = "idle"; // for idle sprite animation
+
+            long timeSinceLastInput = System.nanoTime() - lastDirectionInputTime;
+
+            if (timeSinceLastInput >= 3_000_000_000L) { // 3 seconds
+
+                resetDirection = true;
+
+            } else {
+
+                idling = true;
+
+            }
+
             updateSpriteCounter();
+
         }
+
     }
-
-    // CLEANER IMPLEMENTATION BUT REMOVES ABILITY TO MOVE DIAGONALLY
-    // Check tile collision
-    // collisionOn = false;
-    // gp.cChecker.checkTile(this); // Since player class is a subclass of Entity
-    // class, the collision checker can
-    // // recieve player class as entity.
-
-    // // If collision is false, player moves through the tile.
-
-    // // if (collisionOn == false) {
-
-    // // switch (direction) {
-    // // case "up":
-    // // worldY -= speed;
-    // // break;
-
-    // // case "down":
-    // // worldY += speed;
-    // // break;
-
-    // // case "left":
-    // // worldX -= speed;
-    // // break;
-
-    // // case "right":
-    // // worldX += speed;
-    // // break;
-
-    // // }
-    // // }
 
     public void pickUpObject(int i) {
 
@@ -210,16 +192,42 @@ public class Player extends Entity {
             String objectName = gp.obj[i].name;
 
             switch (objectName) {
-                case "Sword":
-                    hasSword++;
+                case "Gold Key":
+                    hasGoldKey++;
                     gp.obj[i] = null; // makes sword disappear once touched
-                    System.out.println("Sword: " + hasSword);
+                    System.out.println("Obtained a Gold Key");
                     break;
-                case "Chest":
-                    hasChest++;
+
+                case "Iron Key":
+                    hasIronKey++;
+                    gp.obj[i] = null; // makes sword disappear once touched
+                    System.out.println("Obtained a Iron Key");
                     break;
+
+                case "Armor":
+                    hasArmor++;
+                    gp.obj[i] = null;
+                    System.out.println("Obtained: Leather Amor");
+                    break;
+
+                case "ChestClosed":
+                    if (hasGoldKey > 0) {
+                        // Store the original position of the DoorClosed object
+                        int originalWorldX = gp.obj[i].worldX;
+                        int originalWorldY = gp.obj[i].worldY;
+
+                        // Replace the DoorClosed object with an ObjectDoorOpen object
+                        gp.obj[i] = new ObjectChestOpen();
+                        gp.obj[i].worldX = originalWorldX;
+                        gp.obj[i].worldY = originalWorldY;
+
+                        hasGoldKey--;
+                    }
+                    System.out.println("Iron Key(s): " + hasGoldKey);
+                    break;
+
                 case "DoorClosed":
-                    if (hasSword > 0) {
+                    if (hasIronKey > 0) {
                         // Store the original position of the DoorClosed object
                         int originalWorldX = gp.obj[i].worldX;
                         int originalWorldY = gp.obj[i].worldY;
@@ -229,11 +237,10 @@ public class Player extends Entity {
                         gp.obj[i].worldX = originalWorldX;
                         gp.obj[i].worldY = originalWorldY;
 
-                        hasSword--;
+                        hasIronKey--;
                     }
 
-                    System.out.println("Sword: " + hasSword);
-                    System.out.println("Collision: " + collisionOn);
+                    System.out.println("Iron Key(s): " + hasIronKey);
                     break;
 
             }
@@ -249,115 +256,41 @@ public class Player extends Entity {
 
         BufferedImage image = null;
 
-        switch (direction) {
+        int spriteIndex = spriteNum - 1;
+
+        String displayDirection = direction;
+
+        if (idling) {
+            displayDirection = "idle";
+        }
+
+        if (resetDirection) {
+            direction = "idle";
+        }
+
+        switch (displayDirection) {
             case "idle":
-                if (spriteNum == 1) {
-                    image = pi_1;
-                }
-                if (spriteNum == 2) {
-                    image = pi_2;
-                }
-                if (spriteNum == 3) {
-                    image = pi_3;
-                }
-                if (spriteNum == 4) {
-                    image = pi_4;
-                }
-                if (spriteNum == 5) {
-                    image = pi_5;
-                }
-                if (spriteNum == 6) {
-                    image = pi_6;
-                }
+                image = pi[spriteIndex];
                 break;
             case "up":
-                if (spriteNum == 1) {
-                    image = pu_1;
-                }
-                if (spriteNum == 2) {
-                    image = pu_2;
-                }
-                if (spriteNum == 3) {
-                    image = pu_3;
-                }
-                if (spriteNum == 4) {
-                    image = pu_4;
-                }
-                if (spriteNum == 5) {
-                    image = pu_5;
-                }
-                if (spriteNum == 6) {
-                    image = pu_6;
-                }
+                image = pu[spriteIndex];
                 break;
             case "down":
-                if (spriteNum == 1) {
-                    image = pd_1;
-                }
-                if (spriteNum == 2) {
-                    image = pd_2;
-                }
-                if (spriteNum == 3) {
-                    image = pd_3;
-                }
-                if (spriteNum == 4) {
-                    image = pd_4;
-                }
-                if (spriteNum == 5) {
-                    image = pd_5;
-                }
-                if (spriteNum == 6) {
-                    image = pd_6;
-                }
+                image = pd[spriteIndex];
                 break;
             case "left":
-                if (spriteNum == 1) {
-                    image = pl_1;
-                }
-                if (spriteNum == 2) {
-                    image = pl_2;
-                }
-                if (spriteNum == 3) {
-                    image = pl_3;
-                }
-                if (spriteNum == 4) {
-                    image = pl_4;
-                }
-                if (spriteNum == 5) {
-                    image = pl_5;
-                }
-                if (spriteNum == 6) {
-                    image = pl_6;
-                }
+                image = pl[spriteIndex];
                 break;
             case "right":
-                if (spriteNum == 1) {
-                    image = pr_1;
-                }
-                if (spriteNum == 2) {
-                    image = pr_2;
-                }
-                if (spriteNum == 3) {
-                    image = pr_3;
-                }
-                if (spriteNum == 4) {
-                    image = pr_4;
-                }
-                if (spriteNum == 5) {
-                    image = pr_5;
-                }
-                if (spriteNum == 6) {
-                    image = pr_6;
-                }
+                image = pr[spriteIndex];
                 break;
-
         }
 
         g2.drawImage(image, screenX, screenY, gp.playerSize, gp.playerSize, null);
+
         // show player hitbox
         g2.setColor(Color.red);
         g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
-
     }
 
 }
