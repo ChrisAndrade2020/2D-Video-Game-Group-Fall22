@@ -5,7 +5,6 @@ import main.KeyHandler;
 
 import java.awt.image.BufferedImage;
 import java.awt.Color;
-//import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.io.IOException;
@@ -19,6 +18,8 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
+    int hasSword = 0;
+    int hasChest = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
 
@@ -28,7 +29,15 @@ public class Player extends Entity {
         screenX = gp.screenWidth / 2 - (gp.playerSize / 2);
         screenY = gp.screenHeight / 2 - (gp.playerSize / 2);
 
-        solidArea = new Rectangle(60, 96, gp.playerSize - 120, gp.playerSize - 120);
+        solidArea = new Rectangle(); // (60, 96, gp.playerSize - 120, gp.playerSize - 120);
+        solidArea.x = 61;
+        solidArea.y = 96;
+
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+
+        solidArea.width = 24;
+        solidArea.height = 24;
 
         setDefaultValues();
         getPlayerImage();
@@ -93,8 +102,13 @@ public class Player extends Entity {
 
     public void update() {
 
+        // Checks tile Collision
         collisionOn = false;
         gp.cChecker.checkTile(this);
+
+        // Checks object Collision
+        int objIndex = gp.cChecker.checkObject(this, true);
+        pickUpObject(objIndex);
 
         if (keyH.up == true || keyH.down == true || keyH.left == true || keyH.right == true) {
 
@@ -206,6 +220,40 @@ public class Player extends Entity {
                 spriteCounter = 0;
             }
         }
+    }
+
+    public void pickUpObject(int i) {
+
+        if (i != 999) {
+
+            // If this index is 999, it means we did not touch an object. Otherwise player
+            // touched an object.
+
+            // gp.obj[i] = null; // deletes object we touch.
+
+            String objectName = gp.obj[i].name;
+
+            switch (objectName) {
+                case "Sword":
+                    hasSword++;
+                    gp.obj[i] = null; // makes sword disappear once touched
+                    System.out.println("Sword: " + hasSword);
+                    break;
+                case "Chest":
+                    hasChest++;
+                    // lets not have anything happen to the chest for now.
+                    break;
+                case "Door":
+                    if (hasSword > 0) {
+                        gp.obj[i] = null; // makes door disappear and decrement number of sword
+                        hasSword--;
+                    }
+                    System.out.println("Sword: " + hasSword);
+                    break;
+            }
+
+        }
+
     }
 
     public void draw(Graphics2D g2) {
@@ -320,6 +368,7 @@ public class Player extends Entity {
         }
 
         g2.drawImage(image, screenX, screenY, gp.playerSize, gp.playerSize, null);
+        // show player hitbox
         g2.setColor(Color.red);
         g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
 

@@ -11,12 +11,17 @@ public class ObjectDoor extends SuperObject {
         name = "Door";
 
         try {
+
             image = ImageIO.read(getClass().getResourceAsStream("/res/objects/door_world_0.png"));
+
         } catch (IOException e) {
 
             e.printStackTrace();
 
         }
+
+        collision = true;
+
     }
 
 }

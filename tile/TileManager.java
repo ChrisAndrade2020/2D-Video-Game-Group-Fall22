@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.awt.Color;
 import java.awt.Graphics2D;
+
 import javax.imageio.ImageIO;
 
 import main.GamePanel;
@@ -110,7 +112,7 @@ public class TileManager {
             tile[21].collision = true;
 
             tile[22] = new Tile();
-            tile[22].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/walls_7_floor.png"));
+            tile[22].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/walls_11.png"));
             tile[22].collision = true;
 
             tile[23] = new Tile();
@@ -156,6 +158,13 @@ public class TileManager {
             tile[33] = new Tile();
             tile[33].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/walls_3_grass.png"));
             tile[33].collision = true;
+
+            tile[34] = new Tile();
+            tile[34].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/walls_2_floor_header.png"));
+
+            tile[35] = new Tile();
+            tile[35].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/walls_3_floor.png"));
+            tile[35].collision = true;
 
         } catch (IOException e) {
 
@@ -225,6 +234,10 @@ public class TileManager {
                     worldY - (gp.tileSize * 3) < gp.player.worldY + gp.player.screenY) {
 
                 g2.drawImage(tile[tileNum].image, (int) screenX, (int) screenY, gp.tileSize, gp.tileSize, null);
+
+                // g2.setColor(Color.yellow);
+                // g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width,
+                // solidArea.height);
 
             }
 

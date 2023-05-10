@@ -17,6 +17,9 @@ public class ObjectSword extends SuperObject {
             e.printStackTrace();
 
         }
+
+        collision = true;
+
     }
 
 }
