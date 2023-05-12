@@ -7,10 +7,10 @@ Not actually a group project, but the scope has to be as if a group did the proj
 :heavy_check_mark: Movement  
 :heavy_check_mark: Sprites and Animations  
 :heavy_check_mark: Drawing Tiles  
-:x: World & Camera  
+:heavy_check_mark: World & Camera  
 :heavy_check_mark: Collision Detection  
-:x: Objects  
-:x: Object Interaction  
+:heavy_check_mark: Objects  
+:heavy_check_mark: Object Interaction  
 :x: Sound   
 
 # --- Expanded Treasure Hunt Game to RPG ---
