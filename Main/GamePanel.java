@@ -23,9 +23,9 @@ public class GamePanel extends JPanel implements Runnable {
     public int playerSize = originalTileSize * pscale; // size of player
     public int entitySize = originalTileSize * escale; // size of other entities
 
-    public final int maxScreenCol = 15; // emulates gameboy advance aspect ratio. But 16 x 16 pixels are tiny on modern
+    public final int maxScreenCol = 12; // emulates gameboy advance aspect ratio. But 16 x 16 pixels are tiny on modern
                                         // hardware so its scaled up to 720 x 480 instead of 240 x 160
-    public final int maxScreenRow = 10;
+    public final int maxScreenRow = 9;
 
     public int screenWidth = tileSize * maxScreenCol;
     public int screenHeight = tileSize * maxScreenRow;
@@ -39,11 +39,17 @@ public class GamePanel extends JPanel implements Runnable {
 
     // System
     TileManager tileM = new TileManager(this);
+
     KeyHandler keyH = new KeyHandler(this);
+
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
+
+    public UI ui = new UI(this);
+
     Sounds music = new Sounds();
     Sounds sfx = new Sounds();
+
     Thread gameThread; // automatically calls the run method
 
     // Player and Object
@@ -175,6 +181,10 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
         player.draw(g2); // drawing player
+
+        // UI is on top of whatever actually goes on in the worldspace or game, so it
+        // needs to be rendered AFTER the worldspace and player or entities.
+        ui.draw(g2);
 
         g2.dispose(); // apparently good practice to save memory. Might not matter too much with
                       // systems having 16GB or more nowadays.

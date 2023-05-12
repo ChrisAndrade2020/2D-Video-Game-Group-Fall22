@@ -19,11 +19,11 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
-    int hasSword = 0;
-    int hasIronKey = 0;
-    int hasGoldKey = 0;
-    int hasArmor = 0;
-    int hasBoots = 0;
+    public int hasSword = 0;
+    public int hasIronKey = 0;
+    public int hasGoldKey = 0;
+    public int hasArmor = 0;
+    public int hasBoots = 0;
 
     private BufferedImage[] pi;
     private BufferedImage[] pu;
@@ -40,8 +40,8 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
 
-        screenX = gp.screenWidth / 2 - (gp.playerSize / 2);
-        screenY = gp.screenHeight / 2 - (gp.playerSize / 2);
+        screenX = gp.screenWidth / 2 - (gp.playerSize / 2) - 2;
+        screenY = gp.screenHeight / 2 - (gp.playerSize - 48);
 
         solidArea = new Rectangle(); // (60, 96, gp.playerSize - 120, gp.playerSize - 120);
         solidArea.x = 61;
@@ -195,15 +195,15 @@ public class Player extends Entity {
                 case "Gold Key":
                     gp.playSFX(2);
                     hasGoldKey++;
-                    gp.obj[i] = null; // makes sword disappear once touched
-                    System.out.println("Obtained a Gold Key!");
+                    gp.obj[i] = null; // makes key disappear once touched
+                    // System.out.println("Obtained a Gold Key!");
                     break;
 
                 case "Iron Key":
                     gp.playSFX(2);
                     hasIronKey++;
-                    gp.obj[i] = null; // makes sword disappear once touched
-                    System.out.println("Obtained a Iron Key!");
+                    gp.obj[i] = null; // makes key disappear once touched
+                    // System.out.println("Obtained a Iron Key!");
                     break;
 
                 case "ChestArmor":
@@ -212,16 +212,18 @@ public class Player extends Entity {
                         gp.playSFX(3);
                         hasArmor++;
                         gp.obj[i] = null;
-                        System.out.println("Obtained Leather Armor!");
+                        gp.ui.showMessage("Obtained Leather Armor!");
+                        // System.out.println("Obtained Leather Armor!");
                         hasGoldKey--;
-                        System.out.println("Gold Key(s) Remaining: " + hasGoldKey);
+                        // System.out.println("Gold Key(s) Remaining: " + hasGoldKey);
 
                     }
 
                     else {
                         if (!gp.obj[i].collisionSFXPlayed) {
                             gp.playSFX(1);
-                            System.out.println("Needs a gold key!");
+                            gp.ui.showMessage("Chest is locked...");
+                            // System.out.println("Needs a gold key!");
                             gp.obj[i].collisionSFXPlayed = true; // Set the flag
                         }
                     }
@@ -233,18 +235,21 @@ public class Player extends Entity {
                         gp.playSFX(3);
                         hasBoots++;
                         gp.obj[i] = null;
-                        System.out.println("Obtained Leather Boots");
+                        gp.ui.showMessage("Obtained Leather Boots");
+                        // System.out.println("Obtained Leather Boots");
                         hasGoldKey--;
-                        System.out.println("Gold Key(s) Remaining: " + hasGoldKey);
+                        // System.out.println("Gold Key(s) Remaining: " + hasGoldKey);
                         speed += 2;
-                        System.out.println("You feel like you can run faster!");
+                        gp.ui.showMessage("You feel like you can run faster!");
+                        // System.out.println("You feel like you can run faster!");
 
                     }
 
                     else {
                         if (!gp.obj[i].collisionSFXPlayed) {
                             gp.playSFX(1);
-                            System.out.println("Needs a gold key!");
+                            gp.ui.showMessage("Chest is locked...");
+                            // System.out.println("Needs a gold key!");
                             gp.obj[i].collisionSFXPlayed = true; // Set the flag
                         }
                     }
@@ -256,16 +261,19 @@ public class Player extends Entity {
                         gp.playSFX(3);
                         hasSword++;
                         gp.obj[i] = null;
-                        System.out.println("Obtained an Iron Sword!");
+                        gp.ui.showMessage("Obtained an Iron Sword!");
+                        // System.out.println("Obtained an Iron Sword!");
                         hasGoldKey--;
-                        System.out.println("Gold Key(s) Remaining: " + hasGoldKey);
+                        gp.ui.showMessage("Used a Key!");
+                        // System.out.println("Gold Key(s) Remaining: " + hasGoldKey);
 
                     }
 
                     else {
                         if (!gp.obj[i].collisionSFXPlayed) {
                             gp.playSFX(1);
-                            System.out.println("Needs a gold key!");
+                            gp.ui.showMessage("Chest is locked...");
+                            // System.out.println("Needs a gold key!");
                             gp.obj[i].collisionSFXPlayed = true; // Set the flag
                         }
                     }
@@ -288,10 +296,11 @@ public class Player extends Entity {
 
                         hasIronKey--;
 
-                        System.out.println("Iron Key(s) Remaining: " + hasIronKey);
+                        // System.out.println("Iron Key(s) Remaining: " + hasIronKey);
                     } else if (!gp.obj[i].collisionSFXPlayed) {
                         gp.playSFX(1);
-                        System.out.println("Needs an iron key!");
+                        gp.ui.showMessage("Door is locked...");
+                        // System.out.println("Needs an iron key!");
                         gp.obj[i].collisionSFXPlayed = true; // Set the flag
                     }
                     break;
