@@ -42,8 +42,8 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyH = new KeyHandler(this);
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
-    Sounds sound = new Sounds();
-
+    Sounds music = new Sounds();
+    Sounds sfx = new Sounds();
     Thread gameThread; // automatically calls the run method
 
     // Player and Object
@@ -183,22 +183,22 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void playMusic(int i) {
 
-        sound.setFile(i);
-        sound.play();
-        sound.loop();
+        music.setFile(i);
+        music.play();
+        music.loop();
 
     }
 
     public void stopMusic() {
 
-        sound.stop();
+        music.stop();
 
     }
 
     public void playSFX(int i) {
 
-        sound.setFile(i);
-        sound.play();
+        sfx.setFile(i);
+        sfx.play();
         // no need to loop sfx
 
     }
