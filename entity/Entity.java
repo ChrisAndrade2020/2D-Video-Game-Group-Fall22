@@ -30,5 +30,6 @@ public class Entity {
     public boolean collisionOn = false;
 
     protected boolean collisionSFXPlayed = false;
+    protected boolean messageDisplayed = false;
 
 }

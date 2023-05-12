@@ -219,9 +219,11 @@ public class Player extends Entity {
                     }
 
                     else {
-
-                        System.out.println("Needs a gold key!");
-
+                        if (!gp.obj[i].collisionSFXPlayed) {
+                            gp.playSFX(1);
+                            System.out.println("Needs a gold key!");
+                            gp.obj[i].collisionSFXPlayed = true; // Set the flag
+                        }
                     }
 
                     break;
@@ -240,9 +242,11 @@ public class Player extends Entity {
                     }
 
                     else {
-
-                        System.out.println("Needs a gold key!");
-
+                        if (!gp.obj[i].collisionSFXPlayed) {
+                            gp.playSFX(1);
+                            System.out.println("Needs a gold key!");
+                            gp.obj[i].collisionSFXPlayed = true; // Set the flag
+                        }
                     }
 
                     break;
@@ -259,15 +263,17 @@ public class Player extends Entity {
                     }
 
                     else {
-
-                        System.out.println("Needs a gold key!");
-
+                        if (!gp.obj[i].collisionSFXPlayed) {
+                            gp.playSFX(1);
+                            System.out.println("Needs a gold key!");
+                            gp.obj[i].collisionSFXPlayed = true; // Set the flag
+                        }
                     }
 
                     break;
 
                 case "DoorClosed":
-                    if (hasIronKey > 0) {
+                    if (hasIronKey > 0 && gp.obj[i].collisionSFXPlayed) {
                         gp.playSFX(5);
                         // Store the original position of the DoorClosed object
                         int originalWorldX = gp.obj[i].worldX;
@@ -278,18 +284,16 @@ public class Player extends Entity {
                         gp.obj[i].worldX = originalWorldX;
                         gp.obj[i].worldY = originalWorldY;
 
+                        gp.obj[i].collisionSFXPlayed = false; // Set the flag
+
                         hasIronKey--;
 
                         System.out.println("Iron Key(s) Remaining: " + hasIronKey);
-                    }
-
-                    else {
-
+                    } else if (!gp.obj[i].collisionSFXPlayed) {
                         gp.playSFX(1);
                         System.out.println("Needs an iron key!");
-
+                        gp.obj[i].collisionSFXPlayed = true; // Set the flag
                     }
-
                     break;
 
             }
