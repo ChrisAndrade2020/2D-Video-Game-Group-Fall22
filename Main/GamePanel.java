@@ -15,7 +15,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Screen Settings
     final int originalTileSize = 16; // 16x16 common pixel size
-    final int scale = 3;
+    final int scale = 3; // scales up tiles to 48 x 48
     final int pscale = 9;
     final int escale = 12;
 
@@ -23,8 +23,9 @@ public class GamePanel extends JPanel implements Runnable {
     public int playerSize = originalTileSize * pscale; // size of player
     public int entitySize = originalTileSize * escale; // size of other entities
 
-    public final int maxScreenCol = 32;
-    public final int maxScreenRow = 18;
+    public final int maxScreenCol = 15; // emulates gameboy advance aspect ratio. But 16 x 16 pixels are tiny on modern
+                                        // hardware so its scaled up to 720 x 480 instead of 240 x 160
+    public final int maxScreenRow = 10;
 
     public int screenWidth = tileSize * maxScreenCol;
     public int screenHeight = tileSize * maxScreenRow;
@@ -33,17 +34,19 @@ public class GamePanel extends JPanel implements Runnable {
 
     public final int maxWorldCol = 40;
     public final int maxWorldRow = 40;
-    public final int worldWidth = tileSize * maxWorldCol;
-    public final int worldHeight = tileSize * maxWorldRow;
 
     int FPS = 60;
 
+    // System
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler(this);
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
+    Sounds sound = new Sounds();
 
     Thread gameThread; // automatically calls the run method
+
+    // Player and Object
     public Player player = new Player(this, keyH);
 
     public SuperObject obj[] = new SuperObject[25]; // we can display 10 objects at the same time. Too many objects at
@@ -70,6 +73,7 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setObject(); // created this method so we can setup other things later in the future.
                              // Objects, Enemy entities etc.
 
+        playMusic(0);
     }
 
     // Too many problems arise when trying to add a zoom in and out feature
@@ -174,6 +178,28 @@ public class GamePanel extends JPanel implements Runnable {
 
         g2.dispose(); // apparently good practice to save memory. Might not matter too much with
                       // systems having 16GB or more nowadays.
+
+    }
+
+    public void playMusic(int i) {
+
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+
+    }
+
+    public void stopMusic() {
+
+        sound.stop();
+
+    }
+
+    public void playSFX(int i) {
+
+        sound.setFile(i);
+        sound.play();
+        // no need to loop sfx
 
     }
 }

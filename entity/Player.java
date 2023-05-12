@@ -193,12 +193,14 @@ public class Player extends Entity {
 
             switch (objectName) {
                 case "Gold Key":
+                    gp.playSFX(2);
                     hasGoldKey++;
                     gp.obj[i] = null; // makes sword disappear once touched
                     System.out.println("Obtained a Gold Key!");
                     break;
 
                 case "Iron Key":
+                    gp.playSFX(2);
                     hasIronKey++;
                     gp.obj[i] = null; // makes sword disappear once touched
                     System.out.println("Obtained a Iron Key!");
@@ -207,7 +209,7 @@ public class Player extends Entity {
                 case "ChestArmor":
 
                     if (hasGoldKey > 0) {
-
+                        gp.playSFX(3);
                         hasArmor++;
                         gp.obj[i] = null;
                         System.out.println("Obtained Leather Armor!");
@@ -226,7 +228,7 @@ public class Player extends Entity {
 
                 case "ChestBoots":
                     if (hasGoldKey > 0) {
-
+                        gp.playSFX(3);
                         hasBoots++;
                         gp.obj[i] = null;
                         System.out.println("Obtained Leather Boots");
@@ -247,7 +249,7 @@ public class Player extends Entity {
 
                 case "ChestSword":
                     if (hasGoldKey > 0) {
-
+                        gp.playSFX(3);
                         hasSword++;
                         gp.obj[i] = null;
                         System.out.println("Obtained an Iron Sword!");
@@ -266,6 +268,7 @@ public class Player extends Entity {
 
                 case "DoorClosed":
                     if (hasIronKey > 0) {
+                        gp.playSFX(5);
                         // Store the original position of the DoorClosed object
                         int originalWorldX = gp.obj[i].worldX;
                         int originalWorldY = gp.obj[i].worldY;
@@ -282,6 +285,7 @@ public class Player extends Entity {
 
                     else {
 
+                        gp.playSFX(1);
                         System.out.println("Needs an iron key!");
 
                     }
