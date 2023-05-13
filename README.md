@@ -14,9 +14,9 @@ Not actually a group project, but the scope has to be as if a group did the proj
 :heavy_check_mark: Sound   
 
 # --- Expanded Treasure Hunt Game to RPG ---
-:x: Adding New Tilesets  
-:x: Pausing Game  
-:x: Camera Out of Bounds  
+:heavy_check_mark: Adding New Tilesets  
+:heavy_check_mark: Pausing Game  
+:heavy_check_mark: Camera Out of Bounds  
 :x: Adding NPC  
 :x: Dialogue & Font  
 :x: Title Screen  
