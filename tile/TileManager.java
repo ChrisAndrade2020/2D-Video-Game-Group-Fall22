@@ -60,7 +60,7 @@ public class TileManager {
             gp.maxWorldCol = maxTile.length;
             gp.maxWorldRow = maxTile.length;
 
-            mapTileNum = new int[gp.MaxMap][gp.maxWorldCol][gp.maxWorldRow];
+            mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
             br.close();
 
@@ -69,10 +69,7 @@ public class TileManager {
             System.out.println("Exception!");
         }
 
-        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
-
-        getTileImage();
-        loadMap("/res/maps/worldmap1.txt");
+        loadMap("/res/maps/bigMap.txt");
 
     }
 

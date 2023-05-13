@@ -66,9 +66,9 @@ public class Player extends Entity {
 
     public void setDefaultValues() {
 
-        worldX = gp.tileSize * 20;
-        worldY = gp.tileSize * 20;
-        speed = 4;
+        worldX = gp.tileSize * 6;
+        worldY = gp.tileSize * 88;
+        speed = 8;
         direction = "idle";
 
     }
