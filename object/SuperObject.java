@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import main.GamePanel;
+import main.UtilityTool;
 
 // pretty much just the what the entity class is to the player class
 public class SuperObject {
@@ -18,6 +19,7 @@ public class SuperObject {
     public int solidAreaDefaultY = 0;
     public boolean collisionSFXPlayed;
     public boolean messageDisplayed;
+    UtilityTool tool = new UtilityTool();
 
     public void draw(Graphics2D g2, GamePanel gp) {
 

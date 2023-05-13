@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import main.GamePanel;
-import main.Utility;
+import main.UtilityTool;
 
 public class TileManager {
 
@@ -72,13 +72,19 @@ public class TileManager {
             setup(35, "walls_3_floor", true);
 
         }
-        
-        
+
+        finally {
+
+            // I do not know why my IDE forces me to have this block. I believe that this
+            // block is optional?
+
+        }
+
     }
 
     public void setup(int index, String imagePath, boolean collision) {
 
-        Utility tool = new Utility();
+        UtilityTool tool = new UtilityTool();
 
         try {
 

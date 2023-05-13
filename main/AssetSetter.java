@@ -30,71 +30,71 @@ public class AssetSetter {
 
     public void setObject() {
 
-        gp.obj[0] = new ObjectKeyGold();
+        gp.obj[0] = new ObjectKeyGold(gp);
         gp.obj[0].worldX = 1 * gp.tileSize;
         gp.obj[0].worldY = 3 * gp.tileSize;
 
-        gp.obj[1] = new ObjectKeyGold();
+        gp.obj[1] = new ObjectKeyGold(gp);
         gp.obj[1].worldX = 38 * gp.tileSize;
         gp.obj[1].worldY = 29 * gp.tileSize;
 
-        gp.obj[2] = new ObjectKeyGold();
+        gp.obj[2] = new ObjectKeyGold(gp);
         gp.obj[2].worldX = 5 * gp.tileSize;
         gp.obj[2].worldY = 36 * gp.tileSize;
 
-        gp.obj[3] = new ObjectKeyIron();
+        gp.obj[3] = new ObjectKeyIron(gp);
         gp.obj[3].worldX = 35 * gp.tileSize;
         gp.obj[3].worldY = 2 * gp.tileSize;
 
-        gp.obj[4] = new ObjectDoorClosed();
+        gp.obj[4] = new ObjectDoorClosed(gp);
         gp.obj[4].worldX = 8 * gp.tileSize;
         gp.obj[4].worldY = 14 * gp.tileSize;
 
-        gp.obj[5] = new ObjectChestClosedBoots();
+        gp.obj[5] = new ObjectChestClosedBoots(gp);
         gp.obj[5].worldX = 9 * gp.tileSize;
         gp.obj[5].worldY = 9 * gp.tileSize;
 
-        gp.obj[6] = new ObjectChestClosedArmor();
+        gp.obj[6] = new ObjectChestClosedArmor(gp);
         gp.obj[6].worldX = 8 * gp.tileSize;
         gp.obj[6].worldY = 9 * gp.tileSize;
 
-        gp.obj[7] = new ObjectChestClosedSword();
+        gp.obj[7] = new ObjectChestClosedSword(gp);
         gp.obj[7].worldX = 7 * gp.tileSize;
         gp.obj[7].worldY = 9 * gp.tileSize;
 
-        gp.obj[8] = new ObjectStump1();
+        gp.obj[8] = new ObjectStump1(gp);
         gp.obj[8].worldX = 18 * gp.tileSize;
         gp.obj[8].worldY = 9 * gp.tileSize;
 
-        gp.obj[9] = new ObjectStump2();
+        gp.obj[9] = new ObjectStump2(gp);
         gp.obj[9].worldX = 19 * gp.tileSize;
         gp.obj[9].worldY = 9 * gp.tileSize;
 
-        gp.obj[10] = new ObjectStump3();
+        gp.obj[10] = new ObjectStump3(gp);
         gp.obj[10].worldX = 18 * gp.tileSize;
         gp.obj[10].worldY = 10 * gp.tileSize;
 
-        gp.obj[11] = new ObjectStump4();
+        gp.obj[11] = new ObjectStump4(gp);
         gp.obj[11].worldX = 19 * gp.tileSize;
         gp.obj[11].worldY = 10 * gp.tileSize;
 
-        gp.obj[12] = new ObjectLog1();
+        gp.obj[12] = new ObjectLog1(gp);
         gp.obj[12].worldX = 3 * gp.tileSize;
         gp.obj[12].worldY = 13 * gp.tileSize;
 
-        gp.obj[13] = new ObjectLog2();
+        gp.obj[13] = new ObjectLog2(gp);
         gp.obj[13].worldX = 4 * gp.tileSize;
         gp.obj[13].worldY = 13 * gp.tileSize;
 
-        gp.obj[14] = new ObjectBed1();
+        gp.obj[14] = new ObjectBed1(gp);
         gp.obj[14].worldX = 4 * gp.tileSize;
         gp.obj[14].worldY = 9 * gp.tileSize;
 
-        gp.obj[15] = new ObjectBed2();
+        gp.obj[15] = new ObjectBed2(gp);
         gp.obj[15].worldX = 4 * gp.tileSize;
         gp.obj[15].worldY = 10 * gp.tileSize;
 
-        gp.obj[16] = new ObjectCrate();
+        gp.obj[16] = new ObjectCrate(gp);
         gp.obj[16].worldX = 4 * gp.tileSize;
         gp.obj[16].worldY = (int) (10.5 * gp.tileSize); // casted as int to better suit world placement
 

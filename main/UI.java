@@ -27,8 +27,8 @@ public class UI {
         this.gp = gp;
         fontserrat = new Font("Montserrat", Font.BOLD, gp.tileSize / 4);
         fontserrat2 = new Font("Montserrat", Font.BOLD, gp.tileSize / 2);
-        ObjectKeyGold key_gold = new ObjectKeyGold();
-        ObjectKeyIron key_iron = new ObjectKeyIron();
+        ObjectKeyGold key_gold = new ObjectKeyGold(gp);
+        ObjectKeyIron key_iron = new ObjectKeyIron(gp);
         goldKeyImage = key_gold.image;
         ironKeyImage = key_iron.image;
 

@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 import object.ObjectDoorOpen;
 
 import java.awt.image.BufferedImage;
@@ -81,16 +82,12 @@ public class Player extends Entity {
         pl = new BufferedImage[6];
         pr = new BufferedImage[6];
 
-        try {
-            for (int i = 0; i < 6; i++) {
-                pi[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/pi_" + (i + 1) + ".png"));
-                pu[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/pu_" + (i + 1) + ".png"));
-                pd[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/pd_" + (i + 1) + ".png"));
-                pl[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/pl_" + (i + 1) + ".png"));
-                pr[i] = ImageIO.read(getClass().getResourceAsStream("/res/player/pr_" + (i + 1) + ".png"));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (int i = 0; i < 6; i++) {
+            pi[i] = setup("pi_" + (i + 1));
+            pu[i] = setup("pu_" + (i + 1));
+            pd[i] = setup("pd_" + (i + 1));
+            pl[i] = setup("pl_" + (i + 1));
+            pr[i] = setup("pr_" + (i + 1));
         }
     }
 
@@ -101,6 +98,25 @@ public class Player extends Entity {
             spriteNum = (spriteNum % 6) + 1;
             spriteCounter = 0;
         }
+    }
+
+    public BufferedImage setup(String imageName) {
+        UtilityTool tool = new UtilityTool();
+        BufferedImage image = null;
+
+        try {
+            BufferedImage originalImage = ImageIO
+                    .read(getClass().getResourceAsStream("/res/player/" + imageName + ".png"));
+            image = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            image.getGraphics().drawImage(originalImage, 0, 0, null);
+            image = tool.scaledImage(image, gp.playerSize, gp.playerSize);
+        }
+
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return image;
     }
 
     public void update() {
@@ -288,7 +304,7 @@ public class Player extends Entity {
                         int originalWorldY = gp.obj[i].worldY;
 
                         // Replace the DoorClosed object with an ObjectDoorOpen object
-                        gp.obj[i] = new ObjectDoorOpen();
+                        gp.obj[i] = new ObjectDoorOpen(gp);
                         gp.obj[i].worldX = originalWorldX;
                         gp.obj[i].worldY = originalWorldY;
 
