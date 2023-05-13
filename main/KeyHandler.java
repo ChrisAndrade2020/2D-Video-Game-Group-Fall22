@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
 
     public boolean up, down, left, right;
+    boolean renderTime;
     GamePanel gp;
 
     public KeyHandler(GamePanel gp) {
@@ -48,6 +49,22 @@ public class KeyHandler implements KeyListener {
         // gp.zoomScreen(-1);
 
         // }
+
+        if (code == KeyEvent.VK_CAPS_LOCK) { // makes TAB toggleable to check render performance.
+
+            if (renderTime == false) {
+
+                renderTime = true;
+
+            }
+
+            else if (renderTime == true) {
+
+                renderTime = false;
+
+            }
+
+        }
 
     }
 

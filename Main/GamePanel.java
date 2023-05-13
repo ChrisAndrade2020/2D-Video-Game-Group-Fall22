@@ -170,6 +170,13 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
+        // Checking render performance...
+
+        long drawStart = 0;
+        if (keyH.renderTime == true) {
+            drawStart = System.nanoTime();
+        }
+
         tileM.draw(g2); // tile first before player entity, otherwise player will be drawn BEHIND the
                         // tile and won't be seen.
 
@@ -185,6 +192,16 @@ public class GamePanel extends JPanel implements Runnable {
         // UI is on top of whatever actually goes on in the worldspace or game, so it
         // needs to be rendered AFTER the worldspace and player or entities.
         ui.draw(g2);
+
+        // Checking render performance...
+
+        if (keyH.renderTime == true) {
+            long drawEnd = System.nanoTime();
+            long timeToRender = drawEnd - drawStart;
+            g2.setColor(Color.WHITE);
+            g2.drawString("Draw Time: " + timeToRender, 10, 400);
+            System.out.println("Draw Time: " + timeToRender);
+        }
 
         g2.dispose(); // apparently good practice to save memory. Might not matter too much with
                       // systems having 16GB or more nowadays.
