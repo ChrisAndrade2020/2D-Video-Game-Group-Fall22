@@ -1,8 +1,11 @@
 package main;
 
+import object.ObjectBed1;
+import object.ObjectBed2;
 import object.ObjectChestClosedArmor;
 import object.ObjectChestClosedBoots;
 import object.ObjectChestClosedSword;
+import object.ObjectCrate;
 import object.ObjectDoorClosed;
 import object.ObjectKeyGold;
 import object.ObjectKeyIron;
@@ -40,8 +43,8 @@ public class AssetSetter {
         gp.obj[2].worldY = 36 * gp.tileSize;
 
         gp.obj[3] = new ObjectKeyIron();
-        gp.obj[3].worldX = 19 * gp.tileSize;
-        gp.obj[3].worldY = 8 * gp.tileSize;
+        gp.obj[3].worldX = 35 * gp.tileSize;
+        gp.obj[3].worldY = 2 * gp.tileSize;
 
         gp.obj[4] = new ObjectDoorClosed();
         gp.obj[4].worldX = 8 * gp.tileSize;
@@ -83,17 +86,17 @@ public class AssetSetter {
         gp.obj[13].worldX = 4 * gp.tileSize;
         gp.obj[13].worldY = 13 * gp.tileSize;
 
-        // gp.obj[14] = new ObjectLog2();
-        // gp.obj[14].worldX = 4 * gp.tileSize;
-        // gp.obj[14].worldY = 13 * gp.tileSize;
+        gp.obj[14] = new ObjectBed1();
+        gp.obj[14].worldX = 4 * gp.tileSize;
+        gp.obj[14].worldY = 9 * gp.tileSize;
 
-        // gp.obj[15] = new ObjectLog2();
-        // gp.obj[15].worldX = 4 * gp.tileSize;
-        // gp.obj[15].worldY = 13 * gp.tileSize;
+        gp.obj[15] = new ObjectBed2();
+        gp.obj[15].worldX = 4 * gp.tileSize;
+        gp.obj[15].worldY = 10 * gp.tileSize;
 
-        // gp.obj[16] = new ObjectLog2();
-        // gp.obj[16].worldX = 4 * gp.tileSize;
-        // gp.obj[16].worldY = 13 * gp.tileSize;
+        gp.obj[16] = new ObjectCrate();
+        gp.obj[16].worldX = 4 * gp.tileSize;
+        gp.obj[16].worldY = (int) (10.5 * gp.tileSize); // casted as int to better suit world placement
 
         // gp.obj[17] = new ObjectLog2();
         // gp.obj[17].worldX = 4 * gp.tileSize;

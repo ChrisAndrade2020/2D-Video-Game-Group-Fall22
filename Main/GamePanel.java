@@ -23,9 +23,9 @@ public class GamePanel extends JPanel implements Runnable {
     public int playerSize = originalTileSize * pscale; // size of player
     public int entitySize = originalTileSize * escale; // size of other entities
 
-    public final int maxScreenCol = 12; // emulates gameboy advance aspect ratio. But 16 x 16 pixels are tiny on modern
+    public final int maxScreenCol = 15; // emulates gameboy advance aspect ratio. But 16 x 16 pixels are tiny on modern
                                         // hardware so its scaled up to 720 x 480 instead of 240 x 160
-    public final int maxScreenRow = 9;
+    public final int maxScreenRow = 10;
 
     public int screenWidth = tileSize * maxScreenCol;
     public int screenHeight = tileSize * maxScreenRow;

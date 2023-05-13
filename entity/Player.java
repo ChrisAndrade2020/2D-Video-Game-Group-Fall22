@@ -294,6 +294,7 @@ public class Player extends Entity {
 
                         gp.obj[i].collisionSFXPlayed = false; // Set the flag
 
+                        gp.ui.showMessage("Door is open!");
                         hasIronKey--;
 
                         // System.out.println("Iron Key(s) Remaining: " + hasIronKey);
@@ -303,6 +304,15 @@ public class Player extends Entity {
                         // System.out.println("Needs an iron key!");
                         gp.obj[i].collisionSFXPlayed = true; // Set the flag
                     }
+                    break;
+
+                case "Bed1":
+                case "Bed2":
+
+                    gp.ui.gameFinish = true;
+                    gp.stopMusic();
+                    gp.playSFX(4);
+
                     break;
 
             }
