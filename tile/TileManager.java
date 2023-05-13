@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -18,11 +19,56 @@ public class TileManager {
     public Tile[] tile;
     public int mapTileNum[][];
 
+    ArrayList<String> fileNames = new ArrayList<>();
+    ArrayList<String> collisionStatus = new ArrayList<>();
+
     public TileManager(GamePanel gp) {
 
         this.gp = gp;
 
-        tile = new Tile[90];
+        // to read files
+        InputStream is = getClass().getResourceAsStream("/res/maps/bigMapCollision.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+        // getting tile names and collision info from files
+        String line;
+
+        try {
+            while ((line = br.readLine()) != null) {
+
+                fileNames.add(line);
+                collisionStatus.add(br.readLine());
+
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        tile = new Tile[fileNames.size()];
+        getTileImage();
+
+        // geting maxWorld Col & Row
+        is = getClass().getResourceAsStream("/res/maps/bigmap.txt");
+        br = new BufferedReader(new InputStreamReader(is));
+
+        try {
+
+            String line2 = br.readLine();
+            String maxTile[] = line2.split(" ");
+
+            gp.maxWorldCol = maxTile.length;
+            gp.maxWorldRow = maxTile.length;
+
+            mapTileNum = new int[gp.MaxMap][gp.maxWorldCol][gp.maxWorldRow];
+
+            br.close();
+
+            gp.maxWorldCol = maxTile.length;
+        } catch (IOException e) {
+            System.out.println("Exception!");
+        }
+
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
@@ -32,51 +78,22 @@ public class TileManager {
 
     public void getTileImage() {
 
-        // getting tile images
+        for (int i = 0; i < fileNames.size(); i++) {
 
-        try {
+            String fileName;
+            boolean collision;
 
-            setup(0, "elevated_8", false);
-            setup(1, "rocks_8", false);
-            setup(2, "grass", false);
-            setup(3, "plains_8", false);
-            setup(4, "fences_12", true);
-            setup(5, "water1_7", true);
-            setup(6, "walls_1", true);
-            setup(7, "walls_2", true);
-            setup(10, "walls_3", true);
-            setup(11, "walls_20", true);
-            setup(12, "walls_21", true);
-            setup(13, "walls_22", true);
-            setup(14, "walls_7", true);
-            setup(15, "walls_8", true);
-            setup(16, "walls_12", true);
-            setup(17, "walls_14", true);
-            setup(18, "wooden", false);
-            setup(19, "walls_5", true);
-            setup(20, "walls_7_wall", true);
-            setup(21, "walls_8_wall", true);
-            setup(22, "walls_11", true);
-            setup(23, "walls_8_floor", true);
-            setup(24, "walls_1_floor", true);
-            setup(25, "walls_2_floor", true);
-            setup(26, "walls_3_floor", true);
-            setup(27, "walls_14_floor", true);
-            setup(28, "walls_12_floor", true);
-            setup(29, "walls_14_floor", true);
-            setup(30, "walls_5_floor", true);
-            setup(31, "walls_1_grass", true);
-            setup(32, "walls_2_grass", true);
-            setup(33, "walls_3_grass", true);
-            setup(34, "walls_2_floor_header", false);
-            setup(35, "walls_3_floor", true);
+            // getting file name
+            fileName = fileNames.get(i);
 
-        }
+            // getting collision status
+            if (collisionStatus.get(i).equals("true")) {
+                collision = true;
+            } else {
+                collision = false;
+            }
 
-        finally {
-
-            // I do not know why my IDE forces me to have this block. I believe that this
-            // block is optional?
+            setup(i, fileName, collision);
 
         }
 
@@ -89,7 +106,7 @@ public class TileManager {
         try {
 
             tile[index] = new Tile();
-            tile[index].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/" + imagePath + ".png"));
+            tile[index].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/" + imagePath));
             tile[index].image = tool.scaledImage(tile[index].image, gp.tileSize, gp.tileSize);
             tile[index].collision = collision;
 
