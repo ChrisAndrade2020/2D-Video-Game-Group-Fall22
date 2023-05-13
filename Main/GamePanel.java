@@ -4,213 +4,123 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
 import javax.swing.JPanel;
-
 import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    // Screen Settings
-    final int originalTileSize = 16; // 16x16 common pixel size
-    final int scale = 3; // scales up tiles to 48 x 48
+    final int originalTileSize = 16;
+    final int scale = 3;
     final int pscale = 9;
     final int escale = 12;
 
-    public int tileSize = originalTileSize * scale; // size of tiles
-    public int playerSize = originalTileSize * pscale; // size of player
-    public int entitySize = originalTileSize * escale; // size of other entities
+    public int tileSize = originalTileSize * scale;
+    public int playerSize = originalTileSize * pscale;
+    public int entitySize = originalTileSize * escale;
 
-    public final int maxScreenCol = 15; // emulates gameboy advance aspect ratio. But 16 x 16 pixels are tiny on modern
-                                        // hardware so its scaled up to 720 x 480 instead of 240 x 160
+    public final int maxScreenCol = 15;
     public final int maxScreenRow = 10;
 
     public int screenWidth = tileSize * maxScreenCol;
     public int screenHeight = tileSize * maxScreenRow;
 
-    // World Map Settings
-
     public int maxWorldCol;
     public int maxWorldRow;
 
-    public int worldWidth = tileSize * maxWorldCol;
-    public int worldHeight = tileSize * maxWorldRow;
+    public final int worldWidth = tileSize * maxWorldCol;
+    public final int worldHeight = tileSize * maxWorldRow;
 
     int FPS = 60;
 
-    // System
     TileManager tileM = new TileManager(this);
-
     KeyHandler keyH = new KeyHandler(this);
-
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
-
     public UI ui = new UI(this);
 
     Sounds music = new Sounds();
     Sounds sfx = new Sounds();
 
-    Thread gameThread; // automatically calls the run method
+    Thread gameThread;
 
-    // Player and Object
     public Player player = new Player(this, keyH);
-
-    public SuperObject obj[] = new SuperObject[100]; // we can display 10 objects at the same time. Too many objects at
-                                                     // the same time affects performance.
+    public SuperObject obj[] = new SuperObject[100];
 
     public String objectName;
 
-    // Game State
     public int gameState;
     public final int playState = 1;
     public final int pauseState = 2;
 
     public GamePanel() {
-
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
-        this.setFocusable(true); // So gamePanel can focus on the user inputs
-
+        this.setFocusable(true);
     }
 
+    // Sets up the game
     public void setupGame() {
-
-        aSetter.setObject(); // created this method so we can setup other things later in the future.
-                             // Objects, Enemy entities etc.
-
+        aSetter.setObject();
         playMusic(0);
         stopMusic();
-
         gameState = playState;
     }
 
-    // Too many problems arise when trying to add a zoom in and out feature
-    // Need to change player speed, need to cast some ints to doubles, need to
-    // reposition the player based off of the new dimensions, etc.
-    // Commented out.
-
-    // public void zoomScreen(int i) {
-
-    // int oldWorldWidth = tileSize * maxWorldCol; // 1920
-
-    // tileSize += i;
-    // playerSize += 6 * i;
-    // entitySize += 9 * i;
-
-    // int newWorldWidth = tileSize * maxWorldCol; // 1880
-
-    // double multiplier = (double) newWorldWidth / oldWorldWidth;
-
-    // System.out.println("tileSize:" + tileSize);
-    // System.out.println("worldWidth:" + newWorldWidth);
-
-    // double newPlayerWorldX = player.worldX * multiplier;
-    // double newPlayerWorldY = player.worldY * multiplier;
-
-    // player.worldX = (int) newPlayerWorldX;
-    // player.worldY = (int) newPlayerWorldY;
-
-    // }
-
+    // Starts the game thread
     public void startGameThread() {
-
         gameThread = new Thread(this);
         gameThread.start();
-
     }
 
+    // Handles game update and draw timing
     @Override
     public void run() {
-
         double drawInterval = 1000000000 / FPS;
-        /*
-         * using nano-seconds because its more precise vs milliseconds, which is also
-         * another option.
-         * roughly equivalent to 16.67 milliseconds;
-         */
-
-        double nextDrawTime = System.nanoTime() + drawInterval; // telling the computer to draw at 16.67ms intervals
-
+        double nextDrawTime = System.nanoTime() + drawInterval;
         while (gameThread != null) {
-
             update();
-
             repaint();
-
             try {
                 double remainingTime = nextDrawTime - System.nanoTime();
-                remainingTime = remainingTime / 1000000; // converting nano to milliseonds
-
+                remainingTime = remainingTime / 1000000;
                 if (remainingTime < 0) {
-
                     remainingTime = 0;
-
                 }
-
-                Thread.sleep((long) remainingTime); // only accepts milliseconds
-
+                Thread.sleep((long) remainingTime);
                 nextDrawTime += drawInterval;
-
             } catch (InterruptedException e) {
-                //
                 e.printStackTrace();
             }
-
         }
-
     }
 
+    // Updates the game state
     public void update() {
-
         if (gameState == playState) {
-
             player.update();
-
         }
-
-        if (gameState == pauseState) {
-
-            // nothing
-
-        }
-
     }
 
+    // Draws components on the panel
     public void paintComponent(Graphics g) {
-
         super.paintComponent(g);
-
         Graphics2D g2 = (Graphics2D) g;
-
-        // Checking render performance...
-
         long drawStart = 0;
         if (keyH.renderTime == true) {
             drawStart = System.nanoTime();
         }
-
-        tileM.draw(g2); // tile first before player entity, otherwise player will be drawn BEHIND the
-                        // tile and won't be seen.
-
+        tileM.draw(g2);
         for (int i = 0; i < obj.length; i++) {
-            // scanning object array, if object not null draw this method. Otherwise if
-            // array "slot" is empty we get NullPointer Error
             if (obj[i] != null) {
                 obj[i].draw(g2, this);
             }
         }
-        player.draw(g2); // drawing player
-
-        // UI is on top of whatever actually goes on in the worldspace or game, so it
-        // needs to be rendered AFTER the worldspace and player or entities.
+        player.draw(g2);
         ui.draw(g2);
-
-        // Checking render performance...
 
         if (keyH.renderTime == true) {
             long drawEnd = System.nanoTime();
@@ -220,30 +130,24 @@ public class GamePanel extends JPanel implements Runnable {
             System.out.println("Draw Time: " + timeToRender);
         }
 
-        g2.dispose(); // apparently good practice to save memory. Might not matter too much with
-                      // systems having 16GB or more nowadays.
-
+        g2.dispose();
     }
 
+    // Plays the music
     public void playMusic(int i) {
-
         music.setFile(i);
         music.play();
         music.loop();
-
     }
 
+    // Stops the music
     public void stopMusic() {
-
         music.stop();
-
     }
 
+    // Plays the sound effects
     public void playSFX(int i) {
-
         sfx.setFile(i);
         sfx.play();
-        // no need to loop sfx
-
     }
 }

@@ -3,7 +3,6 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
-// import object.ObjectDoorOpen;
 
 import java.awt.image.BufferedImage;
 import java.awt.Color;
@@ -31,15 +30,16 @@ public class Player extends Entity {
     private boolean idling;
     private boolean resetDirection;
 
+    // Constructor of the Player class, initializing the player's attributes and
+    // loading the player's images
     public Player(GamePanel gp, KeyHandler keyH) {
-
         this.gp = gp;
         this.keyH = keyH;
 
         screenX = gp.screenWidth / 2 - (gp.playerSize / 2) - 2;
         screenY = gp.screenHeight / 2 - (gp.playerSize - 48);
 
-        solidArea = new Rectangle(); // (60, 96, gp.playerSize - 120, gp.playerSize - 120);
+        solidArea = new Rectangle();
         solidArea.x = 61;
         solidArea.y = 96;
 
@@ -56,21 +56,18 @@ public class Player extends Entity {
 
         idling = false;
         resetDirection = false;
-
     }
 
+    // Sets the default values for the player's world position, speed, and direction
     public void setDefaultValues() {
-
         worldX = gp.tileSize * 6;
         worldY = gp.tileSize * 92;
         speed = 4;
         direction = "idle";
-
     }
 
+    // Loads the player's images for different directions from the resources
     public void getPlayerImage() {
-
-        // Initialize arrays
         pi = new BufferedImage[6];
         pu = new BufferedImage[6];
         pd = new BufferedImage[6];
@@ -86,6 +83,8 @@ public class Player extends Entity {
         }
     }
 
+    // Updates the sprite counter which is used to change the player's sprite image,
+    // creating an animation effect
     public void updateSpriteCounter() {
         spriteCounter++;
 
@@ -95,6 +94,7 @@ public class Player extends Entity {
         }
     }
 
+    // Method reads an image file and returns a scaled version of the image.
     public BufferedImage setup(String imageName) {
         UtilityTool tool = new UtilityTool();
         BufferedImage image = null;
@@ -105,17 +105,29 @@ public class Player extends Entity {
             image = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
             image.getGraphics().drawImage(originalImage, 0, 0, null);
             image = tool.scaledImage(image, gp.playerSize, gp.playerSize);
-        }
-
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         return image;
     }
 
-    public void update() {
+    // Updates the player's direction and position if there is no collision
+    private void updateDirection(String direction, int speedModifierX, int speedModifierY) {
+        this.direction = direction;
+        collisionOn = false;
+        gp.cChecker.checkTile(this);
+        gp.cChecker.checkObject(this, true);
 
+        if (!collisionOn) {
+            worldX += speed * speedModifierX;
+            worldY += speed * speedModifierY;
+        }
+    }
+
+    // Updates the player's status, including its position, direction, and sprite
+    // image
+    public void update() {
         // Checks tile Collision
         collisionOn = false;
         gp.cChecker.checkTile(this);
@@ -127,46 +139,21 @@ public class Player extends Entity {
         boolean keyPressed = keyH.up || keyH.down || keyH.left || keyH.right;
 
         if (keyPressed) {
-
             lastDirectionInputTime = System.nanoTime();
             idling = false;
             resetDirection = false;
 
             if (keyH.up) {
-                direction = "up";
-                collisionOn = false;
-                gp.cChecker.checkTile(this);
-                gp.cChecker.checkObject(this, true);
-                if (!collisionOn) {
-                    worldY -= speed;
-                }
+                updateDirection("up", 0, -1);
             }
             if (keyH.down) {
-                direction = "down";
-                collisionOn = false;
-                gp.cChecker.checkTile(this);
-                gp.cChecker.checkObject(this, true);
-                if (!collisionOn) {
-                    worldY += speed;
-                }
+                updateDirection("down", 0, 1);
             }
             if (keyH.left) {
-                direction = "left";
-                collisionOn = false;
-                gp.cChecker.checkTile(this);
-                gp.cChecker.checkObject(this, true);
-                if (!collisionOn) {
-                    worldX -= speed;
-                }
+                updateDirection("left", -1, 0);
             }
             if (keyH.right) {
-                direction = "right";
-                collisionOn = false;
-                gp.cChecker.checkTile(this);
-                gp.cChecker.checkObject(this, true);
-                if (!collisionOn) {
-                    worldX += speed;
-                }
+                updateDirection("right", 1, 0);
             }
 
             updateSpriteCounter();
@@ -176,38 +163,26 @@ public class Player extends Entity {
             long timeSinceLastInput = System.nanoTime() - lastDirectionInputTime;
 
             if (timeSinceLastInput >= 3_000_000_000L) { // 3 seconds
-
                 resetDirection = true;
-
             } else {
-
                 idling = true;
-
             }
 
             updateSpriteCounter();
-
         }
-
     }
 
+    // Handles the player's interaction with the objects in the game
     public void pickUpObject(int i) {
-
         if (i != 999) {
 
         }
-
     }
 
+    // Draws the player's current sprite image on the screen
     public void draw(Graphics2D g2) {
-
-        // g2.setColor(Color.WHITE);
-        // g2.fillRect(x, y, gp.tileSize, gp.tileSize);
-
         BufferedImage image = null;
-
         int spriteIndex = spriteNum - 1;
-
         String displayDirection = direction;
 
         if (idling) {
@@ -236,32 +211,8 @@ public class Player extends Entity {
                 break;
         }
 
-        // int x = screenX;
-        // int y = screenY;
-
-        // if (screenX > worldX) {
-        // x = worldX;
-        // }
-
-        // if (screenY > worldY) {
-        // y = worldY;
-        // }
-
-        // int rightOffset = gp.screenWidth - screenX;
-        // if (rightOffset > gp.worldWidth - worldX) {
-        // x = gp.screenWidth - (gp.worldWidth - worldX);
-        // }
-
-        // int bottomOffset = gp.screenHeight - screenY;
-        // if (bottomOffset > gp.worldHeight - worldY) {
-        // y = gp.screenHeight - (gp.worldHeight - worldY);
-        // }
-
         g2.drawImage(image, screenX, screenY, null);
-
-        // show player hitbox
         g2.setColor(Color.red);
         g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
-
 }

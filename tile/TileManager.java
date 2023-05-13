@@ -21,23 +21,20 @@ public class TileManager {
     ArrayList<String> fileNames = new ArrayList<>();
     ArrayList<String> collisionStatus = new ArrayList<>();
 
+    // Initializes TileManager with a given GamePanel
     public TileManager(GamePanel gp) {
 
         this.gp = gp;
 
-        // to read files
         InputStream is = getClass().getResourceAsStream("/res/maps/bigMapCollision.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-        // getting tile names and collision info from files
         String line;
 
         try {
             while ((line = br.readLine()) != null) {
-
                 fileNames.add(line);
                 collisionStatus.add(br.readLine());
-
             }
             br.close();
         } catch (IOException e) {
@@ -47,12 +44,10 @@ public class TileManager {
         tile = new Tile[fileNames.size()];
         getTileImage();
 
-        // geting maxWorld Col & Row
         is = getClass().getResourceAsStream("/res/maps/bigmap.txt");
         br = new BufferedReader(new InputStreamReader(is));
 
         try {
-
             String line2 = br.readLine();
             String maxTile[] = line2.split(" ");
 
@@ -69,9 +64,9 @@ public class TileManager {
         }
 
         loadMap("/res/maps/bigMap.txt");
-
     }
 
+    // Reads and stores tile images from resources
     public void getTileImage() {
 
         for (int i = 0; i < fileNames.size(); i++) {
@@ -79,10 +74,8 @@ public class TileManager {
             String fileName;
             boolean collision;
 
-            // getting file name
             fileName = fileNames.get(i);
 
-            // getting collision status
             if (collisionStatus.get(i).equals("true")) {
                 collision = true;
             } else {
@@ -90,30 +83,26 @@ public class TileManager {
             }
 
             setup(i, fileName, collision);
-
         }
-
     }
 
+    // Setup a Tile object with an image and collision property
     public void setup(int index, String imagePath, boolean collision) {
 
         UtilityTool tool = new UtilityTool();
 
         try {
-
             tile[index] = new Tile();
             tile[index].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/" + imagePath));
             tile[index].image = tool.scaledImage(tile[index].image, gp.tileSize, gp.tileSize);
             tile[index].collision = collision;
 
         } catch (IOException e) {
-
             e.printStackTrace();
-
         }
-
     }
 
+    // Load map from a file and store the tile numbers in a 2D array
     public void loadMap(String filePath) {
 
         try {
@@ -161,33 +150,11 @@ public class TileManager {
 
             int tileNum = mapTileNum[worldCol][worldRow];
 
-            int worldX = worldCol * gp.tileSize; // world coordinates are the coordinates in the world map, whereas
-                                                 // screen coordinates are where we're going to draw the tile on the
-                                                 // screen.
+            int worldX = worldCol * gp.tileSize;
             int worldY = worldRow * gp.tileSize;
 
             double screenX = worldX - gp.player.worldX + gp.player.screenX;
             double screenY = worldY - gp.player.worldY + gp.player.screenY;
-
-            // camera stop
-
-            // if (gp.player.screenX > gp.player.worldX) {
-            // screenX = worldX;
-            // }
-
-            // if (gp.player.screenY > gp.player.worldY) {
-            // screenY = worldY;
-            // }
-
-            // int rightOffset = gp.screenWidth - gp.player.screenX;
-            // if (rightOffset > gp.worldWidth - gp.player.worldX) {
-            // screenX = gp.screenWidth - (gp.worldWidth - worldX);
-            // }
-
-            // int bottomOffset = gp.screenHeight - gp.player.screenY;
-            // if (bottomOffset > gp.worldHeight - gp.player.worldY) {
-            // screenY = gp.screenHeight - (gp.worldHeight - worldY);
-            // }
 
             if (worldX + (gp.tileSize) > gp.player.worldX - gp.player.screenX &&
                     worldX - (gp.tileSize * 4) < gp.player.worldX + gp.player.screenX &&
@@ -198,27 +165,12 @@ public class TileManager {
 
             }
 
-            // else if (gp.player.screenX > gp.player.worldX ||
-            // gp.player.screenY > gp.player.worldY ||
-            // rightOffset > gp.worldWidth - gp.player.worldX ||
-            // bottomOffset > gp.worldHeight - gp.player.worldY) {
-
-            // g2.drawImage(tile[tileNum].image, (int) screenX, (int) screenY, null);
-
-            // }
-
-            // This if statement makes it so we don't draw tiles that aren't on the screen
-
             worldCol++;
 
             if (worldCol == gp.maxWorldCol) {
                 worldCol = 0;
                 worldRow++;
-
             }
-
         }
-
     }
-
 }
