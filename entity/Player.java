@@ -36,7 +36,7 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
 
-        screenX = gp.screenWidth / 2 - (gp.playerSize / 2) - 2;
+        screenX = gp.screenWidth / 2 - ((gp.playerSize / 2) - 2);
         screenY = gp.screenHeight / 2 - (gp.playerSize - 48);
 
         solidArea = new Rectangle();
@@ -62,7 +62,7 @@ public class Player extends Entity {
     public void setDefaultValues() {
         worldX = gp.tileSize * 6;
         worldY = gp.tileSize * 92;
-        speed = 4;
+        speed = 10;
         direction = "idle";
     }
 
@@ -211,8 +211,29 @@ public class Player extends Entity {
                 break;
         }
 
-        g2.drawImage(image, screenX, screenY, null);
+        int x = screenX;
+        int y = screenY;
+
+        if (gp.player.screenX > worldX) {
+            x = worldX;
+        }
+
+        if (gp.player.screenY > worldY) {
+            y = worldY;
+        }
+
+        int rightOffset = gp.screenWidth - screenX;
+        if (rightOffset > gp.worldWidth - worldX) {
+            x = gp.screenWidth - (gp.worldWidth - worldX);
+        }
+
+        int bottomOffset = gp.screenHeight - screenY;
+        if (bottomOffset > gp.worldHeight - worldY) {
+            y = gp.screenHeight - (gp.worldHeight - worldY);
+        }
+
+        g2.drawImage(image, x, y, null);
         g2.setColor(Color.red);
-        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+        g2.drawRect(x + solidArea.x, y + solidArea.y, solidArea.width, solidArea.height);
     }
 }

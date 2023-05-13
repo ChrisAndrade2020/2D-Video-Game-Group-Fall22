@@ -29,8 +29,8 @@ public class GamePanel extends JPanel implements Runnable {
     public int maxWorldCol;
     public int maxWorldRow;
 
-    public final int worldWidth = tileSize * maxWorldCol;
-    public final int worldHeight = tileSize * maxWorldRow;
+    public final int worldWidth = tileSize * 100;
+    public final int worldHeight = tileSize * 100;
 
     int FPS = 60;
 
@@ -107,6 +107,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Draws components on the panel
     public void paintComponent(Graphics g) {
+
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         long drawStart = 0;
