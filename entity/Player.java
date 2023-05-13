@@ -2,19 +2,14 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
-import main.UtilityTool;
 
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 public class Player extends Entity {
 
-    GamePanel gp;
     KeyHandler keyH;
 
     public int screenX;
@@ -33,7 +28,8 @@ public class Player extends Entity {
     // Constructor of the Player class, initializing the player's attributes and
     // loading the player's images
     public Player(GamePanel gp, KeyHandler keyH) {
-        this.gp = gp;
+
+        super(gp); // We are calling the constructor of the super class of this class ( entity )
         this.keyH = keyH;
 
         screenX = gp.screenWidth / 2 - ((gp.playerSize / 2) - 2);
@@ -75,16 +71,15 @@ public class Player extends Entity {
         pr = new BufferedImage[6];
 
         for (int i = 0; i < 6; i++) {
-            pi[i] = setup("pi_" + (i + 1));
-            pu[i] = setup("pu_" + (i + 1));
-            pd[i] = setup("pd_" + (i + 1));
-            pl[i] = setup("pl_" + (i + 1));
-            pr[i] = setup("pr_" + (i + 1));
+            pi[i] = setup("/res/player/pi_" + (i + 1));
+            pu[i] = setup("/res/player/pu_" + (i + 1));
+            pd[i] = setup("/res/player/pd_" + (i + 1));
+            pl[i] = setup("/res/player/pl_" + (i + 1));
+            pr[i] = setup("/res/player/pr_" + (i + 1));
         }
     }
 
     // Updates the sprite counter which is used to change the player's sprite image,
-    // creating an animation effect
     public void updateSpriteCounter() {
         spriteCounter++;
 
@@ -92,24 +87,6 @@ public class Player extends Entity {
             spriteNum = (spriteNum % 6) + 1;
             spriteCounter = 0;
         }
-    }
-
-    // Method reads an image file and returns a scaled version of the image.
-    public BufferedImage setup(String imageName) {
-        UtilityTool tool = new UtilityTool();
-        BufferedImage image = null;
-
-        try {
-            BufferedImage originalImage = ImageIO
-                    .read(getClass().getResourceAsStream("/res/player/" + imageName + ".png"));
-            image = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
-            image.getGraphics().drawImage(originalImage, 0, 0, null);
-            image = tool.scaledImage(image, gp.playerSize, gp.playerSize);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return image;
     }
 
     // Updates the player's direction and position if there is no collision
