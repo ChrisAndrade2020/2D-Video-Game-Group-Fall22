@@ -11,7 +11,7 @@ Not actually a group project, but the scope has to be as if a group did the proj
 :heavy_check_mark: Collision Detection  
 :heavy_check_mark: Objects  
 :heavy_check_mark: Object Interaction  
-:x: Sound   
+:heavy_check_mark: Sound   
 
 # --- Expanded Treasure Hunt Game to RPG ---
 :x: Adding New Tilesets  
