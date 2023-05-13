@@ -3,7 +3,7 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
-import object.ObjectDoorOpen;
+// import object.ObjectDoorOpen;
 
 import java.awt.image.BufferedImage;
 import java.awt.Color;
@@ -18,13 +18,8 @@ public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
 
-    public final int screenX;
-    public final int screenY;
-    public int hasSword = 0;
-    public int hasIronKey = 0;
-    public int hasGoldKey = 0;
-    public int hasArmor = 0;
-    public int hasBoots = 0;
+    public int screenX;
+    public int screenY;
 
     private BufferedImage[] pi;
     private BufferedImage[] pu;
@@ -67,8 +62,8 @@ public class Player extends Entity {
     public void setDefaultValues() {
 
         worldX = gp.tileSize * 6;
-        worldY = gp.tileSize * 88;
-        speed = 8;
+        worldY = gp.tileSize * 92;
+        speed = 4;
         direction = "idle";
 
     }
@@ -200,139 +195,6 @@ public class Player extends Entity {
 
         if (i != 999) {
 
-            // If this index is 999, it means we did not touch an object. Otherwise player
-            // touched an object.
-
-            // gp.obj[i] = null; // deletes object we touch.
-
-            String objectName = gp.obj[i].name;
-
-            switch (objectName) {
-                case "Gold Key":
-                    gp.playSFX(2);
-                    hasGoldKey++;
-                    gp.obj[i] = null; // makes key disappear once touched
-                    // System.out.println("Obtained a Gold Key!");
-                    break;
-
-                case "Iron Key":
-                    gp.playSFX(2);
-                    hasIronKey++;
-                    gp.obj[i] = null; // makes key disappear once touched
-                    // System.out.println("Obtained a Iron Key!");
-                    break;
-
-                case "ChestArmor":
-
-                    if (hasGoldKey > 0) {
-                        gp.playSFX(3);
-                        hasArmor++;
-                        gp.obj[i] = null;
-                        gp.ui.showMessage("Obtained Leather Armor!");
-                        // System.out.println("Obtained Leather Armor!");
-                        hasGoldKey--;
-                        // System.out.println("Gold Key(s) Remaining: " + hasGoldKey);
-
-                    }
-
-                    else {
-                        if (!gp.obj[i].collisionSFXPlayed) {
-                            gp.playSFX(1);
-                            gp.ui.showMessage("Chest is locked...");
-                            // System.out.println("Needs a gold key!");
-                            gp.obj[i].collisionSFXPlayed = true; // Set the flag
-                        }
-                    }
-
-                    break;
-
-                case "ChestBoots":
-                    if (hasGoldKey > 0) {
-                        gp.playSFX(3);
-                        hasBoots++;
-                        gp.obj[i] = null;
-                        gp.ui.showMessage("Obtained Leather Boots");
-                        // System.out.println("Obtained Leather Boots");
-                        hasGoldKey--;
-                        // System.out.println("Gold Key(s) Remaining: " + hasGoldKey);
-                        speed += 2;
-                        gp.ui.showMessage("You feel like you can run faster!");
-                        // System.out.println("You feel like you can run faster!");
-
-                    }
-
-                    else {
-                        if (!gp.obj[i].collisionSFXPlayed) {
-                            gp.playSFX(1);
-                            gp.ui.showMessage("Chest is locked...");
-                            // System.out.println("Needs a gold key!");
-                            gp.obj[i].collisionSFXPlayed = true; // Set the flag
-                        }
-                    }
-
-                    break;
-
-                case "ChestSword":
-                    if (hasGoldKey > 0) {
-                        gp.playSFX(3);
-                        hasSword++;
-                        gp.obj[i] = null;
-                        gp.ui.showMessage("Obtained an Iron Sword!");
-                        // System.out.println("Obtained an Iron Sword!");
-                        hasGoldKey--;
-                        gp.ui.showMessage("Used a Key!");
-                        // System.out.println("Gold Key(s) Remaining: " + hasGoldKey);
-
-                    }
-
-                    else {
-                        if (!gp.obj[i].collisionSFXPlayed) {
-                            gp.playSFX(1);
-                            gp.ui.showMessage("Chest is locked...");
-                            // System.out.println("Needs a gold key!");
-                            gp.obj[i].collisionSFXPlayed = true; // Set the flag
-                        }
-                    }
-
-                    break;
-
-                case "DoorClosed":
-                    if (hasIronKey > 0 && gp.obj[i].collisionSFXPlayed) {
-                        gp.playSFX(5);
-                        // Store the original position of the DoorClosed object
-                        int originalWorldX = gp.obj[i].worldX;
-                        int originalWorldY = gp.obj[i].worldY;
-
-                        // Replace the DoorClosed object with an ObjectDoorOpen object
-                        gp.obj[i] = new ObjectDoorOpen(gp);
-                        gp.obj[i].worldX = originalWorldX;
-                        gp.obj[i].worldY = originalWorldY;
-
-                        gp.obj[i].collisionSFXPlayed = false; // Set the flag
-
-                        gp.ui.showMessage("Door is open!");
-                        hasIronKey--;
-
-                        // System.out.println("Iron Key(s) Remaining: " + hasIronKey);
-                    } else if (!gp.obj[i].collisionSFXPlayed) {
-                        gp.playSFX(1);
-                        gp.ui.showMessage("Door is locked...");
-                        // System.out.println("Needs an iron key!");
-                        gp.obj[i].collisionSFXPlayed = true; // Set the flag
-                    }
-                    break;
-
-                case "Bed1":
-                case "Bed2":
-
-                    gp.ui.gameFinish = true;
-                    gp.stopMusic();
-                    gp.playSFX(4);
-
-                    break;
-
-            }
-
         }
 
     }
@@ -374,7 +236,28 @@ public class Player extends Entity {
                 break;
         }
 
-        g2.drawImage(image, screenX, screenY, gp.playerSize, gp.playerSize, null);
+        // int x = screenX;
+        // int y = screenY;
+
+        // if (screenX > worldX) {
+        // x = worldX;
+        // }
+
+        // if (screenY > worldY) {
+        // y = worldY;
+        // }
+
+        // int rightOffset = gp.screenWidth - screenX;
+        // if (rightOffset > gp.worldWidth - worldX) {
+        // x = gp.screenWidth - (gp.worldWidth - worldX);
+        // }
+
+        // int bottomOffset = gp.screenHeight - screenY;
+        // if (bottomOffset > gp.worldHeight - worldY) {
+        // y = gp.screenHeight - (gp.worldHeight - worldY);
+        // }
+
+        g2.drawImage(image, screenX, screenY, null);
 
         // show player hitbox
         g2.setColor(Color.red);

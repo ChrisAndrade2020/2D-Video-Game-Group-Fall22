@@ -35,6 +35,9 @@ public class GamePanel extends JPanel implements Runnable {
     public int maxWorldCol;
     public int maxWorldRow;
 
+    public int worldWidth = tileSize * maxWorldCol;
+    public int worldHeight = tileSize * maxWorldRow;
+
     int FPS = 60;
 
     // System
@@ -55,14 +58,15 @@ public class GamePanel extends JPanel implements Runnable {
     // Player and Object
     public Player player = new Player(this, keyH);
 
-    public SuperObject obj[] = new SuperObject[25]; // we can display 10 objects at the same time. Too many objects at
-                                                    // the same time affects performance.
+    public SuperObject obj[] = new SuperObject[100]; // we can display 10 objects at the same time. Too many objects at
+                                                     // the same time affects performance.
 
-    // default position
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
     public String objectName;
+
+    // Game State
+    public int gameState;
+    public final int playState = 1;
+    public final int pauseState = 2;
 
     public GamePanel() {
 
@@ -80,6 +84,9 @@ public class GamePanel extends JPanel implements Runnable {
                              // Objects, Enemy entities etc.
 
         playMusic(0);
+        stopMusic();
+
+        gameState = playState;
     }
 
     // Too many problems arise when trying to add a zoom in and out feature
@@ -160,7 +167,17 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
 
-        player.update();
+        if (gameState == playState) {
+
+            player.update();
+
+        }
+
+        if (gameState == pauseState) {
+
+            // nothing
+
+        }
 
     }
 

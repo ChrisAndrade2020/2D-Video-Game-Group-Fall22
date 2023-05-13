@@ -6,14 +6,14 @@ import javax.imageio.ImageIO;
 
 import main.GamePanel;
 
-public class ObjectCrate extends SuperObject {
+public class ObjectCarpet3 extends SuperObject {
 
-    public ObjectCrate(GamePanel gp) {
+    public ObjectCarpet3(GamePanel gp) {
 
-        name = "Crate";
+        name = "Carpet3";
 
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/crate.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/carpet_7.png"));
             tool.scaledImage(image, gp.tileSize, gp.tileSize);
         } catch (IOException e) {
 
@@ -21,7 +21,6 @@ public class ObjectCrate extends SuperObject {
 
         }
 
-        collision = true;
     }
 
 }
