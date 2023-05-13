@@ -2,23 +2,16 @@ package entity;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import main.GamePanel;
-import main.UtilityTool;
 
 public class Entity {
 
-    GamePanel gp;
+    protected GamePanel gp;
 
     public int worldX, worldY;
     public int speed;
 
-    public BufferedImage
-
-    pi_1, pi_2, pi_3, pi_4, pi_5, pi_6,
+    public BufferedImage pi_1, pi_2, pi_3, pi_4, pi_5, pi_6,
             pu_1, pu_2, pu_3, pu_4, pu_5, pu_6,
             pd_1, pd_2, pd_3, pd_4, pd_5, pd_6,
             pl_1, pl_2, pl_3, pl_4, pl_5, pl_6,
@@ -41,23 +34,6 @@ public class Entity {
 
     public Entity(GamePanel gp) {
         this.gp = gp;
-    }
-
-    public BufferedImage setup(String imageName) {
-        UtilityTool tool = new UtilityTool();
-        BufferedImage image = null;
-
-        try {
-            BufferedImage originalImage = ImageIO
-                    .read(getClass().getResourceAsStream(imageName + ".png"));
-            image = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
-            image.getGraphics().drawImage(originalImage, 0, 0, null);
-            image = tool.scaledImage(image, gp.playerSize, gp.playerSize);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return image;
     }
 
 }

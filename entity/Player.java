@@ -2,8 +2,13 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -71,12 +76,29 @@ public class Player extends Entity {
         pr = new BufferedImage[6];
 
         for (int i = 0; i < 6; i++) {
-            pi[i] = setup("/res/player/pi_" + (i + 1));
-            pu[i] = setup("/res/player/pu_" + (i + 1));
-            pd[i] = setup("/res/player/pd_" + (i + 1));
-            pl[i] = setup("/res/player/pl_" + (i + 1));
-            pr[i] = setup("/res/player/pr_" + (i + 1));
+            pi[i] = setup("pi_" + (i + 1));
+            pu[i] = setup("pu_" + (i + 1));
+            pd[i] = setup("pd_" + (i + 1));
+            pl[i] = setup("pl_" + (i + 1));
+            pr[i] = setup("pr_" + (i + 1));
         }
+    }
+
+    public BufferedImage setup(String imageName) {
+        UtilityTool tool = new UtilityTool();
+        BufferedImage image = null;
+
+        try {
+            BufferedImage originalImage = ImageIO
+                    .read(getClass().getResourceAsStream("/res/player/" + imageName + ".png"));
+            image = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            image.getGraphics().drawImage(originalImage, 0, 0, null);
+            image = tool.scaledImage(image, gp.playerSize, gp.playerSize);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return image;
     }
 
     // Updates the sprite counter which is used to change the player's sprite image,
