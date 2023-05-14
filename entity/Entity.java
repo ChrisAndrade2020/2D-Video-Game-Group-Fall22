@@ -160,9 +160,6 @@ public class Entity {
         g2.setColor(Color.red);
         g2.drawRect(x + solidArea.x, y + solidArea.y, solidArea.width, solidArea.height);
 
-        // System.out.println("sprite counter: " + spriteCounter);
-        // // System.out.println("sprite index: " + spriteIndex);
-        // System.out.println("move counter: " + moveCounter);
     }
 
 }

@@ -1,3 +1,4 @@
+
 package entity;
 
 import java.awt.Graphics2D;
@@ -70,6 +71,27 @@ public class NPC_Slime extends Entity {
 
     }
 
+    public void updatePosition(int newX, int newY) {
+        // Save the old position
+        int oldWorldX = worldX;
+        int oldWorldY = worldY;
+
+        // Update the position
+        worldX = newX;
+        worldY = newY;
+
+        // Check for collisions
+        collisionOn = false;
+        gp.cChecker.checkTile(this);
+        gp.cChecker.checkObject(this, true);
+
+        // If a collision is detected, revert to the old position
+        if (collisionOn) {
+            worldX = oldWorldX;
+            worldY = oldWorldY;
+        }
+    }
+
     public BufferedImage getCurrentSprite() {
         int spriteIndex = spriteNum - 1;
         String displayDirection = direction;
@@ -106,8 +128,6 @@ public class NPC_Slime extends Entity {
         // Call the parent class's draw method
         super.draw(g2);
 
-        System.out.println("slime sprite counter: " + spriteCounter);
-        System.out.println("slime move counter: " + moveCounter);
     }
 
 }

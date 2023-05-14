@@ -29,6 +29,8 @@ public class Player extends Entity {
     private boolean idling;
     private boolean resetDirection;
 
+    private int pushbackDistance = 1;
+
     // Constructor of the Player class, initializing the player's attributes and
     // loading the player's images
     public Player(GamePanel gp, KeyHandler keyH) {
@@ -108,6 +110,7 @@ public class Player extends Entity {
         collisionOn = false;
         gp.cChecker.checkTile(this);
         gp.cChecker.checkObject(this, true);
+        gp.cChecker.checkEntity(this, gp.npc);
 
         if (!collisionOn) {
             worldX += speed * speedModifierX;
@@ -119,6 +122,7 @@ public class Player extends Entity {
     protected void updateSpecific() {
         int objIndex = gp.cChecker.checkObject(this, true);
         pickUpObject(objIndex);
+        int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
 
         boolean keyPressed = keyH.up || keyH.down || keyH.left || keyH.right;
 
@@ -196,8 +200,5 @@ public class Player extends Entity {
 
         // Call the parent class's draw method
         super.draw(g2);
-
-        System.out.println("player sprite counter: " + spriteCounter);
-        System.out.println("player move counter: " + moveCounter);
     }
 }
