@@ -9,7 +9,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
@@ -57,6 +56,8 @@ public class Player extends Entity {
 
         idling = false;
         resetDirection = false;
+
+        this.entitySize = 144;
     }
 
     // Sets the default values for the player's world position, speed, and direction
@@ -124,14 +125,8 @@ public class Player extends Entity {
         }
     }
 
-    // Updates the player's status, including its position, direction, and sprite
-    // image
-    public void update() {
-        // Checks tile Collision
-        collisionOn = false;
-        gp.cChecker.checkTile(this);
-
-        // Checks object Collision
+    @Override
+    protected void updateSpecific() {
         int objIndex = gp.cChecker.checkObject(this, true);
         pickUpObject(objIndex);
 
@@ -178,9 +173,7 @@ public class Player extends Entity {
         }
     }
 
-    // Draws the player's current sprite image on the screen
-    public void draw(Graphics2D g2) {
-        BufferedImage image = null;
+    public BufferedImage getCurrentSprite() {
         int spriteIndex = spriteNum - 1;
         String displayDirection = direction;
 
@@ -193,46 +186,28 @@ public class Player extends Entity {
         }
 
         switch (displayDirection) {
-            case "idle":
-                image = pi[spriteIndex];
-                break;
-            case "up":
-                image = pu[spriteIndex];
-                break;
-            case "down":
-                image = pd[spriteIndex];
-                break;
-            case "left":
-                image = pl[spriteIndex];
-                break;
             case "right":
-                image = pr[spriteIndex];
-                break;
+                return pr[spriteIndex];
+            case "left":
+                return pl[spriteIndex];
+            case "up":
+                return pu[spriteIndex];
+            case "down":
+                return pd[spriteIndex];
+            default:
+                return pi[spriteIndex];
         }
+    }
 
-        int x = screenX;
-        int y = screenY;
+    // Draws the player's current sprite image on the screen
+    @Override
+    public void draw(Graphics2D g2) {
+        // Set the current sprite and solid area offsets
+        currentSprite = getCurrentSprite();
+        solidAreaOffsetX = 0;
+        solidAreaOffsetY = 0;
 
-        if (gp.player.screenX > worldX) {
-            x = worldX;
-        }
-
-        if (gp.player.screenY > worldY) {
-            y = worldY;
-        }
-
-        int rightOffset = gp.screenWidth - screenX;
-        if (rightOffset > gp.worldWidth - worldX) {
-            x = gp.screenWidth - (gp.worldWidth - worldX);
-        }
-
-        int bottomOffset = gp.screenHeight - screenY;
-        if (bottomOffset > gp.worldHeight - worldY) {
-            y = gp.screenHeight - (gp.worldHeight - worldY);
-        }
-
-        g2.drawImage(image, x, y, null);
-        g2.setColor(Color.red);
-        g2.drawRect(x + solidArea.x, y + solidArea.y, solidArea.width, solidArea.height);
+        // Call the parent class's draw method
+        super.draw(g2);
     }
 }

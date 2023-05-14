@@ -1,9 +1,11 @@
 package entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -41,6 +43,18 @@ public class Entity {
     protected boolean collisionSFXPlayed = false;
     protected boolean messageDisplayed = false;
 
+    protected BufferedImage currentSprite;
+    protected int solidAreaOffsetX;
+    protected int solidAreaOffsetY;
+
+    protected int entitySize;
+
+    protected Random random = new Random();
+    protected int moveCounter = 0;
+    protected String[] directions = { "idle", "up", "down", "left", "right" };
+    protected boolean idling = false;
+    protected boolean resetDirection = false;
+
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
@@ -63,9 +77,91 @@ public class Entity {
     }
 
     public void update() {
+        // Checks tile and object collision
+        collisionOn = false;
+        gp.cChecker.checkTile(this);
+        gp.cChecker.checkObject(this, true);
+
+        // Call the specific update logic of each subclass (Player or NPC_Slime)
+        updateSpecific();
+
+        // Update the sprite counter
+        updateSpriteCounter();
+    }
+
+    protected void updateSpecific() {
+        // Overridden by specific subclasses
+    }
+
+    protected void updateSpriteCounter() {
+        spriteCounter++;
+
+        if (spriteCounter >= 6) {
+            spriteNum = (spriteNum % 6) + 1;
+            spriteCounter = 0;
+        }
+    }
+
+    public void randomMovement() {
+        if (moveCounter % 60 == 0) {
+            direction = directions[random.nextInt(directions.length)];
+        }
+
+        // Move Entity in direction if no collision
+        if (!collisionOn) {
+            switch (direction) {
+                case "up":
+                    worldY -= speed;
+                    break;
+                case "down":
+                    worldY += speed;
+                    break;
+                case "left":
+                    worldX -= speed;
+                    break;
+                case "right":
+                    worldX += speed;
+                    break;
+            }
+        }
+
+        // Increment spriteCounter every update
+        spriteCounter++;
+
+        // Reset spriteCounter and increment spriteNum after every 6 counts
+        if (spriteCounter >= 6) {
+            spriteCounter = 0;
+            spriteNum = (spriteNum % 6) + 1;
+        }
+
+        moveCounter++;
     }
 
     public void draw(Graphics2D g2) {
+        int x = worldX - gp.player.worldX + gp.player.screenX + solidAreaOffsetX;
+        int y = worldY - gp.player.worldY + gp.player.screenY + solidAreaOffsetY;
 
+        if (gp.player.worldX < gp.player.screenX) {
+            x = worldX;
+        }
+
+        if (gp.player.worldY < gp.player.screenY) {
+            y = worldY;
+        }
+
+        int rightOffset = gp.screenWidth - gp.player.screenX;
+        if (rightOffset > gp.worldWidth - gp.player.worldX) {
+            x = gp.screenWidth - (gp.worldWidth - worldX);
+        }
+
+        int bottomOffset = gp.screenHeight - gp.player.screenY;
+        if (bottomOffset > gp.worldHeight - gp.player.worldY) {
+            y = gp.screenHeight - (gp.worldHeight - worldY);
+        }
+
+        g2.drawImage(currentSprite, x, y, entitySize, entitySize, null);
+        g2.setColor(Color.red);
+        g2.drawRect(x + solidArea.x, y + solidArea.y, solidArea.width, solidArea.height);
     }
+
 }
