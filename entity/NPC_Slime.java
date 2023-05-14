@@ -105,6 +105,9 @@ public class NPC_Slime extends Entity {
 
         // Call the parent class's draw method
         super.draw(g2);
+
+        System.out.println("slime sprite counter: " + spriteCounter);
+        System.out.println("slime move counter: " + moveCounter);
     }
 
 }

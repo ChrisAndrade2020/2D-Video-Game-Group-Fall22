@@ -102,16 +102,6 @@ public class Player extends Entity {
         return image;
     }
 
-    // Updates the sprite counter which is used to change the player's sprite image,
-    public void updateSpriteCounter() {
-        spriteCounter++;
-
-        if (spriteCounter > 6) {
-            spriteNum = (spriteNum % 6) + 1;
-            spriteCounter = 0;
-        }
-    }
-
     // Updates the player's direction and position if there is no collision
     private void updateDirection(String direction, int speedModifierX, int speedModifierY) {
         this.direction = direction;
@@ -150,8 +140,6 @@ public class Player extends Entity {
                 updateDirection("right", 1, 0);
             }
 
-            updateSpriteCounter();
-
         } else {
 
             long timeSinceLastInput = System.nanoTime() - lastDirectionInputTime;
@@ -162,7 +150,6 @@ public class Player extends Entity {
                 idling = true;
             }
 
-            updateSpriteCounter();
         }
     }
 
@@ -209,5 +196,8 @@ public class Player extends Entity {
 
         // Call the parent class's draw method
         super.draw(g2);
+
+        System.out.println("player sprite counter: " + spriteCounter);
+        System.out.println("player move counter: " + moveCounter);
     }
 }
