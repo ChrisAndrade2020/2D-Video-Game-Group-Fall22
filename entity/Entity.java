@@ -80,7 +80,8 @@ public class Entity {
         // Checks tile and object collision
         collisionOn = false;
         gp.cChecker.checkTile(this);
-        gp.cChecker.checkObject(this, true);
+        gp.cChecker.checkObject(this, false);
+        gp.cChecker.checkPlayer(this);
 
         // Call the specific update logic of each subclass (Player or NPC_Slime)
         updateSpecific();

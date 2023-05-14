@@ -29,8 +29,6 @@ public class Player extends Entity {
     private boolean idling;
     private boolean resetDirection;
 
-    private int pushbackDistance = 1;
-
     // Constructor of the Player class, initializing the player's attributes and
     // loading the player's images
     public Player(GamePanel gp, KeyHandler keyH) {
@@ -123,6 +121,7 @@ public class Player extends Entity {
         int objIndex = gp.cChecker.checkObject(this, true);
         pickUpObject(objIndex);
         int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+        interactNPC(npcIndex);
 
         boolean keyPressed = keyH.up || keyH.down || keyH.left || keyH.right;
 
@@ -160,6 +159,13 @@ public class Player extends Entity {
     // Handles the player's interaction with the objects in the game
     public void pickUpObject(int i) {
         if (i != 999) {
+
+        }
+    }
+
+    public void interactNPC(int i) {
+        if (i != 999) {
+            System.out.println("Colliding with NPC");
 
         }
     }

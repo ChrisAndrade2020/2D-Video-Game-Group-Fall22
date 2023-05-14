@@ -84,6 +84,7 @@ public class NPC_Slime extends Entity {
         collisionOn = false;
         gp.cChecker.checkTile(this);
         gp.cChecker.checkObject(this, true);
+        gp.cChecker.checkEntity(this, gp.npc);
 
         // If a collision is detected, revert to the old position
         if (collisionOn) {
