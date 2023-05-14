@@ -129,7 +129,7 @@ public class Entity {
         spriteCounter++;
 
         // Reset spriteCounter and increment spriteNum after every 6 counts
-        if (spriteCounter >= 6) {
+        if (spriteCounter >= 10) {
             spriteCounter = 0;
             spriteNum = (spriteNum % 6) + 1;
         }
@@ -162,6 +162,10 @@ public class Entity {
         g2.drawImage(currentSprite, x, y, entitySize, entitySize, null);
         g2.setColor(Color.red);
         g2.drawRect(x + solidArea.x, y + solidArea.y, solidArea.width, solidArea.height);
+
+        System.out.println("sprite counter: " + spriteCounter);
+        // System.out.println("sprite index: " + spriteIndex);
+        System.out.println("move counter: " + moveCounter);
     }
 
 }
