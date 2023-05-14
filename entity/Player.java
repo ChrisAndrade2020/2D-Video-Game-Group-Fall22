@@ -69,19 +69,11 @@ public class Player extends Entity {
 
     // Loads the player's images for different directions from the resources
     public void getPlayerImage() {
-        pi = new BufferedImage[6];
-        pu = new BufferedImage[6];
-        pd = new BufferedImage[6];
-        pl = new BufferedImage[6];
-        pr = new BufferedImage[6];
-
-        for (int i = 0; i < 6; i++) {
-            pi[i] = setup("pi_" + (i + 1));
-            pu[i] = setup("pu_" + (i + 1));
-            pd[i] = setup("pd_" + (i + 1));
-            pl[i] = setup("pl_" + (i + 1));
-            pr[i] = setup("pr_" + (i + 1));
-        }
+        pi = loadImages("/res/player/", "pi_", 6);
+        pu = loadImages("/res/player/", "pu_", 6);
+        pd = loadImages("/res/player/", "pd_", 6);
+        pl = loadImages("/res/player/", "pl_", 6);
+        pr = loadImages("/res/player/", "pr_", 6);
     }
 
     public BufferedImage setup(String imageName) {
@@ -90,7 +82,7 @@ public class Player extends Entity {
 
         try {
             BufferedImage originalImage = ImageIO
-                    .read(getClass().getResourceAsStream("/res/player/" + imageName + ".png"));
+                    .read(getClass().getResourceAsStream(imageName + ".png"));
             image = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
             image.getGraphics().drawImage(originalImage, 0, 0, null);
             image = tool.scaledImage(image, gp.playerSize, gp.playerSize);

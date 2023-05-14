@@ -1,8 +1,14 @@
 package entity;
 
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import main.GamePanel;
+import main.UtilityTool;
 
 public class Entity {
 
@@ -33,7 +39,40 @@ public class Entity {
     protected boolean messageDisplayed = false;
 
     public Entity(GamePanel gp) {
+
         this.gp = gp;
+
+    }
+
+    public void draw(Graphics2D g2) {
+
+    }
+
+    public BufferedImage[] loadImages(String basePath, String baseName, int count) {
+        BufferedImage[] images = new BufferedImage[count];
+
+        for (int i = 0; i < count; i++) {
+            images[i] = setup(basePath + baseName + (i + 1));
+        }
+
+        return images;
+    }
+
+    public BufferedImage setup(String imagePath) {
+        UtilityTool tool = new UtilityTool();
+        BufferedImage image = null;
+
+        try {
+            BufferedImage originalImage = ImageIO
+                    .read(getClass().getResourceAsStream(imagePath + ".png"));
+            image = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            image.getGraphics().drawImage(originalImage, 0, 0, null);
+            image = tool.scaledImage(image, gp.playerSize, gp.playerSize);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return image;
     }
 
 }
