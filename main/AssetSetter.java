@@ -16,8 +16,8 @@ public class AssetSetter {
 
     public void setNPC() {
         gp.npc[0] = new NPC_Slime(gp);
-        gp.npc[0].worldX = gp.tileSize * 7;
-        gp.npc[0].worldY = gp.tileSize * 88;
+        gp.npc[0].worldX = gp.tileSize * 13;
+        gp.npc[0].worldY = gp.tileSize * 87;
     }
 
 }

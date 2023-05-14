@@ -12,6 +12,9 @@ import main.UtilityTool;
 
 public class Entity {
 
+    protected int screenX;
+    protected int screenY;
+
     protected GamePanel gp;
 
     public int worldX, worldY;
@@ -39,23 +42,7 @@ public class Entity {
     protected boolean messageDisplayed = false;
 
     public Entity(GamePanel gp) {
-
         this.gp = gp;
-
-    }
-
-    public void draw(Graphics2D g2) {
-
-    }
-
-    public BufferedImage[] loadImages(String basePath, String baseName, int count) {
-        BufferedImage[] images = new BufferedImage[count];
-
-        for (int i = 0; i < count; i++) {
-            images[i] = setup(basePath + baseName + (i + 1));
-        }
-
-        return images;
     }
 
     public BufferedImage setup(String imagePath) {
@@ -75,4 +62,10 @@ public class Entity {
         return image;
     }
 
+    public void update() {
+    }
+
+    public void draw(Graphics2D g2) {
+
+    }
 }

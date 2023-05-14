@@ -16,7 +16,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 16;
     final int scale = 3;
     final int pscale = 9;
-    final int escale = 12;
+    final int escale = 6;
 
     public int tileSize = originalTileSize * scale;
     public int playerSize = originalTileSize * pscale;
@@ -128,6 +128,7 @@ public class GamePanel extends JPanel implements Runnable {
         for (int i = 0; i < npc.length; i++) {
             if (npc[i] != null) {
                 npc[i].draw(g2);
+                npc[i].update();
             }
         }
 
