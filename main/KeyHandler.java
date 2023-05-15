@@ -46,7 +46,7 @@ public class KeyHandler implements KeyListener {
                 if (gp.ui.commandNum == 0) {
 
                     gp.gameState = gp.playState;
-                    gp.playMusic(0);
+                    // gp.playMusic(0);
 
                 }
 
@@ -123,7 +123,7 @@ public class KeyHandler implements KeyListener {
         }
 
         // dialogueState
-        else if (gp.gameState == gp.dialogueState) {
+        if (gp.gameState == gp.dialogueState) {
 
             if (code == KeyEvent.VK_ENTER) {
 

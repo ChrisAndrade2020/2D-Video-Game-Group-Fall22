@@ -104,8 +104,6 @@ public class UI {
 
     public void drawPlayerHealth() {
 
-        gp.player.health = 4;
-
         // Max Health + Border
         int x = gp.tileSize / 3;
         int y = gp.tileSize / 3;

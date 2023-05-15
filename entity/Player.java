@@ -64,7 +64,7 @@ public class Player extends Entity {
     public void setDefaultValues() {
         worldX = gp.tileSize * 6;
         worldY = gp.tileSize * 92;
-        speed = 10; // to explore world for now will be set to 4 in actual game
+        speed = 4; // to explore world for now will be set to 4 in actual game
         direction = "idle";
 
         maxHealth = 3;
@@ -130,6 +130,8 @@ public class Player extends Entity {
         pickUpObject(objIndex);
         int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
         interactNPC(npcIndex);
+        gp.eHandler.checkEvent();
+        gp.keyH.enter = false;
 
         boolean keyPressed = keyH.up || keyH.down || keyH.left || keyH.right;
 
@@ -181,7 +183,6 @@ public class Player extends Entity {
             }
         }
 
-        gp.keyH.enter = false;
     }
 
     // Returns the current sprite image based on the player's direction and idling
