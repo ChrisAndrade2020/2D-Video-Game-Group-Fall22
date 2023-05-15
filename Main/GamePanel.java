@@ -49,13 +49,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     public Player player = new Player(this, keyH);
     public SuperObject obj[] = new SuperObject[100];
-    public Entity[] npc = new Entity[16];
+    public Entity[] npc = new Entity[20];
 
     public String objectName;
 
     public int gameState;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int dialogueState = 3;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));

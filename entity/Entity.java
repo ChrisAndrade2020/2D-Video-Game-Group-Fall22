@@ -6,9 +6,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
-
 import main.GamePanel;
 import main.UtilityTool;
 
@@ -59,14 +57,15 @@ public class Entity {
         this.gp = gp;
     }
 
+    // Loads and sets up the image for the entity
     public BufferedImage setup(String imagePath) {
         UtilityTool tool = new UtilityTool();
         BufferedImage image = null;
 
         try {
-            BufferedImage originalImage = ImageIO
-                    .read(getClass().getResourceAsStream(imagePath + ".png"));
-            image = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            BufferedImage originalImage = ImageIO.read(getClass().getResourceAsStream(imagePath + ".png"));
+            image = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(),
+                    BufferedImage.TYPE_INT_ARGB);
             image.getGraphics().drawImage(originalImage, 0, 0, null);
             image = tool.scaledImage(image, gp.playerSize, gp.playerSize);
         } catch (IOException e) {
@@ -76,17 +75,17 @@ public class Entity {
         return image;
     }
 
+    // Updates the entity's collision state and calls the specific update logic for
+    // entity
     public void update() {
-        // Checks tile and object collision
+
         collisionOn = false;
         gp.cChecker.checkTile(this);
         gp.cChecker.checkObject(this, false);
         gp.cChecker.checkPlayer(this);
 
-        // Call the specific update logic of each subclass (Player or NPC_Slime)
         updateSpecific();
 
-        // Update the sprite counter
         updateSpriteCounter();
     }
 
@@ -94,6 +93,8 @@ public class Entity {
         // Overridden by specific subclasses
     }
 
+    // Updates the sprite counter and determines the current sprite to display based
+    // on the animation frame
     protected void updateSpriteCounter() {
         spriteCounter++;
 
@@ -103,12 +104,13 @@ public class Entity {
         }
     }
 
+    // Performs random movement for the entity. It randomly selects a direction and
+    // moves the entity in that direction if there is no collision
     public void randomMovement() {
         if (moveCounter % 60 == 0) {
             direction = directions[random.nextInt(directions.length)];
         }
 
-        // Move Entity in direction if no collision
         if (!collisionOn) {
             switch (direction) {
                 case "up":
@@ -126,7 +128,6 @@ public class Entity {
             }
         }
 
-        // Reset spriteCounter and increment spriteNum after every 6 counts
         if (spriteCounter >= 6) {
             spriteCounter = 0;
             spriteNum = (spriteNum % 6) + 1;
@@ -135,6 +136,7 @@ public class Entity {
         moveCounter++;
     }
 
+    // Draws the entity on the screen
     public void draw(Graphics2D g2) {
         int x = worldX - gp.player.worldX + gp.player.screenX + solidAreaOffsetX;
         int y = worldY - gp.player.worldY + gp.player.screenY + solidAreaOffsetY;
@@ -160,7 +162,5 @@ public class Entity {
         g2.drawImage(currentSprite, x, y, entitySize, entitySize, null);
         g2.setColor(Color.red);
         g2.drawRect(x + solidArea.x, y + solidArea.y, solidArea.width, solidArea.height);
-
     }
-
 }

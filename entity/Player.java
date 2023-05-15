@@ -29,11 +29,11 @@ public class Player extends Entity {
     private boolean idling;
     private boolean resetDirection;
 
-    // Constructor of the Player class, initializing the player's attributes and
-    // loading the player's images
+    // Constructor for the Player class, initializes the player's attributes and
+    // loads the player's images
     public Player(GamePanel gp, KeyHandler keyH) {
 
-        super(gp); // We are calling the constructor of the super class of this class ( entity )
+        super(gp);
         this.keyH = keyH;
 
         screenX = gp.screenWidth / 2 - ((gp.playerSize / 2) - 2);
@@ -64,7 +64,7 @@ public class Player extends Entity {
     public void setDefaultValues() {
         worldX = gp.tileSize * 6;
         worldY = gp.tileSize * 92;
-        speed = 4;
+        speed = 10; // to explore world for now will be set to 4 in actual game
         direction = "idle";
     }
 
@@ -85,6 +85,7 @@ public class Player extends Entity {
         }
     }
 
+    // Helper method to set up and scale the player's images
     public BufferedImage setup(String imageName) {
         UtilityTool tool = new UtilityTool();
         BufferedImage image = null;
@@ -102,7 +103,8 @@ public class Player extends Entity {
         return image;
     }
 
-    // Updates the player's direction and position if there is no collision
+    // Updates the player's direction and position based on the input direction and
+    // speed modifiers, checks for collisions with tiles, objects, and entities
     private void updateDirection(String direction, int speedModifierX, int speedModifierY) {
         this.direction = direction;
         collisionOn = false;
@@ -116,6 +118,9 @@ public class Player extends Entity {
         }
     }
 
+    // Overrides the updateSpecific() method from the superclass Entity and updates
+    // the player's specific behavior, such as picking up objects and interacting
+    // with NPCs based on keyboard inputs
     @Override
     protected void updateSpecific() {
         int objIndex = gp.cChecker.checkObject(this, true);
@@ -163,13 +168,17 @@ public class Player extends Entity {
         }
     }
 
+    // Handles the player's interaction with NPCs in the game
     public void interactNPC(int i) {
         if (i != 999) {
-            System.out.println("Colliding with NPC");
+
+            gp.gameState = gp.dialogueState;
 
         }
     }
 
+    // Returns the current sprite image based on the player's direction and idling
+    // state
     public BufferedImage getCurrentSprite() {
         int spriteIndex = spriteNum - 1;
         String displayDirection = direction;
@@ -196,15 +205,15 @@ public class Player extends Entity {
         }
     }
 
-    // Draws the player's current sprite image on the screen
+    // Overrides the draw() method from the superclass Entity and draws the player's
+    // current sprite image on the screen
     @Override
     public void draw(Graphics2D g2) {
-        // Set the current sprite and solid area offsets
+
         currentSprite = getCurrentSprite();
         solidAreaOffsetX = 0;
         solidAreaOffsetY = 0;
 
-        // Call the parent class's draw method
         super.draw(g2);
     }
 }

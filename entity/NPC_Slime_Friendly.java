@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import main.GamePanel;
 
-public class NPC_Slime extends Entity {
+public class NPC_Slime_Friendly extends Entity {
 
     private BufferedImage[] idle;
     private BufferedImage[] move;
@@ -14,7 +14,7 @@ public class NPC_Slime extends Entity {
     private boolean idling;
     private boolean resetDirection;
 
-    public NPC_Slime(GamePanel gp) {
+    public NPC_Slime_Friendly(GamePanel gp) {
         super(gp);
         loadNPCEntitySprites();
         setDefaultValues();
@@ -32,7 +32,7 @@ public class NPC_Slime extends Entity {
     private void setDefaultValues() {
         worldX = gp.tileSize;
         worldY = gp.tileSize;
-        speed = 2;
+        speed = 1;
         direction = "idle";
     }
 

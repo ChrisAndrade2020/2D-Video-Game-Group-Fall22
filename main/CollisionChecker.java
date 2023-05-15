@@ -10,6 +10,7 @@ public class CollisionChecker {
         this.gp = gp;
     }
 
+    // Checks collision with the tiles
     public void checkTile(Entity entity) {
 
         int entityLeftWorldX = entity.worldX + entity.solidArea.x;
@@ -30,7 +31,7 @@ public class CollisionChecker {
                 tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
                 tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];
 
-                if (gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true) {
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {
                     entity.collisionOn = true;
                 }
                 break;
@@ -39,7 +40,7 @@ public class CollisionChecker {
                 tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
                 tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
 
-                if (gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true) {
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {
                     entity.collisionOn = true;
                 }
                 break;
@@ -48,7 +49,7 @@ public class CollisionChecker {
                 tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
                 tileNum2 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
 
-                if (gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true) {
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {
                     entity.collisionOn = true;
                 }
                 break;
@@ -57,33 +58,25 @@ public class CollisionChecker {
                 tileNum1 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];
                 tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
 
-                if (gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true) {
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {
                     entity.collisionOn = true;
                 }
                 break;
-
         }
     }
 
+    // Checks collision with objects
     public int checkObject(Entity entity, boolean player) {
 
         int index = 999;
-
-        // We use intersects here because we have a limited number of objects.
-        // Otherwise, if we use this method of collision checking with the tiles
-        // we will use up a lot of system resources checking ALL the tiles on the screen
-        // displayed and check one by one if they are colliding the with an entities
-        // hitbox (solidArea)
 
         for (int i = 0; i < gp.obj.length; i++) {
 
             if (gp.obj[i] != null) {
 
-                // get entity hitbox position ( refered to as solidArea in code)
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
-                // get object hitbox position
                 gp.obj[i].solidArea.x = gp.obj[i].worldX + gp.obj[i].solidArea.x;
                 gp.obj[i].solidArea.y = gp.obj[i].worldY + gp.obj[i].solidArea.y;
 
@@ -91,81 +84,66 @@ public class CollisionChecker {
                     case "up":
                         entity.solidArea.y -= entity.speed;
                         if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
-                            // System.out.println("Colliding with something above");
-
-                            if (gp.obj[i].collision == true) {
+                            if (gp.obj[i].collision) {
                                 entity.collisionOn = true;
                             }
-
-                            if (player == true) {
-                                index = i; // So other entities cannot pickup objects
+                            if (player) {
+                                index = i;
                             }
                         }
                         break;
                     case "down":
                         entity.solidArea.y += entity.speed;
                         if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
-                            // System.out.println("Colliding with something below");
-
-                            if (gp.obj[i].collision == true) {
+                            if (gp.obj[i].collision) {
                                 entity.collisionOn = true;
                             }
-
-                            if (player == true) {
-                                index = i; // So other entities cannot pickup objects
+                            if (player) {
+                                index = i;
                             }
                         }
                         break;
                     case "left":
                         entity.solidArea.x -= entity.speed;
                         if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
-                            // System.out.println("Colliding with something on the left");
-
-                            if (gp.obj[i].collision == true) {
+                            if (gp.obj[i].collision) {
                                 entity.collisionOn = true;
                             }
-
-                            if (player == true) {
-                                index = i; // So other entities cannot pickup objects
+                            if (player) {
+                                index = i;
                             }
                         }
                         break;
                     case "right":
                         entity.solidArea.x += entity.speed;
                         if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
-                            // System.out.println("Colliding with something on the right");
-
-                            if (gp.obj[i].collision == true) {
+                            if (gp.obj[i].collision) {
                                 entity.collisionOn = true;
                             }
-
-                            if (player == true) {
-                                index = i; // So other entities cannot pickup objects
+                            if (player) {
+                                index = i;
                             }
                         }
                         break;
-
                 }
-
-                // resetting values
 
                 entity.solidArea.x = entity.solidAreaDefaultX;
                 entity.solidArea.y = entity.solidAreaDefaultY;
 
                 gp.obj[i].solidArea.x = gp.obj[i].solidAreaDefaultX;
                 gp.obj[i].solidArea.y = gp.obj[i].solidAreaDefaultY;
-
             }
         }
 
         return index;
-
     }
 
+    // Checks collision with other entities
     public int checkEntity(Entity entity, Entity[] target) {
         int index = 999;
 
         for (int i = 0; i < target.length; i++) {
+
             if (target[i] != null) {
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
@@ -206,15 +184,16 @@ public class CollisionChecker {
 
                 entity.solidArea.x = entity.solidAreaDefaultX;
                 entity.solidArea.y = entity.solidAreaDefaultY;
-
                 target[i].solidArea.x = target[i].solidAreaDefaultX;
                 target[i].solidArea.y = target[i].solidAreaDefaultY;
+
             }
         }
 
         return index;
     }
 
+    // Checks collision with the player
     public void checkPlayer(Entity entity) {
         entity.solidArea.x = entity.worldX + entity.solidArea.x;
         entity.solidArea.y = entity.worldY + entity.solidArea.y;
@@ -255,5 +234,4 @@ public class CollisionChecker {
         gp.player.solidArea.x = gp.player.solidAreaDefaultX;
         gp.player.solidArea.y = gp.player.solidAreaDefaultY;
     }
-
 }

@@ -6,33 +6,34 @@ import java.awt.image.BufferedImage;
 
 import main.GamePanel;
 
-public class NPC_Slime extends Entity {
+public class NPC_Skeleton extends Entity {
 
     private BufferedImage[] idle;
     private BufferedImage[] move;
+    private BufferedImage[] moveleft;
 
     private boolean idling;
     private boolean resetDirection;
 
-    public NPC_Slime(GamePanel gp) {
+    public NPC_Skeleton(GamePanel gp) {
         super(gp);
         loadNPCEntitySprites();
         setDefaultValues();
         solidArea = new Rectangle();
-        solidArea.x = 30;
-        solidArea.y = 42;
+        solidArea.x = 81;
+        solidArea.y = 132;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 36;
-        solidArea.height = 24;
-        this.entitySize = 96;
+        solidArea.width = 28;
+        solidArea.height = 28;
+        this.entitySize = 192;
     }
 
     // Sets the default values for the NPC's world position, speed, and direction
     private void setDefaultValues() {
         worldX = gp.tileSize;
         worldY = gp.tileSize;
-        speed = 2;
+        speed = 4;
         direction = "idle";
     }
 
@@ -40,9 +41,11 @@ public class NPC_Slime extends Entity {
     private void loadNPCEntitySprites() {
         idle = new BufferedImage[6];
         move = new BufferedImage[6];
+        moveleft = new BufferedImage[6];
         for (int i = 0; i < 6; i++) {
-            idle[i] = setup("/res/npc/slime_idle" + (i + 1));
-            move[i] = setup("/res/npc/slime_move" + (i + 1));
+            idle[i] = setup("/res/npc/skeleton_idle" + (i + 1));
+            move[i] = setup("/res/npc/skeleton_move_udr" + (i + 1)); // udr = up down right
+            moveleft[i] = setup("/res/npc/skeleton_move_l" + (i + 1));
         }
     }
 
@@ -54,6 +57,9 @@ public class NPC_Slime extends Entity {
         BufferedImage image = null;
         if (direction.equals("idle")) {
             image = idle[spriteIndex];
+        }
+        if (direction.equals("left")) {
+            image = moveleft[spriteIndex];
         } else {
             image = move[spriteIndex];
         }
@@ -91,7 +97,7 @@ public class NPC_Slime extends Entity {
             case "right":
                 return move[spriteIndex];
             case "left":
-                return move[spriteIndex];
+                return moveleft[spriteIndex];
             case "up":
                 return move[spriteIndex];
             case "down":

@@ -3,13 +3,14 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-// import java.awt.image.BufferedImage;
 
 public class UI {
 
     GamePanel gp;
     Graphics2D g2;
     Font fontserrat;
+
+    // tileSize = 48
 
     public boolean messageOn = false;
     public String message = "";
@@ -49,6 +50,12 @@ public class UI {
 
         }
 
+        if (gp.gameState == gp.dialogueState) {
+
+            drawdialogueScreen();
+
+        }
+
     }
 
     public void drawPauseScreen() {
@@ -61,6 +68,25 @@ public class UI {
         int y = gp.screenHeight / 2;
 
         g2.drawString(text, x, y);
+    }
+
+    public void drawdialogueScreen() {
+
+        int x = gp.tileSize / 2;
+        double y = gp.tileSize * 7.5;
+        int width = gp.screenWidth - (gp.tileSize * 8);
+        int height = gp.tileSize * 2;
+
+        drawTextWindow(x, (int) y, width, height);
+
+    }
+
+    public void drawTextWindow(int x, int y, int width, int height) {
+
+        Color c = new Color(255, 255, 255);
+        g2.setColor(c);
+        g2.fillRoundRect(x, y, width, height, 35, 35);
+
     }
 
     public int getXforCenteredText(String text) {
