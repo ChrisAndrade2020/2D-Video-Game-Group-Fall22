@@ -8,7 +8,7 @@ public class ObjectArmor extends Entity {
     public ObjectArmor(GamePanel gp) {
         super(gp);
         name = "Armor";
-        pd_1 = setup("/res/objects/armor");
+        down1 = setup("/res/objects/armor");
 
     }
 

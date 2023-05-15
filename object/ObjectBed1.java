@@ -10,7 +10,7 @@ public class ObjectBed1 extends Entity {
 
         name = "Bed1";
         direction = "down";
-        pd_1 = setup("/res/objects/bed_1");
+        down1 = setup("/res/objects/bed_1");
         collision = true;
 
     }

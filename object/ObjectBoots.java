@@ -9,7 +9,7 @@ public class ObjectBoots extends Entity {
         super(gp);
 
         name = "Boots";
-        pd_1 = setup("/res/objects/boots");
+        down1 = setup("/res/objects/boots");
 
     }
 

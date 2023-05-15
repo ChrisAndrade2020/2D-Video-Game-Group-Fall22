@@ -8,9 +8,11 @@ public class ObjectDoorClosed extends Entity {
     public ObjectDoorClosed(GamePanel gp) {
         super(gp);
 
+        System.out.println("ObjectDoorClosed created, image is " + (pd_1 != null ? "not null" : "null"));
+
         direction = "down";
         name = "DoorClosed";
-        pd_1 = setup("/res/objects/door_world_0");
+        down1 = setup("/res/objects/door_world_0");
         collision = true;
 
         solidArea.x = 0;

@@ -1,43 +1,39 @@
-package entity;
+package monster;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import entity.Entity;
 import main.GamePanel;
 
-public class NPC_Slime extends Entity {
+public class Slime extends Entity {
 
     private BufferedImage[] idle;
     private BufferedImage[] move;
 
-    private boolean idling;
-    private boolean resetDirection;
-
-    public NPC_Slime(GamePanel gp) {
+    public Slime(GamePanel gp) {
         super(gp);
-        loadNPCEntitySprites();
-        setDefaultValues();
-        solidArea = new Rectangle();
+
+        type = 2;
+
+        name = "Slime";
+        speed = 2;
+        maxHealth = 4;
+
         solidArea.x = 30;
         solidArea.y = 42;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
         solidArea.width = 36;
         solidArea.height = 24;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+
         this.entitySize = 96;
+
+        loadSlimeSprites();
     }
 
-    // Sets the default values for the NPC's world position, speed, and direction
-    private void setDefaultValues() {
-        worldX = gp.tileSize;
-        worldY = gp.tileSize;
-        speed = 2;
-        direction = "idle";
-    }
-
-    // Loads the NPC's sprites for idle and movement animations
-    private void loadNPCEntitySprites() {
+    // Loads the Slime's sprites for idle and movement animations
+    private void loadSlimeSprites() {
         idle = new BufferedImage[6];
         move = new BufferedImage[6];
         for (int i = 0; i < 6; i++) {

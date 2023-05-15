@@ -52,7 +52,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public Player player = new Player(this, keyH);
     public Entity obj[] = new Entity[100];
-    public Entity[] npc = new Entity[20];
+    public Entity npc[] = new Entity[100];
+    public Entity monster[] = new Entity[100];
     ArrayList<Entity> entityList = new ArrayList<>();
 
     public String objectName;
@@ -73,8 +74,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Sets up the game
     public void setupGame() {
+
         aSetter.setObject();
         aSetter.setNPC();
+        aSetter.setMonster();
         // playMusic(0);
 
         gameState = titleState;
@@ -112,11 +115,40 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         if (gameState == playState) {
             player.update();
+
+            // Clear the list at the start of each update
+            entityList.clear();
+
+            // Always add the player to the list
+            entityList.add(player);
+
             for (int i = 0; i < npc.length; i++) {
                 if (npc[i] != null) {
                     npc[i].update();
+                    // Add the updated npc to the list
+                    entityList.add(npc[i]);
                 }
             }
+
+            for (int i = 0; i < monster.length; i++) {
+                if (monster[i] != null) {
+                    monster[i].update();
+                    // Add the updated monster to the list
+                    entityList.add(monster[i]);
+                }
+            }
+
+            // Check collisions between entities of the same type
+            for (Entity entity1 : entityList) {
+                for (Entity entity2 : entityList) {
+                    if (entity1 != entity2) {
+                        cChecker.checkEntity(entity1, new Entity[] { entity2 });
+                    }
+                }
+            }
+        }
+        if (gameState == pauseState) {
+            // nothing
         }
     }
 
@@ -132,24 +164,11 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (gameState == titleState) {
             ui.draw(g2);
-        } else {
+        }
+
+        else {
 
             tileM.draw(g2);
-
-            // Adding entities to the List
-            entityList.add(player);
-
-            for (int i = 0; i < npc.length; i++) {
-                if (npc[i] != null) {
-                    entityList.add(npc[i]);
-                }
-            }
-
-            for (int i = 0; i < obj.length; i++) {
-                if (obj[i] != null) {
-                    entityList.add(obj[i]);
-                }
-            }
 
             // Sort for render order i.e. proper entity overlap
             Collections.sort(entityList, new Comparator<Entity>() {
@@ -167,8 +186,6 @@ public class GamePanel extends JPanel implements Runnable {
                 entityList.get(i).draw(g2);
             }
 
-            entityList.clear();
-
             ui.draw(g2);
 
             if (keyH.renderTime == true) {
@@ -177,6 +194,7 @@ public class GamePanel extends JPanel implements Runnable {
                 g2.setColor(Color.WHITE);
                 g2.drawString("Draw Time: " + timeToRender, 10, 400);
                 System.out.println("Draw Time: " + timeToRender);
+
             }
 
             g2.dispose();

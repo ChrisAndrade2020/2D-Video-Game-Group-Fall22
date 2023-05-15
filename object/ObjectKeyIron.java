@@ -10,7 +10,7 @@ public class ObjectKeyIron extends Entity {
 
         name = "IKey";
         direction = "down";
-        pd_1 = setup("/res/objects/key_iron");
+        down1 = setup("/res/objects/key_iron");
 
     }
 

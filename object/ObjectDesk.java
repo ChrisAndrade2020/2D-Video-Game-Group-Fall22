@@ -9,7 +9,7 @@ public class ObjectDesk extends Entity {
         super(gp);
 
         name = "Desk";
-        pd_1 = setup("/res/objects/desk");
+        down1 = setup("/res/objects/desk");
         collision = true;
 
     }

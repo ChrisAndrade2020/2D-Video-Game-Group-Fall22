@@ -10,7 +10,7 @@ public class ObjectSword extends Entity {
 
         direction = "down";
         name = "Sword";
-        pd_1 = setup("/res/objects/sword");
+        down1 = setup("/res/objects/sword");
 
     }
 

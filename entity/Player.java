@@ -9,6 +9,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
@@ -67,7 +69,7 @@ public class Player extends Entity {
         speed = 4; // to explore world for now will be set to 4 in actual game
         direction = "idle";
 
-        maxHealth = 3;
+        maxHealth = 10; // 10 for testing purposes , 4 in game
         health = maxHealth;
     }
 
@@ -100,6 +102,7 @@ public class Player extends Entity {
             image.getGraphics().drawImage(originalImage, 0, 0, null);
             image = tool.scaledImage(image, gp.playerSize, gp.playerSize);
         } catch (IOException e) {
+            System.out.println("Error loading image from " + imageName);
             e.printStackTrace();
         }
 
@@ -114,6 +117,7 @@ public class Player extends Entity {
         gp.cChecker.checkTile(this);
         gp.cChecker.checkObject(this, true);
         gp.cChecker.checkEntity(this, gp.npc);
+        gp.cChecker.checkEntity(this, gp.monster);
 
         if (!collisionOn) {
             worldX += speed * speedModifierX;
@@ -128,8 +132,13 @@ public class Player extends Entity {
     protected void updateSpecific() {
         int objIndex = gp.cChecker.checkObject(this, true);
         pickUpObject(objIndex);
+
         int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
         interactNPC(npcIndex);
+
+        int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+        contactMonster(monsterIndex);
+
         gp.eHandler.checkEvent();
         gp.keyH.enter = false;
 
@@ -164,6 +173,27 @@ public class Player extends Entity {
             }
 
         }
+
+        if (invincible == true) {
+            invincibilityTimer++;
+            if (invincibilityTimer > 60) {
+                invincible = false;
+                invincibilityTimer = 0;
+            }
+        }
+    }
+
+    private void contactMonster(int i) {
+
+        if (i != 999) {
+
+            if (invincible == false) {
+                health -= 1;
+                invincible = true;
+            }
+
+        }
+
     }
 
     // Handles the player's interaction with the objects in the game
@@ -223,5 +253,10 @@ public class Player extends Entity {
         solidAreaOffsetY = 0;
 
         super.draw(g2);
+
+        // debugging to show invincibility frame
+        // g2.setFont(new Font("Arial", Font.PLAIN, 26));
+        // g2.setColor(Color.WHITE);
+        // g2.drawString("Invincible: " + invincibilityTimer, 10, 400);
     }
 }

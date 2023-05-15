@@ -9,7 +9,7 @@ public class ObjectBookshelf2 extends Entity {
         super(gp);
 
         name = "Shelf2";
-        pd_1 = setup("/res/objects/bookshelf_2");
+        down1 = setup("/res/objects/bookshelf_2");
         collision = true;
 
     }

@@ -9,7 +9,7 @@ public class ObjectDoorOpen extends Entity {
         super(gp);
 
         name = "DoorOpen";
-        pd_1 = setup("/res/objects/door_world_1");
+        down1 = setup("/res/objects/door_world_1");
 
     }
 

@@ -10,7 +10,7 @@ public class ObjectKeyGold extends Entity {
 
         name = "GKey";
         direction = "down";
-        pd_1 = setup("/res/objects/key_gold");
+        down1 = setup("/res/objects/key_gold");
 
     }
 

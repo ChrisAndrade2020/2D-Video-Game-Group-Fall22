@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class Entity {
     public int worldX, worldY;
     public int speed;
 
-    public BufferedImage pi_1, pi_2, pi_3, pi_4, pi_5, pi_6,
+    public BufferedImage down1, pi_1, pi_2, pi_3, pi_4, pi_5, pi_6,
             pu_1, pu_2, pu_3, pu_4, pu_5, pu_6,
             pd_1, pd_2, pd_3, pd_4, pd_5, pd_6,
             pl_1, pl_2, pl_3, pl_4, pl_5, pl_6,
@@ -41,7 +42,7 @@ public class Entity {
     protected boolean collisionSFXPlayed = false;
     protected boolean messageDisplayed = false;
 
-    protected BufferedImage currentSprite;
+    protected Image currentSprite;
     protected int solidAreaOffsetX;
     protected int solidAreaOffsetY;
 
@@ -53,12 +54,17 @@ public class Entity {
     protected boolean idling = false;
     protected boolean resetDirection = false;
 
+    public boolean invincible = false;
+    public int invincibilityTimer;
+
     String dialogues[] = new String[20];
     int dialogueIndex = 0;
 
     public BufferedImage image, image2, image3;
     public String name;
     public boolean collision = false;
+
+    public int type;
 
     // Char Status
     public int maxHealth;
@@ -80,6 +86,7 @@ public class Entity {
             image.getGraphics().drawImage(originalImage, 0, 0, null);
             image = tool.scaledImage(image, gp.playerSize, gp.playerSize);
         } catch (IOException e) {
+            System.out.println("Error loading image from " + imagePath);
             e.printStackTrace();
         }
 
@@ -119,11 +126,19 @@ public class Entity {
         collisionOn = false;
         gp.cChecker.checkTile(this);
         gp.cChecker.checkObject(this, false);
-        gp.cChecker.checkPlayer(this);
+        // boolean contactPlayer = gp.cChecker.checkPlayer(this);
+
+        // if (this.type == 2 && contactPlayer == true) {
+        // if (gp.player.invincible = false) {
+        // gp.player.health -= 1;
+        // gp.player.invincible = true;
+        // }
+        // }
 
         updateSpecific();
 
         updateSpriteCounter();
+
     }
 
     protected void updateSpecific() {
