@@ -9,6 +9,7 @@ public class ObjectChest extends Entity {
         super(gp);
 
         name = "Chest";
+        direction = "down";
         pd_1 = setup("/res/objects/chest1");
         collision = true;
 

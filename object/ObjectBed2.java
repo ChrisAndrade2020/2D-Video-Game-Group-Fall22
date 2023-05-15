@@ -9,6 +9,7 @@ public class ObjectBed2 extends Entity {
         super(gp);
 
         name = "Bed2";
+        direction = "down";
         pd_1 = setup("/res/objects/bed_2");
         collision = true;
 

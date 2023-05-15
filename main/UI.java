@@ -209,7 +209,7 @@ public class UI {
 
     public void drawTextWindow(int x, int y, int width, int height) {
 
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, gp.tileSize / 4));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, gp.tileSize / 3));
 
         Color c = new Color(0, 0, 0, 190);
         g2.setColor(c);

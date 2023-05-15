@@ -3,6 +3,13 @@ package main;
 import entity.NPC_Skeleton;
 import entity.NPC_Slime;
 import entity.NPC_Slime_Friendly;
+import object.ObjectBed1;
+import object.ObjectBed2;
+import object.ObjectChest;
+import object.ObjectCrate;
+import object.ObjectDoorClosed;
+import object.ObjectKeyGold;
+import object.ObjectKeyIron;
 
 public class AssetSetter {
 
@@ -13,7 +20,34 @@ public class AssetSetter {
     }
 
     public void setObject() {
-        // ...code to set objects...
+
+        gp.obj[0] = new ObjectDoorClosed(gp);
+        gp.obj[0].worldX = gp.tileSize * 7;
+        gp.obj[0].worldY = gp.tileSize * 91;
+
+        gp.obj[1] = new ObjectChest(gp);
+        gp.obj[1].worldX = gp.tileSize * 5;
+        gp.obj[1].worldY = gp.tileSize * 88;
+
+        gp.obj[2] = new ObjectCrate(gp);
+        gp.obj[2].worldX = gp.tileSize * 26;
+        gp.obj[2].worldY = (int) (gp.tileSize * 93.5);
+
+        gp.obj[3] = new ObjectKeyGold(gp);
+        gp.obj[3].worldX = gp.tileSize * 9;
+        gp.obj[3].worldY = gp.tileSize * 89;
+
+        gp.obj[4] = new ObjectKeyIron(gp);
+        gp.obj[4].worldX = gp.tileSize * 26;
+        gp.obj[4].worldY = gp.tileSize * 93;
+
+        gp.obj[5] = new ObjectBed1(gp);
+        gp.obj[5].worldX = gp.tileSize * 5;
+        gp.obj[5].worldY = gp.tileSize * 86;
+
+        gp.obj[6] = new ObjectBed2(gp);
+        gp.obj[6].worldX = gp.tileSize * 5;
+        gp.obj[6].worldY = gp.tileSize * 87;
     }
 
     public void setNPC() {

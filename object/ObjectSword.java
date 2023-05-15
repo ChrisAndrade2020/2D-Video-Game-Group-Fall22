@@ -8,6 +8,7 @@ public class ObjectSword extends Entity {
     public ObjectSword(GamePanel gp) {
         super(gp);
 
+        direction = "down";
         name = "Sword";
         pd_1 = setup("/res/objects/sword");
 

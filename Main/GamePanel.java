@@ -4,11 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.List;
 import java.util.ArrayList;
-
+import java.util.Collections;
+import java.util.Comparator;
 import javax.swing.JPanel;
-
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
@@ -132,27 +131,44 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         if (gameState == titleState) {
-
             ui.draw(g2);
+        } else {
 
-        }
-
-        else {
             tileM.draw(g2);
 
-            for (int i = 0; i < obj.length; i++) {
-                if (obj[i] != null) {
-                    obj[i].draw(g2);
-                }
-            }
+            // Adding entities to the List
+            entityList.add(player);
 
             for (int i = 0; i < npc.length; i++) {
                 if (npc[i] != null) {
-                    npc[i].draw(g2);
+                    entityList.add(npc[i]);
                 }
             }
 
-            player.draw(g2);
+            for (int i = 0; i < obj.length; i++) {
+                if (obj[i] != null) {
+                    entityList.add(obj[i]);
+                }
+            }
+
+            // Sort for render order i.e. proper entity overlap
+            Collections.sort(entityList, new Comparator<Entity>() {
+
+                @Override
+                public int compare(Entity e1, Entity e2) {
+                    int result = Integer.compare(e1.worldY, e2.worldY);
+                    return result;
+                }
+
+            });
+
+            // drawing all entities
+            for (int i = 0; i < entityList.size(); i++) {
+                entityList.get(i).draw(g2);
+            }
+
+            entityList.clear();
+
             ui.draw(g2);
 
             if (keyH.renderTime == true) {
@@ -165,7 +181,6 @@ public class GamePanel extends JPanel implements Runnable {
 
             g2.dispose();
         }
-
     }
 
     // Plays the music

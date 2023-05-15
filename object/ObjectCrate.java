@@ -9,6 +9,7 @@ public class ObjectCrate extends Entity {
         super(gp);
 
         name = "Crate";
+        direction = "down";
         pd_1 = setup("/res/objects/crate");
         collision = true;
 
