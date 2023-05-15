@@ -172,9 +172,13 @@ public class Player extends Entity {
     public void interactNPC(int i) {
         if (i != 999) {
 
-            gp.gameState = gp.dialogueState;
-
+            if (gp.keyH.enter == true) {
+                gp.gameState = gp.dialogueState;
+                gp.npc[i].speak();
+            }
         }
+
+        gp.keyH.enter = false;
     }
 
     // Returns the current sprite image based on the player's direction and idling

@@ -15,9 +15,9 @@ public class NPC_Slime_Friendly extends Entity {
     private boolean resetDirection;
 
     public NPC_Slime_Friendly(GamePanel gp) {
+
         super(gp);
-        loadNPCEntitySprites();
-        setDefaultValues();
+
         solidArea = new Rectangle();
         solidArea.x = 30;
         solidArea.y = 42;
@@ -26,13 +26,17 @@ public class NPC_Slime_Friendly extends Entity {
         solidArea.width = 36;
         solidArea.height = 24;
         this.entitySize = 96;
+
+        loadNPCEntitySprites();
+        setDefaultValues();
+        setDialogue();
     }
 
     // Sets the default values for the NPC's world position, speed, and direction
     private void setDefaultValues() {
         worldX = gp.tileSize;
         worldY = gp.tileSize;
-        speed = 1;
+        speed = 0;
         direction = "idle";
     }
 
@@ -99,6 +103,23 @@ public class NPC_Slime_Friendly extends Entity {
             default:
                 return idle[spriteIndex];
         }
+    }
+
+    public void setDialogue() {
+
+        dialogues[0] = "!!!";
+        dialogues[1] = "What are you looking at?!";
+        dialogues[2] = "You just gonna stare at me or what? \nFirst time seeing a talking slime?";
+        dialogues[3] = "...";
+        dialogues[4] = "If you're just gonna stare at me all day \ngo and make yourself useful!";
+
+    }
+
+    // Add in specific stuff here
+    public void speak() {
+
+        super.speak();
+
     }
 
     // Similar to Player class
