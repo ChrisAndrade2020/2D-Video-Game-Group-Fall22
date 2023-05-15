@@ -17,12 +17,12 @@ Not actually a group project, but the scope has to be as if a group did the proj
 :heavy_check_mark: Adding New Tilesets  
 :heavy_check_mark: Pausing Game  
 :heavy_check_mark: Camera Out of Bounds  
-:x: Adding NPC  
-:x: Dialogue & Font  
-:x: Title Screen  
-:x: Player HP  
-:x: Events  
-:x: Enemy Entity  
+:heavy_check_mark: Adding NPC  
+:heavy_check_mark: Dialogue & Font  
+:heavy_check_mark: Title Screen  
+:heavy_check_mark: Player HP  
+:heavy_check_mark: Events  
+:heavy_check_mark: Enemy Entity  
 :x: Hit Detection  
 :x: Enemy HP and Death Animation  
 :x: Map Transition  
