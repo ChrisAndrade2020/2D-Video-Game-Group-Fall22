@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.List;
+import java.util.ArrayList;
+
 import javax.swing.JPanel;
 
 import entity.Entity;
 import entity.Player;
-import object.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -50,8 +52,9 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
 
     public Player player = new Player(this, keyH);
-    public SuperObject obj[] = new SuperObject[100];
+    public Entity obj[] = new Entity[100];
     public Entity[] npc = new Entity[20];
+    ArrayList<Entity> entityList = new ArrayList<>();
 
     public String objectName;
 
@@ -139,7 +142,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             for (int i = 0; i < obj.length; i++) {
                 if (obj[i] != null) {
-                    obj[i].draw(g2, this);
+                    obj[i].draw(g2);
                 }
             }
 

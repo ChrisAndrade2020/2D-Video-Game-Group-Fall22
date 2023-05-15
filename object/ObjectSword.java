@@ -1,27 +1,15 @@
 package object;
 
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
+import entity.Entity;
 import main.GamePanel;
 
-public class ObjectSword extends SuperObject {
+public class ObjectSword extends Entity {
 
     public ObjectSword(GamePanel gp) {
+        super(gp);
 
         name = "Sword";
-
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/sword.png"));
-            tool.scaledImage(image, gp.tileSize, gp.tileSize);
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
-        }
-
-        collision = true;
+        pd_1 = setup("/res/objects/sword");
 
     }
 

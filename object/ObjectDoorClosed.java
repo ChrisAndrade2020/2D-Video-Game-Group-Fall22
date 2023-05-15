@@ -1,30 +1,16 @@
 package object;
 
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
+import entity.Entity;
 import main.GamePanel;
 
-public class ObjectDoorClosed extends SuperObject {
+public class ObjectDoorClosed extends Entity {
 
     public ObjectDoorClosed(GamePanel gp) {
+        super(gp);
 
         name = "DoorClosed";
-
-        try {
-
-            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/door_world_0.png"));
-            tool.scaledImage(image, gp.tileSize, gp.tileSize);
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
-        }
-
+        pd_1 = setup("/res/objects/door_world_0");
         collision = true;
-
     }
 
 }

@@ -1,50 +1,73 @@
 package main;
 
-import java.awt.Rectangle;
-
 public class EventHandler {
 
     GamePanel gp;
-    Rectangle eventRect;
-    int eventRectDefaultX, eventRectDefaultY;
-
-    boolean inpatchyGrassEvent = false;
+    EventRect eventRect[][];
+    int previousEventX, previousEventY;
+    boolean canTouchEvent = true;
 
     public EventHandler(GamePanel gp) {
         this.gp = gp;
 
-        eventRect = new Rectangle();
-        eventRect.x = 23;
-        eventRect.y = 23;
+        eventRect = new EventRect[gp.maxWorldCol][gp.maxWorldRow];
 
-        eventRect.width = 2;
-        eventRect.height = 2;
+        int col = 0;
+        int row = 0;
 
-        eventRectDefaultX = eventRect.x;
-        eventRectDefaultY = eventRect.y;
+        while (col < gp.maxWorldCol && row < gp.maxWorldRow) { // Change maxScreenRow to maxWorldRow
 
+            eventRect[col][row] = new EventRect();
+            eventRect[col][row].x = 23;
+            eventRect[col][row].y = 23;
+            eventRect[col][row].width = 2;
+            eventRect[col][row].height = 2;
+            eventRect[col][row].eventRectDefaultX = eventRect[col][row].x;
+            eventRect[col][row].eventRectDefaultY = eventRect[col][row].y;
+
+            col++;
+
+            if (col == gp.maxWorldCol) {
+                col = 0;
+                row++;
+            }
+        }
     }
 
     public void checkEvent() {
 
-        if (hit(20, 85, "down")) {
-            if (!inpatchyGrassEvent) {
-                inpatchyGrassEvent = true;
-                patchyGrass(gp.dialogueState);
+        // Check player entity distance from event tile
+        int xDistance = Math.abs(gp.player.worldX - previousEventX);
+        int yDistance = Math.abs(gp.player.worldY - previousEventY);
+        int distance = Math.max(xDistance, yDistance);
+
+        if (distance > gp.tileSize * 2) {
+            canTouchEvent = true; // when player is 2 tiles away from previously triggered tile.
+        }
+
+        if (canTouchEvent == true) {
+
+            if (hit(20, 85, "down")) {
+                patchyGrass(20, 85, gp.dialogueState);
             }
-        } else {
-            inpatchyGrassEvent = false;
-        }
-        if (hit(24, 93, "idle")) {
-            healingTile(gp.dialogueState);
-        }
-        if (hit(9, 86, "up")) {
-            teleportSomewhere(gp.dialogueState);
+            if (hit(24, 93, "idle")) {
+                healingTile(24, 93, gp.dialogueState);
+            }
+            if (hit(9, 86, "up")) {
+                teleportSomewhere(9, 86, gp.dialogueState);
+            }
         }
 
     }
 
-    private void healingTile(int gameState) {
+    private void teleportSomewhere(int col, int row, int gameState) {
+        gp.gameState = gameState;
+        gp.ui.currentDialogue = "Something feels weird...";
+        gp.player.worldX = gp.tileSize * 77;
+        gp.player.worldY = gp.tileSize * 2;
+    }
+
+    private void healingTile(int col, int row, int gameState) {
         if (gp.keyH.enter == true) {
             gp.gameState = gameState;
             gp.ui.currentDialogue = "You feel better...";
@@ -52,35 +75,35 @@ public class EventHandler {
         }
     }
 
-    private void patchyGrass(int gameState) {
+    private void patchyGrass(int col, int row, int gameState) {
         gp.gameState = gameState;
         gp.ui.currentDialogue = "You tripped!";
         gp.player.health -= 1;
+        // eventRect[col][row].eventDone = true;
+        canTouchEvent = false;
     }
 
-    private void teleportSomewhere(int gameState) {
-        gp.gameState = gameState;
-        gp.ui.currentDialogue = "What's going on?!";
-        gp.player.worldX = gp.tileSize * 77;
-        gp.player.worldY = gp.tileSize * 3;
-    }
+    public boolean hit(int col, int row, String reqDirection) {
 
-    public boolean hit(int eventCol, int eventRow, String reqDirection) {
         boolean hit = false;
 
-        Rectangle tempPlayerArea = new Rectangle(gp.player.solidArea);
-        tempPlayerArea.x += gp.player.worldX;
-        tempPlayerArea.y += gp.player.worldY;
+        gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
+        gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
+        eventRect[col][row].x = col * gp.tileSize + eventRect[col][row].x;
+        eventRect[col][row].y = row * gp.tileSize + eventRect[col][row].y;
 
-        Rectangle tempEventRect = new Rectangle(eventRect);
-        tempEventRect.x += eventCol * gp.tileSize;
-        tempEventRect.y += eventRow * gp.tileSize;
-
-        if (tempPlayerArea.intersects(tempEventRect)) {
+        if (gp.player.solidArea.intersects(eventRect[col][row]) && eventRect[col][row].eventDone == false) {
             if (gp.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")) {
                 hit = true;
+                previousEventX = gp.player.worldX;
+                previousEventY = gp.player.worldY;
             }
         }
+
+        gp.player.solidArea.x = gp.player.solidAreaDefaultX;
+        gp.player.solidArea.y = gp.player.solidAreaDefaultY;
+        eventRect[col][row].x = eventRect[col][row].eventRectDefaultX;
+        eventRect[col][row].y = eventRect[col][row].eventRectDefaultY;
 
         return hit;
     }

@@ -28,7 +28,7 @@ public class Entity {
             slime_idle1, slime_idle2, slime_idle3, slime_idle4, slime_idle5, slime_idle6,
             slime_move1, slime_move2, slime_move3, slime_move4, slime_move5, slime_move6;
 
-    public String direction;
+    public String direction = "down";
 
     public int spriteCounter = 0;
     public int spriteNum = 1;
@@ -55,6 +55,10 @@ public class Entity {
 
     String dialogues[] = new String[20];
     int dialogueIndex = 0;
+
+    public BufferedImage image, image2, image3;
+    public String name;
+    public boolean collision = false;
 
     // Char Status
     public int maxHealth;

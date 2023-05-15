@@ -1,27 +1,17 @@
 package object;
 
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
+import entity.Entity;
 import main.GamePanel;
 
-public class ObjectCrate extends SuperObject {
+public class ObjectCrate extends Entity {
 
     public ObjectCrate(GamePanel gp) {
+        super(gp);
 
         name = "Crate";
-
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/crate.png"));
-            tool.scaledImage(image, gp.tileSize, gp.tileSize);
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
-        }
-
+        pd_1 = setup("/res/objects/crate");
         collision = true;
+
     }
 
 }

@@ -10,8 +10,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+import entity.Entity;
 import object.ObjectHeart;
-import object.SuperObject;
 
 public class UI {
 
@@ -51,7 +51,7 @@ public class UI {
 
         }
 
-        SuperObject heart = new ObjectHeart(gp);
+        Entity heart = new ObjectHeart(gp);
         heart_full = heart.image;
         heart_border = heart.image2;
         heart_empty = heart.image3;
@@ -110,8 +110,8 @@ public class UI {
         int i = 0;
 
         while (i < gp.player.maxHealth) {
-            g2.drawImage(heart_empty, x, y, null);
-            g2.drawImage(heart_border, x, y, null);
+            g2.drawImage(heart_empty, x, y, gp.tileSize, gp.tileSize, null);
+            g2.drawImage(heart_border, x, y, gp.tileSize, gp.tileSize, null);
             i++;
             x += gp.tileSize + 4;
         }
@@ -122,7 +122,7 @@ public class UI {
         i = 0;
 
         while (i < gp.player.health) {
-            g2.drawImage(heart_full, x, y, null);
+            g2.drawImage(heart_full, x, y, gp.tileSize, gp.tileSize, null);
             i++;
             x += gp.tileSize + 4;
         }
