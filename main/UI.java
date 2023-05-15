@@ -15,8 +15,6 @@ public class UI {
     Graphics2D g2;
     Font Montserrat, MontserratBold;
 
-    // tileSize = 48
-
     public boolean messageOn = false;
     public String message = "";
 
@@ -25,6 +23,8 @@ public class UI {
     public boolean gameFinish = false;
 
     public String currentDialogue = "";
+
+    public int commandNum = 0;
 
     public UI(GamePanel gp) {
 
@@ -64,6 +64,12 @@ public class UI {
                 RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.WHITE);
 
+        if (gp.gameState == gp.titleState) {
+
+            drawTitleScreen();
+
+        }
+
         if (gp.gameState == gp.playState) {
 
         }
@@ -78,6 +84,62 @@ public class UI {
 
             drawdialogueScreen();
 
+        }
+
+    }
+
+    private void drawTitleScreen() {
+
+        g2.setColor(new Color(77, 138, 179));
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, gp.tileSize * 2));
+        String text = "Mystic Isles";
+        int x = getXforCenteredText(text);
+        int y = gp.tileSize * 3;
+
+        g2.setColor(Color.BLACK);
+        g2.drawString(text, x + 3, y + 3);
+
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, x, y);
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, gp.tileSize));
+        text = "New Game";
+        x = getXforCenteredText(text);
+        y += gp.tileSize * 3;
+        g2.setColor(Color.BLACK);
+        g2.drawString(text, x + 3, y + 3);
+
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, x, y);
+
+        if (commandNum == 0) {
+            g2.drawString(">", x - gp.tileSize, y);
+        }
+
+        text = "Load Game";
+        x = getXforCenteredText(text);
+        y += gp.tileSize;
+        g2.setColor(Color.GRAY);
+        g2.drawString(text, x + 3, y + 3);
+
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, x, y);
+        if (commandNum == 1) {
+            g2.drawString(">", x - gp.tileSize, y);
+        }
+
+        text = "Quit";
+        x = getXforCenteredText(text);
+        y += gp.tileSize;
+        g2.setColor(Color.BLACK);
+        g2.drawString(text, x + 3, y + 3);
+
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, x, y);
+        if (commandNum == 2) {
+            g2.drawString(">", x - gp.tileSize, y);
         }
 
     }
