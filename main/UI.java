@@ -6,14 +6,20 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+
+import object.ObjectHeart;
+import object.SuperObject;
 
 public class UI {
 
     GamePanel gp;
     Graphics2D g2;
     Font Montserrat, MontserratBold;
+
+    BufferedImage heart, heart_border, heart_empty;
 
     public boolean messageOn = false;
     public String message = "";
@@ -42,9 +48,13 @@ public class UI {
         } catch (IOException e) {
 
             e.printStackTrace();
-            ;
 
         }
+
+        SuperObject heart = new ObjectHeart(gp);
+        heart = heart.image1;
+        heart_border = heart.image2;
+        heart_empty = heart.image3;
 
     }
 
@@ -113,7 +123,6 @@ public class UI {
 
         g2.setColor(Color.WHITE);
         g2.drawString(text, x, y);
-
         if (commandNum == 0) {
             g2.drawString(">", x - gp.tileSize, y);
         }
@@ -121,10 +130,10 @@ public class UI {
         text = "Load Game";
         x = getXforCenteredText(text);
         y += gp.tileSize;
-        g2.setColor(Color.GRAY);
+        g2.setColor(Color.BLACK);
         g2.drawString(text, x + 3, y + 3);
 
-        g2.setColor(Color.WHITE);
+        g2.setColor(Color.GRAY);
         g2.drawString(text, x, y);
         if (commandNum == 1) {
             g2.drawString(">", x - gp.tileSize, y);

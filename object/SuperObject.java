@@ -10,7 +10,7 @@ import main.UtilityTool;
 // pretty much just the what the entity class is to the player class
 public class SuperObject {
 
-    public BufferedImage image;
+    public BufferedImage image, image2, image3;
     public String name;
     public boolean collision = false;
     public int worldX, worldY;

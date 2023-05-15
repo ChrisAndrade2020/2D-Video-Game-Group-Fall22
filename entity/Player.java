@@ -66,6 +66,9 @@ public class Player extends Entity {
         worldY = gp.tileSize * 92;
         speed = 10; // to explore world for now will be set to 4 in actual game
         direction = "idle";
+
+        maxHealth = 3;
+        health = maxHealth;
     }
 
     // Loads the player's images for different directions from the resources
