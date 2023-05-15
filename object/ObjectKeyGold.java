@@ -12,6 +12,8 @@ public class ObjectKeyGold extends Entity {
         direction = "down";
         down1 = setup("/res/objects/key_gold");
 
+        gp.player.keyGold++;
+
     }
 
 }

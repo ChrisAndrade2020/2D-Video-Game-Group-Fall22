@@ -13,6 +13,8 @@ public class ObjectChest extends Entity {
         down1 = setup("/res/objects/chest1");
         collision = true;
 
+        // contains random boots, armor, or sword.
+
     }
 
 }

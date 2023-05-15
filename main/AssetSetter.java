@@ -7,7 +7,6 @@ import object.ObjectBed1;
 import object.ObjectBed2;
 import object.ObjectChest;
 import object.ObjectCrate;
-import object.ObjectDoorClosed;
 import object.ObjectHeart;
 import object.ObjectKeyGold;
 import object.ObjectKeyIron;
@@ -56,6 +55,10 @@ public class AssetSetter {
         gp.npc[0] = new NPC_Slime_Friendly(gp);
         gp.npc[0].worldX = gp.tileSize * 7;
         gp.npc[0].worldY = gp.tileSize * 88;
+
+        gp.npc[1] = new NPC_Skeleton(gp);
+        gp.npc[1].worldX = gp.tileSize * 13;
+        gp.npc[1].worldY = gp.tileSize * 85;
 
     }
 

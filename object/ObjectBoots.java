@@ -11,6 +11,8 @@ public class ObjectBoots extends Entity {
         name = "Boots";
         down1 = setup("/res/objects/boots");
 
+        gp.player.speed += 2;
+
     }
 
 }

@@ -21,6 +21,9 @@ public class Player extends Entity {
     public int screenX;
     public int screenY;
 
+    public int keyIron = 0;
+    public int keyGold = 0;
+
     private BufferedImage[] pi;
     private BufferedImage[] pu;
     private BufferedImage[] pd;
@@ -255,8 +258,8 @@ public class Player extends Entity {
         super.draw(g2);
 
         // debugging to show invincibility frame
-        // g2.setFont(new Font("Arial", Font.PLAIN, 26));
-        // g2.setColor(Color.WHITE);
-        // g2.drawString("Invincible: " + invincibilityTimer, 10, 400);
+        g2.setFont(new Font("Arial", Font.PLAIN, 26));
+        g2.setColor(Color.WHITE);
+        g2.drawString("Invincible: " + invincibilityTimer, 10, 400);
     }
 }

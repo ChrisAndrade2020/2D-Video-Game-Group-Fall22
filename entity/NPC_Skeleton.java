@@ -27,6 +27,7 @@ public class NPC_Skeleton extends Entity {
         solidArea.width = 28;
         solidArea.height = 28;
         this.entitySize = 192;
+        setDialogue();
     }
 
     // Sets the default values for the NPC's world position, speed, and direction
@@ -37,15 +38,25 @@ public class NPC_Skeleton extends Entity {
         direction = "idle";
     }
 
+    public void setDialogue() {
+
+        dialogues[0] = "skele skele";
+        dialogues[1] = "What are you looking at?!";
+        dialogues[2] = "You just gonna stare at me or what? \nFirst time seeing a talking slime?";
+        dialogues[3] = "...";
+        dialogues[4] = "If you're just gonna stare at me all day \ngo and make yourself useful!";
+
+    }
+
     // Loads the NPC's sprites for idle and movement animations
     private void loadNPCEntitySprites() {
         idle = new BufferedImage[6];
         move = new BufferedImage[6];
         moveleft = new BufferedImage[6];
         for (int i = 0; i < 6; i++) {
-            idle[i] = setup("/res/npc/skeleton_idle" + (i + 1));
-            move[i] = setup("/res/npc/skeleton_move_udr" + (i + 1)); // udr = up down right
-            moveleft[i] = setup("/res/npc/skeleton_move_l" + (i + 1));
+            idle[i] = setup("/res/monster/skeleton_idle" + (i + 1));
+            move[i] = setup("/res/monster/skeleton_move_udr" + (i + 1)); // udr = up down right
+            moveleft[i] = setup("/res/monster/skeleton_move_l" + (i + 1));
         }
     }
 

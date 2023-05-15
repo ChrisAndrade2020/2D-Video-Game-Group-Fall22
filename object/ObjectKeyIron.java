@@ -12,6 +12,8 @@ public class ObjectKeyIron extends Entity {
         direction = "down";
         down1 = setup("/res/objects/key_iron");
 
+        gp.player.keyIron++;
+
     }
 
 }

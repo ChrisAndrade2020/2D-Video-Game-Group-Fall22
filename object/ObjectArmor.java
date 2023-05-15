@@ -10,6 +10,8 @@ public class ObjectArmor extends Entity {
         name = "Armor";
         down1 = setup("/res/objects/armor");
 
+        gp.player.maxHealth += 2;
+
     }
 
 }

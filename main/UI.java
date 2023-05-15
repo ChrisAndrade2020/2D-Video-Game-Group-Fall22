@@ -83,6 +83,8 @@ public class UI {
         if (gp.gameState == gp.playState) {
 
             drawPlayerHealth();
+            // drawPlayerIntventory();
+            // drawPlayerExperience();
 
         }
 
@@ -100,6 +102,12 @@ public class UI {
 
         }
 
+    }
+
+    private void drawPlayerExperience() {
+    }
+
+    private void drawPlayerIntventory() {
     }
 
     public void drawPlayerHealth() {
