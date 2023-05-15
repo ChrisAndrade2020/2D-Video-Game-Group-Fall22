@@ -14,12 +14,12 @@ public class ObjectHeart extends SuperObject {
 
         try {
 
-            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/heart.png"));
-            image2 = ImageIO.read(getClass().getResourceAsStream("/res/objects/hear_border.png"));
-            image3 = ImageIO.read(getClass().getResourceAsStream("/res/objects/heat_empty.png"));
-            tool.scaledImage(image, gp.tileSize, gp.tileSize);
-            tool.scaledImage(image2, gp.tileSize, gp.tileSize);
-            tool.scaledImage(image3, gp.tileSize, gp.tileSize);
+            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/heart_full.png"));
+            image2 = ImageIO.read(getClass().getResourceAsStream("/res/objects/heart_border.png"));
+            image3 = ImageIO.read(getClass().getResourceAsStream("/res/objects/heart_empty.png"));
+            image = tool.scaledImage(image, gp.tileSize, gp.tileSize);
+            image2 = tool.scaledImage(image2, gp.tileSize, gp.tileSize);
+            image3 = tool.scaledImage(image3, gp.tileSize, gp.tileSize);
 
         } catch (IOException e) {
 

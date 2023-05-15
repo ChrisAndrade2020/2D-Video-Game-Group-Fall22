@@ -19,7 +19,7 @@ public class UI {
     Graphics2D g2;
     Font Montserrat, MontserratBold;
 
-    BufferedImage heart, heart_border, heart_empty;
+    BufferedImage heart_full, heart_border, heart_empty;
 
     public boolean messageOn = false;
     public String message = "";
@@ -52,7 +52,7 @@ public class UI {
         }
 
         SuperObject heart = new ObjectHeart(gp);
-        heart = heart.image1;
+        heart_full = heart.image;
         heart_border = heart.image2;
         heart_empty = heart.image3;
 
@@ -82,18 +82,51 @@ public class UI {
 
         if (gp.gameState == gp.playState) {
 
+            drawPlayerHealth();
+
         }
 
         if (gp.gameState == gp.pauseState) {
 
+            drawPlayerHealth();
             drawPauseScreen();
 
         }
 
         if (gp.gameState == gp.dialogueState) {
 
-            drawdialogueScreen();
+            drawPlayerHealth();
+            drawDialogueScreen();
 
+        }
+
+    }
+
+    public void drawPlayerHealth() {
+
+        gp.player.health = 4;
+
+        // Max Health + Border
+        int x = gp.tileSize / 3;
+        int y = gp.tileSize / 3;
+        int i = 0;
+
+        while (i < gp.player.maxHealth) {
+            g2.drawImage(heart_empty, x, y, null);
+            g2.drawImage(heart_border, x, y, null);
+            i++;
+            x += gp.tileSize + 4;
+        }
+
+        // Curr Health
+        x = gp.tileSize / 3;
+        y = gp.tileSize / 3;
+        i = 0;
+
+        while (i < gp.player.health) {
+            g2.drawImage(heart_full, x, y, null);
+            i++;
+            x += gp.tileSize + 4;
         }
 
     }
@@ -165,7 +198,7 @@ public class UI {
         g2.drawString(text, x, y);
     }
 
-    public void drawdialogueScreen() {
+    public void drawDialogueScreen() {
 
         int x = gp.tileSize / 2;
         double y = gp.tileSize * 7.5;
