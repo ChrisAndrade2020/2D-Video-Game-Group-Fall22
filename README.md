@@ -1,7 +1,7 @@
 # 2D-Video-Game-Group-Fall22
-Not actually a group project, but the scope has to be as if a group did the project
+Note: No actual group work. 
 
-# --- Basic Treasure Hunting Game To-Do List ---
+# Basic Treasure Hunting Game To-Do List
 :heavy_check_mark: Window  
 :heavy_check_mark: Game Loop  
 :heavy_check_mark: Movement  
@@ -13,7 +13,7 @@ Not actually a group project, but the scope has to be as if a group did the proj
 :heavy_check_mark: Object Interaction  
 :heavy_check_mark: Sound   
 
-# --- Expanded Treasure Hunt Game to RPG ---
+# Expanded Treasure Hunt Game to RPG
 :heavy_check_mark: Adding New Tilesets  
 :heavy_check_mark: Pausing Game  
 :heavy_check_mark: Camera Out of Bounds  
@@ -31,7 +31,7 @@ Not actually a group project, but the scope has to be as if a group did the proj
 :x: Config Files  
 :x: Game Over Screen  
 
-# --- RPG Expansion ---
+# RPG Expansion 
 :x: Player Stats  
 :x: Player Notifications ( Level Up, Damage Dealt, EXP gained )  
 :x: Player Inventory  
