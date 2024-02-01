@@ -1,7 +1,7 @@
 # 2D-Video-Game-Group-Fall22
 Note: No actual group work. 
 
-[https://www.youtube.com/playlist?list=PLoq3otmP0_RYjWRwzo8SANSNUdQZbo6Hw] (Watch the Development Log)
+(Watch the Development Log)[https://www.youtube.com/playlist?list=PLoq3otmP0_RYjWRwzo8SANSNUdQZbo6Hw] 
 
 # Basic Treasure Hunting Game To-Do List
 :heavy_check_mark: Window  
